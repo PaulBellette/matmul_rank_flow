@@ -1,0 +1,884 @@
+{
+  "corpora": [
+    {
+      "root": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov",
+      "files_seen": 6357,
+      "candidate_files": 2636,
+      "plausible_rank23_by_name": 11,
+      "parsed_rank23": 4,
+      "extension_counts": {
+        ".m": 2757,
+        ".json": 2589,
+        ".mpl": 680,
+        ".txt": 256,
+        ".exp": 44,
+        ".py": 25,
+        "<none>": 2,
+        ".md": 2,
+        ".npz": 2
+      },
+      "candidate_extension_counts": {
+        ".json": 8,
+        ".m": 3
+      },
+      "status_counts": {
+        "unsupported_extension": 3721,
+        "wrong_shape": 2579,
+        "wrong_rank": 44,
+        "parsed_rank23": 4,
+        "parse_error": 4,
+        "plausible_unsupported_extension": 3,
+        "unsupported_json_schema": 2
+      },
+      "parser_counts": {
+        "json_uvws": 2587,
+        "kauers_exp": 44,
+        "json": 2
+      },
+      "samples_by_status": {
+        "unsupported_extension": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/find_alternative_schemes.py",
+            "extension": ".py",
+            "size": 4678,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/requirements.txt",
+            "extension": ".txt",
+            "size": 26,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/.gitignore",
+            "extension": "<none>",
+            "size": 17,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/update_schemes_status.py",
+            "extension": ".py",
+            "size": 14754,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/lift_schemes.py",
+            "extension": ".py",
+            "size": 3693,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/CHANGELOG.md",
+            "extension": ".md",
+            "size": 77803,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/LICENSE",
+            "extension": "<none>",
+            "size": 1072,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/README.md",
+            "extension": ".md",
+            "size": 111470,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          }
+        ],
+        "unsupported_json_schema": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/reduced_known.json",
+            "extension": ".json",
+            "size": 1189,
+            "parser": "json",
+            "detail": "2x2x2-7,2x2x3-11,2x2x4-14,2x2x5-18,2x2x6-21,2x3x3-15,2x3x4-20,2x3x5-25,2x3x6-30,2x4x4-26,2x4x5-33,2x4x6-39",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/status.json",
+            "extension": ".json",
+            "size": 2043077,
+            "parser": "json",
+            "detail": "10x10x10,10x10x11,10x10x12,10x10x13,10x10x14,10x10x15,10x10x16,10x11x11,10x11x12,10x11x13,10x11x14,10x11x15",
+            "plausible_rank23": false
+          }
+        ],
+        "parsed_rank23": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/3x3x3_m23_8d34d377660f8f8d8b32cd4b6a1e1c40a5093dd0_ZT.json",
+            "extension": ".json",
+            "size": 4526,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/naive_addition_reduced_ZT/3x3x3_m23_c88_ZT.json",
+            "extension": ".json",
+            "size": 4447,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/alpha_tensor/3x3x3_m23_Z.json",
+            "extension": ".json",
+            "size": 4425,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/a_60_addition/3x3x3_m23_additions60_ZT.json",
+            "extension": ".json",
+            "size": 4299,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          }
+        ],
+        "wrong_shape": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/3x10x16_m355_58906c9c48ea2952b5c725009a53aa50a7c27bf2_ZT.json",
+            "extension": ".json",
+            "size": 307922,
+            "parser": "json_uvws",
+            "detail": "n=[3, 10, 16]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/2x3x11_m56_5f3026a3d87950d100413fcca508135c301e45aa_ZT.json",
+            "extension": ".json",
+            "size": 18560,
+            "parser": "json_uvws",
+            "detail": "n=[2, 3, 11]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/2x4x6_m39_ccc011db720670dc67a33f49f6985b1d0a02b70f_Q.json",
+            "extension": ".json",
+            "size": 20346,
+            "parser": "json_uvws",
+            "detail": "n=[2, 4, 6]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/2x5x9_m73_3ca559e25544f87de80375fcc70e0eb8192ddbe3_ZT.json",
+            "extension": ".json",
+            "size": 25880,
+            "parser": "json_uvws",
+            "detail": "n=[2, 5, 9]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/5x5x11_m195_f54761081f8ee96c952ff29ccde183df419b8f65_ZT.json",
+            "extension": ".json",
+            "size": 111933,
+            "parser": "json_uvws",
+            "detail": "n=[5, 5, 11]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/3x4x13_m119_4fbf255e27f0d83a6bc585041d29efbf7785b028_ZT.json",
+            "extension": ".json",
+            "size": 50726,
+            "parser": "json_uvws",
+            "detail": "n=[3, 4, 13]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/4x5x9_m132_a0a4706b24c30d557886f170b0e01096823dd8f2_ZT.json",
+            "extension": ".json",
+            "size": 58794,
+            "parser": "json_uvws",
+            "detail": "n=[4, 5, 9]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/serendipitous_base/2x4x8_m51_4f8823917d1632e9d8a0f24c08bc414f7633f115_ZT.json",
+            "extension": ".json",
+            "size": 14853,
+            "parser": "json_uvws",
+            "detail": "n=[2, 4, 8]",
+            "plausible_rank23": false
+          }
+        ],
+        "plausible_unsupported_extension": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/naive_addition_reduced_ZT/3x3x3_m23_c88_ZT.m",
+            "extension": ".m",
+            "size": 2557,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/classic/Smirnov-333-23-139.m",
+            "extension": ".m",
+            "size": 2568,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/classic/Laderman-333-23-98.m",
+            "extension": ".m",
+            "size": 2546,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": true
+          }
+        ],
+        "parse_error": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/addition_reduced_ZT/3x3x3_m23_cr58_cn119_ZT_reduced.json",
+            "extension": ".json",
+            "size": 4586,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/addition_reduced_ZT/3x3x3_m23_cr58_cn122_ZT_reduced.json",
+            "extension": ".json",
+            "size": 4728,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/addition_reduced_ZT/3x3x3_m23_cr58_cn120_ZT_reduced.json",
+            "extension": ".json",
+            "size": 4508,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/results/addition_reduced_ZT/3x3x3_m23_cr60_cn97_ZT_reduced.json",
+            "extension": ".json",
+            "size": 4606,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          }
+        ],
+        "wrong_rank": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/345-47-mod0.exp",
+            "extension": ".exp",
+            "size": 3716,
+            "parser": "kauers_exp",
+            "detail": "summands=47",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/235-25-mod0.exp",
+            "extension": ".exp",
+            "size": 1209,
+            "parser": "kauers_exp",
+            "detail": "summands=25",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/223-11-mod0.exp",
+            "extension": ".exp",
+            "size": 346,
+            "parser": "kauers_exp",
+            "detail": "summands=11",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/455-76-mod0.exp",
+            "extension": ".exp",
+            "size": 5851,
+            "parser": "kauers_exp",
+            "detail": "summands=76",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/255-40-mod0.exp",
+            "extension": ".exp",
+            "size": 3682,
+            "parser": "kauers_exp",
+            "detail": "summands=40",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/334-29-mod0.exp",
+            "extension": ".exp",
+            "size": 1274,
+            "parser": "kauers_exp",
+            "detail": "summands=29",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/335-36-mod0.exp",
+            "extension": ".exp",
+            "size": 2156,
+            "parser": "kauers_exp",
+            "detail": "summands=36",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/perminov/schemes/known/jakobmoosbauer_flips/224-14-mod0.exp",
+            "extension": ".exp",
+            "size": 702,
+            "parser": "kauers_exp",
+            "detail": "summands=14",
+            "plausible_rank23": false
+          }
+        ]
+      }
+    },
+    {
+      "root": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers",
+      "files_seen": 1785,
+      "candidate_files": 910,
+      "plausible_rank23_by_name": 1,
+      "parsed_rank23": 1,
+      "extension_counts": {
+        ".exp": 910,
+        ".m": 874,
+        "<none>": 1
+      },
+      "candidate_extension_counts": {
+        ".exp": 1
+      },
+      "status_counts": {
+        "wrong_rank": 909,
+        "unsupported_extension": 875,
+        "parsed_rank23": 1
+      },
+      "parser_counts": {
+        "kauers_exp": 910
+      },
+      "samples_by_status": {
+        "unsupported_extension": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/LICENSE",
+            "extension": "<none>",
+            "size": 35149,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/kcdbe45d08f530dd.m",
+            "extension": ".m",
+            "size": 27365,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k5e9e84445d3a0c21.m",
+            "extension": ".m",
+            "size": 28135,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k14771a81020cedbd.m",
+            "extension": ".m",
+            "size": 27583,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k0de46c8b0be5455.m",
+            "extension": ".m",
+            "size": 28633,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k7b8c39f48be24ac9.m",
+            "extension": ".m",
+            "size": 28968,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k374f62c9ee293fbf.m",
+            "extension": ".m",
+            "size": 29276,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k58cc22c2a980727f.m",
+            "extension": ".m",
+            "size": 28477,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          }
+        ],
+        "wrong_rank": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/378/ffdb2d875f.mod2.exp",
+            "extension": ".exp",
+            "size": 10266,
+            "parser": "kauers_exp",
+            "detail": "summands=129",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k2637e838dd25f696.exp",
+            "extension": ".exp",
+            "size": 16580,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k2e9c12b487c50159.exp",
+            "extension": ".exp",
+            "size": 18574,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k59e8daed03100816.exp",
+            "extension": ".exp",
+            "size": 17102,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k5e9e84445d3a0c21.exp",
+            "extension": ".exp",
+            "size": 15874,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k5463149099afde9c.exp",
+            "extension": ".exp",
+            "size": 15677,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k40354988e35d7ee4.exp",
+            "extension": ".exp",
+            "size": 15019,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/358/k0de46c8b0be5455.exp",
+            "extension": ".exp",
+            "size": 15191,
+            "parser": "kauers_exp",
+            "detail": "summands=90",
+            "plausible_rank23": false
+          }
+        ],
+        "parsed_rank23": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/kauers/structured/k000000011c4745e-333-23-mod0.exp",
+            "extension": ".exp",
+            "size": 756,
+            "parser": "kauers_exp",
+            "detail": null,
+            "plausible_rank23": true
+          }
+        ]
+      }
+    },
+    {
+      "root": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog",
+      "files_seen": 11896,
+      "candidate_files": 11140,
+      "plausible_rank23_by_name": 11,
+      "parsed_rank23": 7,
+      "extension_counts": {
+        ".json": 11140,
+        ".java": 477,
+        ".md": 91,
+        ".py": 48,
+        ".pdf": 33,
+        ".tex": 29,
+        ".out": 22,
+        ".npz": 16,
+        ".yml": 6,
+        "<none>": 5,
+        ".txt": 5,
+        ".wls": 5,
+        ".mpl": 4,
+        ".bz2": 3,
+        ".xml": 2,
+        ".sh": 1,
+        ".js": 1,
+        ".html": 1,
+        ".css": 1,
+        ".bib": 1,
+        ".csv": 1,
+        ".strassen": 1,
+        ".zip": 1,
+        ".for": 1,
+        ".mgm": 1
+      },
+      "candidate_extension_counts": {
+        ".json": 11
+      },
+      "status_counts": {
+        "unsupported_json_schema": 10533,
+        "unsupported_extension": 756,
+        "wrong_shape": 594,
+        "parsed_rank23": 7,
+        "parse_error": 4,
+        "wrong_rank": 2
+      },
+      "parser_counts": {
+        "json": 10533,
+        "json_uvws": 607
+      },
+      "samples_by_status": {
+        "unsupported_extension": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/pom.xml",
+            "extension": ".xml",
+            "size": 6865,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/CLAUDE.md",
+            "extension": ".md",
+            "size": 26938,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/.gitignore",
+            "extension": "<none>",
+            "size": 840,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/REFERENCES.md",
+            "extension": ".md",
+            "size": 107891,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/.java-version",
+            "extension": "<none>",
+            "size": 3,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/ROADMAP.md",
+            "extension": ".md",
+            "size": 47595,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/README.md",
+            "extension": ".md",
+            "size": 14399,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/.gitattributes",
+            "extension": "<none>",
+            "size": 595,
+            "parser": null,
+            "detail": null,
+            "plausible_rank23": false
+          }
+        ],
+        "unsupported_json_schema": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/references/fmm-lille-biblio.json",
+            "extension": ".json",
+            "size": 147536,
+            "parser": "json",
+            "detail": "entries,source",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/references/fmm-lille-detail.json",
+            "extension": ".json",
+            "size": 627713,
+            "parser": "json",
+            "detail": "entries,source",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/references/dis09-cubic-tables.json",
+            "extension": ".json",
+            "size": 8676,
+            "parser": "json",
+            "detail": "_description,_extracted,_source,_subsequent_improvements_note,commutative,non_commutative",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/references/sedoglavic-fmm-sota.json",
+            "extension": ".json",
+            "size": 283382,
+            "parser": "json",
+            "detail": "10x10x10,10x10x11,10x10x12,10x10x13,10x10x14,10x10x15,10x10x16,10x10x17,10x10x18,10x10x19,10x10x20,10x10x21",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/references/perminov-serendipitous-17-32.json",
+            "extension": ".json",
+            "size": 322131,
+            "parser": "json",
+            "detail": "10x10x21,10x10x22,10x10x30,10x10x32,10x11x18,10x11x20,10x11x21,10x11x27,10x11x28,10x11x30,10x11x32,10x12x18",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/references/fmm-artifact-audit.json",
+            "extension": ".json",
+            "size": 1836,
+            "parser": "json",
+            "detail": "audited,classes,method,shapes",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/docs/border-ranks.json",
+            "extension": ".json",
+            "size": 1991,
+            "parser": "json",
+            "detail": "_TODO,_description,_schema,entries",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/docs/cited-bounds.json",
+            "extension": ".json",
+            "size": 2551526,
+            "parser": "json",
+            "detail": "_description,_schema,entries",
+            "plausible_rank23": false
+          }
+        ],
+        "wrong_rank": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/bud-bases/section3/3x3x3-r24-metaflip-a9a757a.json",
+            "extension": ".json",
+            "size": 2944,
+            "parser": "json_uvws",
+            "detail": "rank=24",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/derived/section3/3x3x3-r24-derived-3e0f875.json",
+            "extension": ".json",
+            "size": 3062,
+            "parser": "json_uvws",
+            "detail": "rank=24",
+            "plausible_rank23": false
+          }
+        ],
+        "wrong_shape": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/curated/section2/2x2x2-r7-solven_orbit_c9x3_c8x1-37b6062.json",
+            "extension": ".json",
+            "size": 1617,
+            "parser": "json_uvws",
+            "detail": "n=[2, 2, 2]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/curated/section2/2x2x2-r7-solven_orbit_c9x2_c8x2-c9abd45.json",
+            "extension": ".json",
+            "size": 1458,
+            "parser": "json_uvws",
+            "detail": "n=[2, 2, 2]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/curated/section2/2x2x2-r7-solven_winograd_cousin_axflip1-cb16ec6.json",
+            "extension": ".json",
+            "size": 2231,
+            "parser": "json_uvws",
+            "detail": "n=[2, 2, 2]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/curated/section8/3x3x8-r55-solven_closure_2026-b766126.json",
+            "extension": ".json",
+            "size": 30694,
+            "parser": "json_uvws",
+            "detail": "n=[3, 3, 8]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/curated/section7/7x7x7-r249-solven_strassen_2026-0e10bb6.json",
+            "extension": ".json",
+            "size": 169016,
+            "parser": "json_uvws",
+            "detail": "n=[7, 7, 7]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/derived/section6/2x6x5-r47-derived-999879e.json",
+            "extension": ".json",
+            "size": 9318,
+            "parser": "json_uvws",
+            "detail": "n=[2, 6, 5]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/derived/section6/2x6x6-r60-derived-970876d.json",
+            "extension": ".json",
+            "size": 12917,
+            "parser": "json_uvws",
+            "detail": "n=[2, 6, 6]",
+            "plausible_rank23": false
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/derived/section6/3x3x6-r40-derived-d246191.json",
+            "extension": ".json",
+            "size": 8640,
+            "parser": "json_uvws",
+            "detail": "n=[3, 3, 6]",
+            "plausible_rank23": false
+          }
+        ],
+        "parse_error": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-perminov_cr58_cn122_ZT_reduced-1508042.json",
+            "extension": ".json",
+            "size": 6089,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-perminov_cr58_cn119_ZT_reduced-b724f69.json",
+            "extension": ".json",
+            "size": 6035,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-perminov_cr60_cn97_ZT_reduced-f69f687.json",
+            "extension": ".json",
+            "size": 6040,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-perminov_cr58_cn120_ZT_reduced-6b32275.json",
+            "extension": ".json",
+            "size": 5941,
+            "parser": "json_uvws",
+            "detail": "expected 9x23 or 23x9 factor array",
+            "plausible_rank23": true
+          }
+        ],
+        "parsed_rank23": [
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-laderman_1976-b173cf2.json",
+            "extension": ".json",
+            "size": 5163,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-alphatensor_F2-3c9f5dd.json",
+            "extension": ".json",
+            "size": 5067,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-alphaevolve-e134de1.json",
+            "extension": ".json",
+            "size": 5582,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-perminov_2025-a2dabfe.json",
+            "extension": ".json",
+            "size": 4154,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-perminov_c88_ZT-92c8128.json",
+            "extension": ".json",
+            "size": 6846,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-kauers_2026-83d0abe.json",
+            "extension": ".json",
+            "size": 2655,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          },
+          {
+            "path": "/home/paul-bellete/src/matmul_rank_flow/external/rank23_corpora/matmulcatalog/src/main/resources/schemes/known/section3/3x3x3-r23-alphatensor_Z-abce7c1.json",
+            "extension": ".json",
+            "size": 5495,
+            "parser": "json_uvws",
+            "detail": null,
+            "plausible_rank23": true
+          }
+        ]
+      }
+    }
+  ],
+  "totals": {
+    "files_seen": 20038,
+    "candidate_files": 14686,
+    "plausible_rank23_by_name": 23,
+    "parsed_rank23": 12
+  }
+}

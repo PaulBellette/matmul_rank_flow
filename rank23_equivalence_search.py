@@ -26,10 +26,12 @@ that repository's documented convention.
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import itertools
 import json
 import math
+import re
 from functools import lru_cache
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -197,28 +199,239 @@ def load_scheme_exp(path: Path) -> Scheme | None:
     return Scheme(path.stem, (A, B, C), str(path))
 
 
-def scan_corpus(root: Path) -> list[Scheme]:
-    out: list[Scheme] = []
-    import re
-    for p in root.rglob("*"):
-        if not p.is_file() or p.suffix.lower() not in {".json", ".exp"}:
-            continue
-        # Public FMM corpora often contain thousands of large JSON schemes whose
-        # dimensions/rank are encoded in the filename. Skip obvious non-333/23
-        # entries without paying JSON parse cost.
-        if p.suffix.lower() == ".json":
-            m = re.search(r"(?:^|[^0-9])(\d+)x(\d+)x(\d+)_m(\d+)", p.name)
-            if m and tuple(map(int, m.groups())) != (3, 3, 3, 23):
-                continue
+@dataclass
+class ScanRecord:
+    path: str
+    extension: str
+    size: int
+    status: str
+    parser: str | None = None
+    detail: str | None = None
+    plausible_rank23: bool = False
+
+
+_R23_NAME_PATTERNS = (
+    re.compile(r"(?:^|[^0-9])333[-_]?23(?:[^0-9]|$)", re.I),
+    re.compile(r"3x3x3[_-]?m?23(?:[^0-9]|$)", re.I),
+    re.compile(r"333[-_]23[-_]", re.I),
+)
+
+
+def _name_plausible_rank23(path: Path) -> bool:
+    name = path.name
+    return any(rx.search(name) for rx in _R23_NAME_PATTERNS)
+
+
+def _json_scan(path: Path) -> tuple[Scheme | None, ScanRecord]:
+    size = path.stat().st_size
+    plausible = _name_plausible_rank23(path)
+    try:
+        obj = json.loads(path.read_text())
+    except Exception as e:
+        return None, ScanRecord(str(path), ".json", size, "json_decode_error", "json", str(e), plausible)
+    if not isinstance(obj, dict):
+        return None, ScanRecord(str(path), ".json", size, "unsupported_json_root", "json", type(obj).__name__, plausible)
+    if obj.get("exact_identity") is False:
+        return None, ScanRecord(str(path), ".json", size, "explicit_noncertificate", "json", None, plausible)
+
+    if all(k in obj for k in ("u", "v", "w")):
+        parser = "json_uvws"
+        n = obj.get("n")
         try:
-            s = load_scheme_json(p) if p.suffix.lower() == ".json" else load_scheme_exp(p)
-        except Exception:
-            # Corpora mix full schemes, reduced formats, manifests, and metadata.
-            # Unsupported entries are intentionally skipped.
+            rank = int(obj.get("m", len(obj["u"])))
+        except Exception as e:
+            return None, ScanRecord(str(path), ".json", size, "json_metadata_error", parser, str(e), plausible)
+        if n is not None and list(n) != [3, 3, 3]:
+            return None, ScanRecord(str(path), ".json", size, "wrong_shape", parser, f"n={n}", plausible)
+        if rank != 23:
+            return None, ScanRecord(str(path), ".json", size, "wrong_rank", parser, f"rank={rank}", plausible)
+        try:
+            scheme = load_scheme_json(path)
+        except Exception as e:
+            return None, ScanRecord(str(path), ".json", size, "parse_error", parser, str(e), True)
+        if scheme is None:
+            return None, ScanRecord(str(path), ".json", size, "loader_rejected", parser, None, True)
+        return scheme, ScanRecord(str(path), ".json", size, "parsed_rank23", parser, None, True)
+
+    if all(k in obj for k in ("U", "V", "W")):
+        parser = "json_UVW"
+        try:
+            rank = int(obj.get("rank", len(obj.get("c", [])) or 23))
+        except Exception as e:
+            return None, ScanRecord(str(path), ".json", size, "json_metadata_error", parser, str(e), plausible)
+        if rank != 23:
+            return None, ScanRecord(str(path), ".json", size, "wrong_rank", parser, f"rank={rank}", plausible)
+        try:
+            scheme = load_scheme_json(path)
+        except Exception as e:
+            return None, ScanRecord(str(path), ".json", size, "parse_error", parser, str(e), True)
+        if scheme is None:
+            return None, ScanRecord(str(path), ".json", size, "loader_rejected", parser, None, True)
+        return scheme, ScanRecord(str(path), ".json", size, "parsed_rank23", parser, None, True)
+
+    # Perminov reduced schemes are deliberately diagnosed separately rather than
+    # silently disappearing. They may need a dedicated reconstruction loader.
+    keys = set(obj)
+    if any("reduced" in str(k).lower() for k in keys) or path.stem.endswith("_reduced"):
+        return None, ScanRecord(str(path), ".json", size, "unsupported_reduced_json", "json", ",".join(sorted(keys)[:12]), plausible)
+    return None, ScanRecord(str(path), ".json", size, "unsupported_json_schema", "json", ",".join(sorted(keys)[:12]), plausible)
+
+
+def _exp_scan(path: Path) -> tuple[Scheme | None, ScanRecord]:
+    size = path.stat().st_size
+    plausible = _name_plausible_rank23(path)
+    try:
+        text = path.read_text()
+    except Exception as e:
+        return None, ScanRecord(str(path), ".exp", size, "read_error", "kauers_exp", str(e), plausible)
+    lines = [x.strip() for x in text.splitlines() if x.strip() and not x.lstrip().startswith("#")]
+    if len(lines) != 23:
+        return None, ScanRecord(str(path), ".exp", size, "wrong_rank", "kauers_exp", f"summands={len(lines)}", plausible)
+    toks = re.findall(r"\b([abc])(\d)(\d)\b", "\n".join(lines))
+    if not toks:
+        return None, ScanRecord(str(path), ".exp", size, "exp_no_abc_symbols", "kauers_exp", None, plausible)
+    if any(int(i) > 3 or int(j) > 3 for _, i, j in toks):
+        dims = sorted(set((int(i), int(j)) for _, i, j in toks if int(i) > 3 or int(j) > 3))[:8]
+        return None, ScanRecord(str(path), ".exp", size, "wrong_shape", "kauers_exp", f"indices={dims}", plausible)
+    try:
+        scheme = load_scheme_exp(path)
+    except Exception as e:
+        return None, ScanRecord(str(path), ".exp", size, "parse_error", "kauers_exp", str(e), True)
+    if scheme is None:
+        return None, ScanRecord(str(path), ".exp", size, "loader_rejected", "kauers_exp", None, True)
+    return scheme, ScanRecord(str(path), ".exp", size, "parsed_rank23", "kauers_exp", None, True)
+
+
+def inspect_corpus_file(path: Path) -> tuple[Scheme | None, ScanRecord]:
+    """Inspect one corpus file and always explain why it was or was not loaded."""
+    suffix = path.suffix.lower()
+    try:
+        size = path.stat().st_size
+    except Exception:
+        size = -1
+    if suffix == ".json":
+        return _json_scan(path)
+    if suffix == ".exp":
+        return _exp_scan(path)
+    plausible = _name_plausible_rank23(path)
+    ext = suffix or "<none>"
+    status = "plausible_unsupported_extension" if plausible else "unsupported_extension"
+    return None, ScanRecord(str(path), ext, size, status, None, None, plausible)
+
+
+def scan_corpus_detailed(root: Path) -> tuple[list[Scheme], dict[str, Any], list[ScanRecord]]:
+    schemes: list[Scheme] = []
+    records: list[ScanRecord] = []
+    ext_counts: Counter[str] = Counter()
+    status_counts: Counter[str] = Counter()
+    parser_counts: Counter[str] = Counter()
+    candidate_ext_counts: Counter[str] = Counter()
+
+    root = root.resolve()
+    for p in root.rglob("*"):
+        if not p.is_file():
             continue
-        if s is not None:
-            out.append(s)
-    return out
+        # Git metadata is not corpus content and can dominate extension counts.
+        if ".git" in p.parts:
+            continue
+        ext = p.suffix.lower() or "<none>"
+        ext_counts[ext] += 1
+        scheme, rec = inspect_corpus_file(p)
+        records.append(rec)
+        status_counts[rec.status] += 1
+        if rec.parser:
+            parser_counts[rec.parser] += 1
+        if rec.plausible_rank23:
+            candidate_ext_counts[rec.extension] += 1
+        if scheme is not None:
+            schemes.append(scheme)
+
+    report = {
+        "root": str(root),
+        "files_seen": len(records),
+        "candidate_files": sum(1 for r in records if r.plausible_rank23 or r.extension in {".json", ".exp"}),
+        "plausible_rank23_by_name": sum(1 for r in records if r.plausible_rank23),
+        "parsed_rank23": len(schemes),
+        "extension_counts": dict(ext_counts.most_common()),
+        "candidate_extension_counts": dict(candidate_ext_counts.most_common()),
+        "status_counts": dict(status_counts.most_common()),
+        "parser_counts": dict(parser_counts.most_common()),
+    }
+    return schemes, report, records
+
+
+def scan_corpus(root: Path) -> list[Scheme]:
+    return scan_corpus_detailed(root)[0]
+
+
+def _sample_records(records: list[ScanRecord], *, per_status: int = 8) -> dict[str, list[dict[str, Any]]]:
+    out: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for r in records:
+        bucket = out[r.status]
+        if len(bucket) >= per_status:
+            continue
+        bucket.append({
+            "path": r.path,
+            "extension": r.extension,
+            "size": r.size,
+            "parser": r.parser,
+            "detail": r.detail,
+            "plausible_rank23": r.plausible_rank23,
+        })
+    return dict(out)
+
+
+def write_corpus_audit(outdir: Path, reports: list[dict[str, Any]], records_by_root: list[list[ScanRecord]], *, sample_limit: int = 8) -> None:
+    outdir.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "corpora": [
+            {**rep, "samples_by_status": _sample_records(recs, per_status=sample_limit)}
+            for rep, recs in zip(reports, records_by_root)
+        ]
+    }
+    payload["totals"] = {
+        "files_seen": sum(r["files_seen"] for r in reports),
+        "candidate_files": sum(r["candidate_files"] for r in reports),
+        "plausible_rank23_by_name": sum(r["plausible_rank23_by_name"] for r in reports),
+        "parsed_rank23": sum(r["parsed_rank23"] for r in reports),
+    }
+    (outdir / "corpus_audit.json").write_text(json.dumps(payload, indent=2) + "\n")
+
+    # Full machine-readable skip ledger. This is intentionally verbose so every
+    # plausible scheme can be accounted for before making corpus-wide claims.
+    with (outdir / "corpus_files.csv").open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["corpus_root", "path", "extension", "size", "status", "parser", "plausible_rank23", "detail"])
+        for rep, recs in zip(reports, records_by_root):
+            for r in recs:
+                w.writerow([rep["root"], r.path, r.extension, r.size, r.status, r.parser or "", int(r.plausible_rank23), r.detail or ""])
+
+    lines = ["# Corpus audit", "", "Every file is assigned an explicit status; nothing disappears silently.", ""]
+    for rep in reports:
+        lines += [
+            f"## `{rep['root']}`", "",
+            f"- files_seen: **{rep['files_seen']}**",
+            f"- candidate_files (`.json`/`.exp` or rank-23-looking name): **{rep['candidate_files']}**",
+            f"- plausible_rank23_by_name: **{rep['plausible_rank23_by_name']}**",
+            f"- parsed_rank23: **{rep['parsed_rank23']}**",
+            "",
+            "### Status counts", "",
+        ]
+        for k, v in rep["status_counts"].items():
+            lines.append(f"- {k}: **{v}**")
+        lines += ["", "### Extensions", ""]
+        for k, v in list(rep["extension_counts"].items())[:20]:
+            lines.append(f"- `{k}`: {v}")
+        lines.append("")
+    lines += [
+        "## Coverage rule", "",
+        "Before making a corpus-wide inequivalence claim, every plausible 3x3 rank-23",
+        "entry should be either `parsed_rank23` or have an explicit defensible status",
+        "such as `wrong_rank`, `wrong_shape`, or a documented unsupported format.",
+        "`plausible_unsupported_extension`, `parse_error`, and `loader_rejected` are",
+        "coverage gaps that should be resolved first.",
+    ]
+    (outdir / "CORPUS_AUDIT.md").write_text("\n".join(lines) + "\n")
 
 
 # ---------- exact rank invariants ----------
@@ -684,17 +897,24 @@ def main() -> None:
     ap.add_argument("--corpus", type=Path, action="append", default=[])
     ap.add_argument("--out", type=Path, default=Path("results/blind_rank23/equivalence_search"))
     ap.add_argument("--direct-limit", type=int, default=8)
+    ap.add_argument("--audit-samples", type=int, default=8, help="sample paths retained per audit status")
     args = ap.parse_args()
 
     target = load_scheme_json(args.certificate)
     if target is None:
         raise SystemExit("could not parse target certificate")
     corpus = []
+    audit_reports = []
+    audit_records = []
     for root in args.corpus:
-        corpus.extend(scan_corpus(root))
+        schemes, report, records = scan_corpus_detailed(root)
+        corpus.extend(schemes)
+        audit_reports.append(report)
+        audit_records.append(records)
 
     result = search(target, corpus, direct_limit=args.direct_limit)
     args.out.mkdir(parents=True, exist_ok=True)
+    write_corpus_audit(args.out, audit_reports, audit_records, sample_limit=args.audit_samples)
     (args.out / "equivalence_search.json").write_text(json.dumps(result, indent=2) + "\n")
     write_report(args.out / "EQUIVALENCE_SEARCH.md", result)
 
@@ -704,6 +924,11 @@ def main() -> None:
     print("HKS f(x,y,z):", result["target"]["symmetric_rank_poly"])
     print("target WL:", result["target"]["wl_incidence"])
     print("corpus rank-23 schemes:", len(corpus))
+    for rep in audit_reports:
+        print(f"audit {rep['root']}: files={rep['files_seen']} candidates={rep['candidate_files']} parsed_rank23={rep['parsed_rank23']}")
+        gaps = {k:v for k,v in rep["status_counts"].items() if k in {"plausible_unsupported_extension","parse_error","loader_rejected","unsupported_reduced_json","unsupported_json_schema"}}
+        if gaps:
+            print("  coverage gaps:", gaps)
     for k, v in result["stage_counts"].items():
         print(f"{k}: {v}")
     print("wrote", args.out)
