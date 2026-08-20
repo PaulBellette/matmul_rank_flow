@@ -1,0 +1,9 @@
+started_utc=2026-08-20T11:54:34Z
+host=chunky-boy
+pwd=/home/paul-bellete/src/matmul_rank_flow
+python=Python 3.13.9
+max_cycles=120
+seeds=101 211 307 401 503
+git_commit=c7e3e5d9c0bfc1f357480272e82d64262fde3ebe
+git_branch=main
+git_dirty=no

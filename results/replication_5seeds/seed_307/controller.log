@@ -1,0 +1,85 @@
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=00: id0:genericity+deletion+death(x0)
+beam gen=01 rank=26 frontier=4 | id11:N=64.6 E=0.0739 D=2.59 | id12:N=72.0 E=0.108 D=2.47 | id14:N=80.0 E=1 D=2.22 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=01: id11:genericity+deletion(x0) | id14:death(x0) | id12:explore(x0)
+beam gen=02 rank=26 frontier=4 | id59:N=70.0 E=0.0307 D=2.22 | id11:N=64.6 E=0.0739 D=2.59 | id43:N=82.0 E=1 D=1.94 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=02: id11:genericity(x1) | id59:deletion(x0) | id43:death(x0)
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+beam gen=03 rank=26 frontier=4 | id59:N=70.0 E=0.0307 D=2.22 | id11:N=64.6 E=0.0739 D=2.59 | id43:N=82.0 E=1 D=1.94 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=03: id11:genericity(x2) | id59:deletion(x1) | id43:death(x1) | id0:explore(x1)
+beam gen=04 rank=26 frontier=4 | id134:N=72.0 E=0.0273 D=2.07 | id132:N=78.0 E=0.0558 D=1.89 | id0:N=135.0 E=0.387 D=2.72 | id119:N=64.0 E=1 D=2.08
+beam expand gen=04: id119:genericity(x0) | id134:deletion(x0) | id132:death(x0)
+beam gen=05 rank=26 frontier=4 | id189:N=77.0 E=0.0217 D=2.26 | id132:N=78.0 E=0.0558 D=1.89 | id172:N=67.2 E=0.997 D=2.19 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=05: id172:genericity(x0) | id189:deletion(x0) | id132:death(x1)
+beam gen=06 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id132:N=78.0 E=0.0558 D=1.89 | id0:N=135.0 E=0.387 D=2.72 | id215:N=66.0 E=0.988 D=2.34
+beam expand gen=06: id215:genericity(x0) | id226:deletion(x0) | id132:death(x2) | id0:explore(x2)
+beam gen=07 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id255:N=66.0 E=0.0655 D=2.24 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=07: id255:genericity(x0) | id226:deletion(x1) | id270:death(x0)
+beam gen=08 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id311:N=65.0 E=0.0721 D=2.23 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=08: id311:genericity(x0) | id226:deletion(x2) | id270:death(x1)
+beam gen=09 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id347:N=65.0 E=0.0451 D=2.21 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=09: id347:genericity(x0) | id226:deletion(x3) | id270:death(x2) | id0:explore(x3)
+beam gen=10 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id386:N=65.0 E=1 D=2.20
+beam expand gen=10: id386:genericity(x0) | id226:deletion(x4) | id270:death(x3)
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+beam gen=11 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id445:N=64.0 E=0.655 D=2.13
+beam expand gen=11: id445:genericity(x0) | id226:deletion(x5) | id270:death(x4)
+beam gen=12 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id483:N=63.0 E=1 D=2.04
+beam expand gen=12: id483:genericity(x0) | id226:deletion(x6) | id270:death(x5) | id0:explore(x4)
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+beam gen=13 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id524:N=62.0 E=0.991 D=2.22
+beam expand gen=13: id524:genericity(x0) | id226:deletion(x7) | id270:death(x6)
+beam gen=14 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id589:N=79.0 E=0.0597 D=1.83 | id0:N=135.0 E=0.387 D=2.72 | id524:N=62.0 E=0.991 D=2.22
+beam expand gen=14: id524:genericity(x1) | id226:deletion(x8) | id589:death(x0)
+beam gen=15 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id589:N=79.0 E=0.0597 D=1.83 | id0:N=135.0 E=0.387 D=2.72 | id619:N=64.7 E=0.999 D=2.11
+beam expand gen=15: id619:genericity(x0) | id226:deletion(x9) | id589:death(x1) | id0:explore(x5)
+beam gen=16 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id589:N=79.0 E=0.0597 D=1.83 | id662:N=64.0 E=0.322 D=2.01 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=16: id662:genericity(x0) | id226:deletion(x10) | id589:death(x2)
+beam gen=17 rank=26 frontier=4 | id723:N=78.0 E=0.0111 D=1.98 | id589:N=79.0 E=0.0597 D=1.83 | id708:N=64.0 E=0.253 D=2.11 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=17: id708:genericity(x0) | id723:deletion(x0) | id589:death(x3)
+beam gen=18 rank=26 frontier=4 | id765:N=78.0 E=0.0108 D=2.11 | id589:N=79.0 E=0.0597 D=1.83 | id708:N=64.0 E=0.253 D=2.11 | id0:N=135.0 E=0.387 D=2.72
+*** beam rank drop 26->25: residual=1.215e-12 max|a|=3.061 parent=id765 channel=r3
+beam gen=19 rank=25 frontier=1 | id777:N=63.0 E=0.587 D=2.36
+beam expand gen=19: id777:genericity+deletion+death(x0)
+beam gen=20 rank=25 frontier=4 | id790:N=63.0 E=0.0299 D=2.11 | id791:N=63.0 E=0.0911 D=2.17 | id777:N=63.0 E=0.587 D=2.36 | id789:N=63.0 E=0.998 D=2.52
+beam expand gen=20: id791:genericity(x0) | id790:deletion+death(x0) | id789:explore(x0)
+beam gen=21 rank=25 frontier=4 | id809:N=63.0 E=0.248 D=2.06 | id790:N=63.0 E=0.0299 D=2.11 | id836:N=63.0 E=0.0429 D=2.21 | id777:N=63.0 E=0.587 D=2.36
+*** beam rank drop 25->24: residual=1.060e-12 max|a|=3.573 parent=id790 channel=r15
+beam gen=22 rank=24 frontier=1 | id840:N=45.0 E=1 D=2.46
+beam expand gen=22: id840:genericity+deletion+death(x0)
+beam gen=23 rank=24 frontier=4 | id856:N=45.0 E=0.148 D=2.23 | id853:N=45.0 E=1 D=2.02 | id840:N=45.0 E=1 D=2.46 | id852:N=45.0 E=1 D=2.50
+beam expand gen=23: id856:genericity+deletion(x0) | id853:death(x0) | id852:explore(x0)
+beam gen=24 rank=24 frontier=4 | id856:N=45.0 E=0.148 D=2.23 | id868:N=45.0 E=1 D=1.93 | id840:N=45.0 E=1 D=2.46 | id871:N=45.0 E=0.0774 D=2.56
+*** beam rank drop 24->23: residual=3.498e-10 max|a|=3.856 parent=id871 channel=r8
+final rank=23; residual=3.107e-10

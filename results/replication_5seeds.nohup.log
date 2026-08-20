@@ -1,0 +1,1278 @@
+nohup: ignoring input
+run_5seed_replication.sh: line 39: test: too many arguments
+
+================================================================
+SEED 101  started 2026-08-20T11:54:34Z
+================================================================
+[seed 101] stage 1: autonomous collision 27 -> 26
+{
+  "n": 3,
+  "rank": 27,
+  "total_pairs": 351,
+  "physical_jacobian_rows": 810,
+  "physical_jacobian_cols": 756,
+  "physical_jacobian_rank": 594,
+  "physical_tangent_dimension": 162,
+  "best_orbit_curvature": 0.33333333333333337,
+  "best_orbit_masks": [
+    "111"
+  ],
+  "best_pair_count": 108,
+  "chosen_pair": [
+    9,
+    25
+  ],
+  "chosen_pair_ijk": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      2,
+      2,
+      1
+    ]
+  ],
+  "cube": {
+    "I": [
+      1,
+      2
+    ],
+    "J": [
+      0,
+      2
+    ],
+    "K": [
+      0,
+      1
+    ],
+    "removed_schoolbook_channels": [
+      9,
+      10,
+      15,
+      16,
+      18,
+      19,
+      24,
+      25
+    ],
+    "kept_schoolbook_channels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13,
+      14,
+      17,
+      20,
+      21,
+      22,
+      23,
+      26
+    ]
+  },
+  "max_embedded_homotopy_residual": 7.28021923224409e-16,
+  "endpoint_active_channels": 26,
+  "fused_rank": 26,
+  "fused_tensor_residual": 6.280369834735101e-16,
+  "rank26_top_first_order_pairs": [
+    {
+      "r": 0,
+      "s": 6,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 10,
+      "s": 12,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 17,
+      "s": 18,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 3,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 1,
+      "s": 4,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 1,
+      "s": 7,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 2,
+      "s": 5,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 2,
+      "s": 9,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 2,
+      "s": 14,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 3,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 4,
+      "s": 5,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 4,
+      "s": 16,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    }
+  ]
+}
+[seed 101] stage 2: specialist Pareto beam 26 -> 23
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=1.01 D=2.72
+*** beam rank drop 26->25: residual=2.667e-15 max|a|=4.944 parent=id0 channel=r24
+beam gen=01 rank=25 frontier=1 | id1:N=65.0 E=1 D=2.44
+beam expand gen=01: id1:genericity+deletion+death(x0)
+beam gen=02 rank=25 frontier=4 | id4:N=65.0 E=1 D=2.15 | id5:N=65.0 E=1 D=2.08 | id1:N=65.0 E=1 D=2.44 | id3:N=65.0 E=1 D=2.67
+beam expand gen=02: id3:genericity(x0) | id5:deletion+death(x0) | id4:explore(x0)
+beam gen=03 rank=25 frontier=4 | id51:N=65.0 E=1 D=2.19 | id5:N=65.0 E=1 D=2.08 | id18:N=65.0 E=1 D=2.03 | id20:N=64.0 E=1 D=2.20
+beam expand gen=03: id20:genericity(x0) | id5:deletion(x1) | id18:death(x0) | id51:explore(x0)
+beam gen=04 rank=25 frontier=4 | id51:N=65.0 E=1 D=2.19 | id64:N=64.0 E=1 D=1.97 | id111:N=65.0 E=0.103 D=2.44 | id63:N=64.0 E=1 D=2.02
+beam expand gen=04: id64:genericity+death(x0) | id111:deletion(x0) | id63:explore(x0)
+beam gen=05 rank=25 frontier=4 | id124:N=64.0 E=0.914 D=2.11 | id111:N=65.0 E=0.103 D=2.44 | id51:N=65.0 E=1 D=2.19 | id125:N=65.0 E=1 D=1.90
+beam expand gen=05: id124:genericity(x0) | id111:deletion(x1) | id125:death(x0)
+beam gen=06 rank=25 frontier=4 | id125:N=65.0 E=1 D=1.90 | id51:N=65.0 E=1 D=2.19 | id111:N=65.0 E=0.103 D=2.44 | id168:N=64.0 E=1 D=1.96
+beam expand gen=06: id168:genericity(x0) | id111:deletion(x2) | id125:death(x1) | id51:explore(x1)
+beam gen=07 rank=25 frontier=4 | id207:N=64.0 E=1 D=1.95 | id51:N=65.0 E=1 D=2.19 | id125:N=65.0 E=1 D=1.90 | id111:N=65.0 E=0.103 D=2.44
+beam expand gen=07: id207:genericity(x0) | id111:deletion(x3) | id125:death(x2)
+beam gen=08 rank=25 frontier=4 | id266:N=64.0 E=1 D=2.10 | id51:N=65.0 E=1 D=2.19 | id269:N=64.0 E=1 D=1.89 | id111:N=65.0 E=0.103 D=2.44
+beam expand gen=08: id266:genericity(x0) | id111:deletion(x4) | id269:death(x0)
+beam gen=09 rank=25 frontier=4 | id313:N=64.0 E=0.315 D=1.90 | id329:N=65.0 E=1 D=2.13 | id340:N=64.0 E=1 D=1.84 | id111:N=65.0 E=0.103 D=2.44
+*** beam rank drop 25->24: residual=3.391e-15 max|a|=4.134 parent=id111 channel=r18
+beam gen=10 rank=24 frontier=1 | id344:N=50.0 E=1 D=2.73
+beam expand gen=10: id344:genericity+deletion+death(x0)
+beam gen=11 rank=24 frontier=4 | id359:N=50.0 E=0.294 D=2.11 | id357:N=50.0 E=0.329 D=2.04 | id356:N=50.0 E=1 D=2.30 | id358:N=50.0 E=1 D=2.30
+*** beam rank drop 24->23: residual=2.520e-13 max|a|=5.138 parent=id359 channel=r10
+final rank=23; residual=2.380e-13
+
+================================================================
+SEED 211  started 2026-08-20T12:10:21Z
+================================================================
+[seed 211] stage 1: autonomous collision 27 -> 26
+{
+  "n": 3,
+  "rank": 27,
+  "total_pairs": 351,
+  "physical_jacobian_rows": 810,
+  "physical_jacobian_cols": 756,
+  "physical_jacobian_rank": 594,
+  "physical_tangent_dimension": 162,
+  "best_orbit_curvature": 0.33333333333333337,
+  "best_orbit_masks": [
+    "111"
+  ],
+  "best_pair_count": 108,
+  "chosen_pair": [
+    9,
+    22
+  ],
+  "chosen_pair_ijk": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "cube": {
+    "I": [
+      1,
+      2
+    ],
+    "J": [
+      0,
+      1
+    ],
+    "K": [
+      0,
+      1
+    ],
+    "removed_schoolbook_channels": [
+      9,
+      10,
+      12,
+      13,
+      18,
+      19,
+      21,
+      22
+    ],
+    "kept_schoolbook_channels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      14,
+      15,
+      16,
+      17,
+      20,
+      23,
+      24,
+      25,
+      26
+    ]
+  },
+  "max_embedded_homotopy_residual": 7.28021923224409e-16,
+  "endpoint_active_channels": 26,
+  "fused_rank": 26,
+  "fused_tensor_residual": 6.280369834735101e-16,
+  "rank26_top_first_order_pairs": [
+    {
+      "r": 2,
+      "s": 5,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 7,
+      "s": 12,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 7,
+      "s": 17,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 9,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 9,
+      "s": 14,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 13,
+      "s": 18,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 14,
+      "s": 15,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 14,
+      "s": 18,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 15,
+      "s": 18,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 3,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 6,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 1,
+      "s": 4,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    }
+  ]
+}
+[seed 211] stage 2: specialist Pareto beam 26 -> 23
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=1.01 D=2.72
+*** beam rank drop 26->25: residual=2.997e-15 max|a|=4.801 parent=id0 channel=r23
+beam gen=01 rank=25 frontier=1 | id1:N=64.0 E=0.996 D=2.63
+beam expand gen=01: id1:genericity+deletion+death(x0)
+beam gen=02 rank=25 frontier=4 | id15:N=64.0 E=1 D=2.14 | id17:N=64.0 E=1 D=2.18 | id13:N=64.0 E=0.986 D=2.35 | id14:N=64.0 E=1 D=1.97
+beam expand gen=02: id15:genericity(x0) | id13:deletion(x0) | id14:death(x0)
+beam gen=03 rank=25 frontier=4 | id45:N=64.0 E=0.994 D=2.08 | id46:N=64.0 E=0.652 D=1.95 | id30:N=65.0 E=1 D=1.94 | id32:N=64.0 E=1 D=2.28
+beam expand gen=03: id45:genericity(x0) | id46:deletion(x0) | id30:death(x0) | id32:explore(x0)
+beam gen=04 rank=25 frontier=4 | id76:N=64.0 E=0.204 D=1.93 | id123:N=64.0 E=1 D=2.15 | id121:N=64.0 E=1 D=1.87 | id91:N=64.0 E=1 D=2.13
+beam expand gen=04: id76:genericity+deletion(x0) | id121:death(x0) | id91:explore(x0)
+beam gen=05 rank=25 frontier=4 | id153:N=64.0 E=0.177 D=2.06 | id166:N=64.0 E=0.402 D=2.09 | id136:N=64.0 E=1 D=1.83 | id123:N=64.0 E=1 D=2.15
+*** beam rank drop 25->24: residual=1.587e-13 max|a|=4.313 parent=id153 channel=r15
+beam gen=06 rank=24 frontier=1 | id170:N=51.0 E=1 D=2.20
+beam expand gen=06: id170:genericity+deletion+death(x0)
+beam gen=07 rank=24 frontier=4 | id183:N=51.0 E=1 D=2.11 | id184:N=51.0 E=0.992 D=2.14 | id186:N=51.0 E=1 D=2.12 | id182:N=50.0 E=1 D=2.21
+beam expand gen=07: id182:genericity(x0) | id184:deletion(x0) | id183:death(x0)
+beam gen=08 rank=24 frontier=4 | id186:N=51.0 E=1 D=2.12 | id184:N=51.0 E=0.992 D=2.14 | id198:N=50.0 E=1 D=1.96 | id217:N=51.0 E=0.584 D=2.35
+beam expand gen=08: id198:genericity+death(x0) | id217:deletion(x0) | id186:explore(x0)
+beam gen=09 rank=24 frontier=4 | id244:N=50.0 E=1 D=1.93 | id186:N=51.0 E=1 D=2.12 | id261:N=51.0 E=0.265 D=2.36 | id243:N=50.0 E=1 D=2.07
+beam expand gen=09: id244:genericity+death(x0) | id261:deletion(x0) | id243:explore(x0) | id186:explore(x1)
+beam gen=10 rank=24 frontier=4 | id186:N=51.0 E=1 D=2.12 | id244:N=50.0 E=1 D=1.93 | id261:N=51.0 E=0.265 D=2.36 | id333:N=48.0 E=1 D=2.72
+beam expand gen=10: id333:genericity(x0) | id261:deletion(x1) | id244:death(x1)
+beam gen=11 rank=24 frontier=4 | id186:N=51.0 E=1 D=2.12 | id244:N=50.0 E=1 D=1.93 | id261:N=51.0 E=0.265 D=2.36 | id347:N=48.0 E=1 D=2.12
+*** beam rank drop 24->23: residual=3.732e-15 max|a|=4.608 parent=id261 channel=r8
+final rank=23; residual=3.608e-15
+
+================================================================
+SEED 307  started 2026-08-20T12:27:06Z
+================================================================
+[seed 307] stage 1: autonomous collision 27 -> 26
+{
+  "n": 3,
+  "rank": 27,
+  "total_pairs": 351,
+  "physical_jacobian_rows": 810,
+  "physical_jacobian_cols": 756,
+  "physical_jacobian_rank": 594,
+  "physical_tangent_dimension": 162,
+  "best_orbit_curvature": 0.33333333333333337,
+  "best_orbit_masks": [
+    "111"
+  ],
+  "best_pair_count": 108,
+  "chosen_pair": [
+    11,
+    22
+  ],
+  "chosen_pair_ijk": [
+    [
+      1,
+      0,
+      2
+    ],
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "cube": {
+    "I": [
+      1,
+      2
+    ],
+    "J": [
+      0,
+      1
+    ],
+    "K": [
+      2,
+      1
+    ],
+    "removed_schoolbook_channels": [
+      10,
+      11,
+      13,
+      14,
+      19,
+      20,
+      22,
+      23
+    ],
+    "kept_schoolbook_channels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15,
+      16,
+      17,
+      18,
+      21,
+      24,
+      25,
+      26
+    ]
+  },
+  "max_embedded_homotopy_residual": 7.28021923224409e-16,
+  "endpoint_active_channels": 26,
+  "fused_rank": 26,
+  "fused_tensor_residual": 6.280369834735101e-16,
+  "rank26_top_first_order_pairs": [
+    {
+      "r": 8,
+      "s": 18,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 10,
+      "s": 11,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 12,
+      "s": 13,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 1,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 2,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 3,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 14,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 1,
+      "s": 2,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 2,
+      "s": 8,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 3,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 6,
+      "s": 7,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 9,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    }
+  ]
+}
+[seed 307] stage 2: specialist Pareto beam 26 -> 23
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=00: id0:genericity+deletion+death(x0)
+beam gen=01 rank=26 frontier=4 | id11:N=64.6 E=0.0739 D=2.59 | id12:N=72.0 E=0.108 D=2.47 | id14:N=80.0 E=1 D=2.22 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=01: id11:genericity+deletion(x0) | id14:death(x0) | id12:explore(x0)
+beam gen=02 rank=26 frontier=4 | id59:N=70.0 E=0.0307 D=2.22 | id11:N=64.6 E=0.0739 D=2.59 | id43:N=82.0 E=1 D=1.94 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=02: id11:genericity(x1) | id59:deletion(x0) | id43:death(x0)
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+beam gen=03 rank=26 frontier=4 | id59:N=70.0 E=0.0307 D=2.22 | id11:N=64.6 E=0.0739 D=2.59 | id43:N=82.0 E=1 D=1.94 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=03: id11:genericity(x2) | id59:deletion(x1) | id43:death(x1) | id0:explore(x1)
+beam gen=04 rank=26 frontier=4 | id134:N=72.0 E=0.0273 D=2.07 | id132:N=78.0 E=0.0558 D=1.89 | id0:N=135.0 E=0.387 D=2.72 | id119:N=64.0 E=1 D=2.08
+beam expand gen=04: id119:genericity(x0) | id134:deletion(x0) | id132:death(x0)
+beam gen=05 rank=26 frontier=4 | id189:N=77.0 E=0.0217 D=2.26 | id132:N=78.0 E=0.0558 D=1.89 | id172:N=67.2 E=0.997 D=2.19 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=05: id172:genericity(x0) | id189:deletion(x0) | id132:death(x1)
+beam gen=06 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id132:N=78.0 E=0.0558 D=1.89 | id0:N=135.0 E=0.387 D=2.72 | id215:N=66.0 E=0.988 D=2.34
+beam expand gen=06: id215:genericity(x0) | id226:deletion(x0) | id132:death(x2) | id0:explore(x2)
+beam gen=07 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id255:N=66.0 E=0.0655 D=2.24 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=07: id255:genericity(x0) | id226:deletion(x1) | id270:death(x0)
+beam gen=08 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id311:N=65.0 E=0.0721 D=2.23 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=08: id311:genericity(x0) | id226:deletion(x2) | id270:death(x1)
+beam gen=09 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id347:N=65.0 E=0.0451 D=2.21 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=09: id347:genericity(x0) | id226:deletion(x3) | id270:death(x2) | id0:explore(x3)
+beam gen=10 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id386:N=65.0 E=1 D=2.20
+beam expand gen=10: id386:genericity(x0) | id226:deletion(x4) | id270:death(x3)
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+beam gen=11 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id445:N=64.0 E=0.655 D=2.13
+beam expand gen=11: id445:genericity(x0) | id226:deletion(x5) | id270:death(x4)
+beam gen=12 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id483:N=63.0 E=1 D=2.04
+beam expand gen=12: id483:genericity(x0) | id226:deletion(x6) | id270:death(x5) | id0:explore(x4)
+
+Intel oneMKL ERROR: Parameter 4 was incorrect on entry to DLASCL.
+beam gen=13 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id270:N=77.0 E=0.0326 D=1.88 | id0:N=135.0 E=0.387 D=2.72 | id524:N=62.0 E=0.991 D=2.22
+beam expand gen=13: id524:genericity(x0) | id226:deletion(x7) | id270:death(x6)
+beam gen=14 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id589:N=79.0 E=0.0597 D=1.83 | id0:N=135.0 E=0.387 D=2.72 | id524:N=62.0 E=0.991 D=2.22
+beam expand gen=14: id524:genericity(x1) | id226:deletion(x8) | id589:death(x0)
+beam gen=15 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id589:N=79.0 E=0.0597 D=1.83 | id0:N=135.0 E=0.387 D=2.72 | id619:N=64.7 E=0.999 D=2.11
+beam expand gen=15: id619:genericity(x0) | id226:deletion(x9) | id589:death(x1) | id0:explore(x5)
+beam gen=16 rank=26 frontier=4 | id226:N=77.0 E=0.012 D=1.96 | id589:N=79.0 E=0.0597 D=1.83 | id662:N=64.0 E=0.322 D=2.01 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=16: id662:genericity(x0) | id226:deletion(x10) | id589:death(x2)
+beam gen=17 rank=26 frontier=4 | id723:N=78.0 E=0.0111 D=1.98 | id589:N=79.0 E=0.0597 D=1.83 | id708:N=64.0 E=0.253 D=2.11 | id0:N=135.0 E=0.387 D=2.72
+beam expand gen=17: id708:genericity(x0) | id723:deletion(x0) | id589:death(x3)
+beam gen=18 rank=26 frontier=4 | id765:N=78.0 E=0.0108 D=2.11 | id589:N=79.0 E=0.0597 D=1.83 | id708:N=64.0 E=0.253 D=2.11 | id0:N=135.0 E=0.387 D=2.72
+*** beam rank drop 26->25: residual=1.215e-12 max|a|=3.061 parent=id765 channel=r3
+beam gen=19 rank=25 frontier=1 | id777:N=63.0 E=0.587 D=2.36
+beam expand gen=19: id777:genericity+deletion+death(x0)
+beam gen=20 rank=25 frontier=4 | id790:N=63.0 E=0.0299 D=2.11 | id791:N=63.0 E=0.0911 D=2.17 | id777:N=63.0 E=0.587 D=2.36 | id789:N=63.0 E=0.998 D=2.52
+beam expand gen=20: id791:genericity(x0) | id790:deletion+death(x0) | id789:explore(x0)
+beam gen=21 rank=25 frontier=4 | id809:N=63.0 E=0.248 D=2.06 | id790:N=63.0 E=0.0299 D=2.11 | id836:N=63.0 E=0.0429 D=2.21 | id777:N=63.0 E=0.587 D=2.36
+*** beam rank drop 25->24: residual=1.060e-12 max|a|=3.573 parent=id790 channel=r15
+beam gen=22 rank=24 frontier=1 | id840:N=45.0 E=1 D=2.46
+beam expand gen=22: id840:genericity+deletion+death(x0)
+beam gen=23 rank=24 frontier=4 | id856:N=45.0 E=0.148 D=2.23 | id853:N=45.0 E=1 D=2.02 | id840:N=45.0 E=1 D=2.46 | id852:N=45.0 E=1 D=2.50
+beam expand gen=23: id856:genericity+deletion(x0) | id853:death(x0) | id852:explore(x0)
+beam gen=24 rank=24 frontier=4 | id856:N=45.0 E=0.148 D=2.23 | id868:N=45.0 E=1 D=1.93 | id840:N=45.0 E=1 D=2.46 | id871:N=45.0 E=0.0774 D=2.56
+*** beam rank drop 24->23: residual=3.498e-10 max|a|=3.856 parent=id871 channel=r8
+final rank=23; residual=3.107e-10
+
+================================================================
+SEED 401  started 2026-08-20T13:34:14Z
+================================================================
+[seed 401] stage 1: autonomous collision 27 -> 26
+{
+  "n": 3,
+  "rank": 27,
+  "total_pairs": 351,
+  "physical_jacobian_rows": 810,
+  "physical_jacobian_cols": 756,
+  "physical_jacobian_rank": 594,
+  "physical_tangent_dimension": 162,
+  "best_orbit_curvature": 0.33333333333333337,
+  "best_orbit_masks": [
+    "111"
+  ],
+  "best_pair_count": 108,
+  "chosen_pair": [
+    7,
+    23
+  ],
+  "chosen_pair_ijk": [
+    [
+      0,
+      2,
+      1
+    ],
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "cube": {
+    "I": [
+      0,
+      2
+    ],
+    "J": [
+      2,
+      1
+    ],
+    "K": [
+      1,
+      2
+    ],
+    "removed_schoolbook_channels": [
+      4,
+      5,
+      7,
+      8,
+      22,
+      23,
+      25,
+      26
+    ],
+    "kept_schoolbook_channels": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      24
+    ]
+  },
+  "max_embedded_homotopy_residual": 7.28021923224409e-16,
+  "endpoint_active_channels": 26,
+  "fused_rank": 26,
+  "fused_tensor_residual": 6.280369834735101e-16,
+  "rank26_top_first_order_pairs": [
+    {
+      "r": 5,
+      "s": 6,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 5,
+      "s": 11,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 5,
+      "s": 14,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 6,
+      "s": 12,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 7,
+      "s": 16,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 8,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 9,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 11,
+      "s": 12,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 12,
+      "s": 13,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 14,
+      "s": 17,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 2,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 3,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    }
+  ]
+}
+[seed 401] stage 2: specialist Pareto beam 26 -> 23
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=0.417 D=2.72
+beam expand gen=00: id0:genericity+deletion+death(x0)
+beam gen=01 rank=26 frontier=4 | id14:N=79.0 E=0.247 D=2.41 | id13:N=82.0 E=0.0428 D=2.49 | id0:N=135.0 E=0.417 D=2.72 | id12:N=83.0 E=0.997 D=2.48
+beam expand gen=01: id14:genericity+death(x0) | id13:deletion(x0) | id12:explore(x0)
+beam gen=02 rank=26 frontier=4 | id26:N=78.0 E=0.0477 D=1.94 | id44:N=82.0 E=0.0302 D=2.08 | id58:N=83.0 E=0.153 D=1.90 | id0:N=135.0 E=0.417 D=2.72
+*** beam rank drop 26->25: residual=2.068e-15 max|a|=2.939 parent=id44 channel=r12
+beam gen=03 rank=25 frontier=1 | id61:N=72.0 E=0.773 D=2.49
+beam expand gen=03: id61:genericity+deletion+death(x0)
+beam gen=04 rank=25 frontier=4 | id61:N=72.0 E=0.773 D=2.49 | id76:N=72.0 E=1 D=2.26 | id74:N=72.0 E=1 D=2.07 | id73:N=72.0 E=1 D=2.53
+beam expand gen=04: id74:genericity+death(x0) | id61:deletion(x1) | id73:explore(x0)
+beam gen=05 rank=25 frontier=4 | id108:N=72.0 E=1 D=2.26 | id61:N=72.0 E=0.773 D=2.49 | id90:N=72.0 E=1 D=1.97 | id107:N=72.0 E=0.277 D=2.55
+beam expand gen=05: id90:genericity+death(x0) | id107:deletion(x0) | id108:explore(x0)
+beam gen=06 rank=25 frontier=4 | id135:N=72.0 E=0.0915 D=2.05 | id136:N=72.0 E=1 D=1.93 | id61:N=72.0 E=0.773 D=2.49 | id169:N=72.0 E=1 D=2.13
+beam expand gen=06: id135:genericity+deletion(x0) | id136:death(x0) | id169:explore(x0) | id61:explore(x2)
+beam gen=07 rank=25 frontier=4 | id198:N=72.0 E=1 D=1.90 | id135:N=72.0 E=0.0915 D=2.05 | id185:N=72.0 E=1 D=2.01 | id61:N=72.0 E=0.773 D=2.49
+beam expand gen=07: id198:genericity+death(x0) | id135:deletion(x1) | id185:explore(x0)
+beam gen=08 rank=25 frontier=4 | id198:N=72.0 E=1 D=1.90 | id272:N=72.0 E=1 D=1.92 | id61:N=72.0 E=0.773 D=2.49 | id135:N=72.0 E=0.0915 D=2.05
+beam expand gen=08: id198:genericity+death(x1) | id135:deletion(x2) | id272:explore(x0)
+beam gen=09 rank=25 frontier=4 | id291:N=72.0 E=1 D=1.92 | id198:N=72.0 E=1 D=1.90 | id306:N=72.0 E=0.0502 D=2.16 | id61:N=72.0 E=0.773 D=2.49
+*** beam rank drop 25->24: residual=2.801e-13 max|a|=4.031 parent=id306 channel=r15
+beam gen=10 rank=24 frontier=1 | id321:N=50.0 E=0.678 D=2.57
+beam expand gen=10: id321:genericity+deletion+death(x0)
+beam gen=11 rank=24 frontier=4 | id336:N=50.0 E=1 D=2.15 | id334:N=50.0 E=0.973 D=2.11 | id337:N=50.0 E=0.156 D=2.18 | id333:N=50.0 E=1 D=2.17
+*** beam rank drop 24->23: residual=9.906e-10 max|a|=3.572 parent=id337 channel=r4
+final rank=23; residual=8.306e-10
+
+================================================================
+SEED 503  started 2026-08-20T13:49:25Z
+================================================================
+[seed 503] stage 1: autonomous collision 27 -> 26
+{
+  "n": 3,
+  "rank": 27,
+  "total_pairs": 351,
+  "physical_jacobian_rows": 810,
+  "physical_jacobian_cols": 756,
+  "physical_jacobian_rank": 594,
+  "physical_tangent_dimension": 162,
+  "best_orbit_curvature": 0.33333333333333337,
+  "best_orbit_masks": [
+    "111"
+  ],
+  "best_pair_count": 108,
+  "chosen_pair": [
+    2,
+    22
+  ],
+  "chosen_pair_ijk": [
+    [
+      0,
+      0,
+      2
+    ],
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "cube": {
+    "I": [
+      0,
+      2
+    ],
+    "J": [
+      0,
+      1
+    ],
+    "K": [
+      2,
+      1
+    ],
+    "removed_schoolbook_channels": [
+      1,
+      2,
+      4,
+      5,
+      19,
+      20,
+      22,
+      23
+    ],
+    "kept_schoolbook_channels": [
+      0,
+      3,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      21,
+      24,
+      25,
+      26
+    ]
+  },
+  "max_embedded_homotopy_residual": 7.28021923224409e-16,
+  "endpoint_active_channels": 26,
+  "fused_rank": 26,
+  "fused_tensor_residual": 6.280369834735101e-16,
+  "rank26_top_first_order_pairs": [
+    {
+      "r": 0,
+      "s": 5,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 2,
+      "s": 11,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 5,
+      "s": 7,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 10,
+      "s": 13,
+      "projected_gradient_norm": 0.6666666666666669,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 0,
+      "s": 2,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 1,
+      "s": 15,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 3,
+      "s": 4,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 4,
+      "s": 13,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": 1.0,
+      "sign_v": -1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 5,
+      "s": 14,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 7,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 8,
+      "s": 10,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": -1.0,
+      "sign_w": 1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    },
+    {
+      "r": 8,
+      "s": 11,
+      "projected_gradient_norm": 0.6666666666666667,
+      "collision_value": -0.3333333333333333,
+      "sign_u": -1.0,
+      "sign_v": 1.0,
+      "sign_w": -1.0,
+      "amp_r": 1.0,
+      "amp_s": 1.0
+    }
+  ]
+}
+[seed 503] stage 2: specialist Pareto beam 26 -> 23
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=1.01 D=2.72
+beam expand gen=00: id0:genericity+deletion+death(x0)
+beam gen=01 rank=26 frontier=4 | id12:N=69.3 E=0.0346 D=1.97 | id13:N=71.0 E=0.0397 D=2.42 | id0:N=135.0 E=1.01 D=2.72 | id11:N=79.0 E=0.134 D=2.49
+*** beam rank drop 26->25: residual=4.292e-14 max|a|=3.144 parent=id12 channel=r12
+beam gen=02 rank=25 frontier=1 | id14:N=71.0 E=0.224 D=2.61
+beam expand gen=02: id14:genericity+deletion+death(x0)
+beam gen=03 rank=25 frontier=4 | id26:N=71.0 E=0.104 D=2.08 | id27:N=71.0 E=1 D=2.05 | id29:N=71.0 E=1 D=2.11 | id14:N=71.0 E=0.224 D=2.61
+*** beam rank drop 25->24: residual=4.985e-15 max|a|=3.669 parent=id26 channel=r0
+beam gen=04 rank=24 frontier=1 | id31:N=46.0 E=1 D=2.61
+beam expand gen=04: id31:genericity+deletion+death(x0)
+beam gen=05 rank=24 frontier=4 | id43:N=46.0 E=1 D=2.20 | id44:N=46.0 E=0.23 D=2.09 | id46:N=46.0 E=0.815 D=2.50 | id47:N=46.0 E=1 D=2.22
+beam expand gen=05: id43:genericity(x0) | id44:deletion+death(x0) | id46:explore(x0)
+beam gen=06 rank=24 frontier=4 | id44:N=46.0 E=0.23 D=2.09 | id76:N=46.0 E=0.826 D=2.07 | id59:N=46.0 E=1 D=2.23 | id63:N=46.0 E=1 D=2.29
+beam expand gen=06: id59:genericity(x0) | id44:deletion(x1) | id76:death(x0) | id63:explore(x0)
+beam gen=07 rank=24 frontier=4 | id44:N=46.0 E=0.23 D=2.09 | id136:N=46.0 E=1 D=2.01 | id150:N=46.0 E=1 D=2.58 | id135:N=46.0 E=1 D=2.13
+beam expand gen=07: id136:genericity+death(x0) | id44:deletion(x2) | id135:explore(x0)
+beam gen=08 rank=24 frontier=4 | id169:N=46.0 E=0.635 D=1.95 | id184:N=47.0 E=0.135 D=2.13 | id150:N=46.0 E=1 D=2.58 | id196:N=46.0 E=1 D=2.21
+*** beam rank drop 24->23: residual=3.276e-15 max|a|=3.593 parent=id184 channel=r9
+final rank=23; residual=3.229e-15
+
+Finished. Summary: results/replication_5seeds/SUMMARY.md

@@ -1,0 +1,19 @@
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=1.01 D=2.72
+beam expand gen=00: id0:genericity+deletion+death(x0)
+beam gen=01 rank=26 frontier=4 | id12:N=69.3 E=0.0346 D=1.97 | id13:N=71.0 E=0.0397 D=2.42 | id0:N=135.0 E=1.01 D=2.72 | id11:N=79.0 E=0.134 D=2.49
+*** beam rank drop 26->25: residual=4.292e-14 max|a|=3.144 parent=id12 channel=r12
+beam gen=02 rank=25 frontier=1 | id14:N=71.0 E=0.224 D=2.61
+beam expand gen=02: id14:genericity+deletion+death(x0)
+beam gen=03 rank=25 frontier=4 | id26:N=71.0 E=0.104 D=2.08 | id27:N=71.0 E=1 D=2.05 | id29:N=71.0 E=1 D=2.11 | id14:N=71.0 E=0.224 D=2.61
+*** beam rank drop 25->24: residual=4.985e-15 max|a|=3.669 parent=id26 channel=r0
+beam gen=04 rank=24 frontier=1 | id31:N=46.0 E=1 D=2.61
+beam expand gen=04: id31:genericity+deletion+death(x0)
+beam gen=05 rank=24 frontier=4 | id43:N=46.0 E=1 D=2.20 | id44:N=46.0 E=0.23 D=2.09 | id46:N=46.0 E=0.815 D=2.50 | id47:N=46.0 E=1 D=2.22
+beam expand gen=05: id43:genericity(x0) | id44:deletion+death(x0) | id46:explore(x0)
+beam gen=06 rank=24 frontier=4 | id44:N=46.0 E=0.23 D=2.09 | id76:N=46.0 E=0.826 D=2.07 | id59:N=46.0 E=1 D=2.23 | id63:N=46.0 E=1 D=2.29
+beam expand gen=06: id59:genericity(x0) | id44:deletion(x1) | id76:death(x0) | id63:explore(x0)
+beam gen=07 rank=24 frontier=4 | id44:N=46.0 E=0.23 D=2.09 | id136:N=46.0 E=1 D=2.01 | id150:N=46.0 E=1 D=2.58 | id135:N=46.0 E=1 D=2.13
+beam expand gen=07: id136:genericity+death(x0) | id44:deletion(x2) | id135:explore(x0)
+beam gen=08 rank=24 frontier=4 | id169:N=46.0 E=0.635 D=1.95 | id184:N=47.0 E=0.135 D=2.13 | id150:N=46.0 E=1 D=2.58 | id196:N=46.0 E=1 D=2.21
+*** beam rank drop 24->23: residual=3.276e-15 max|a|=3.593 parent=id184 channel=r9
+final rank=23; residual=3.229e-15

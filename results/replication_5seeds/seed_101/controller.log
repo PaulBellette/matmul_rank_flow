@@ -1,0 +1,25 @@
+beam gen=00 rank=26 frontier=1 | id0:N=135.0 E=1.01 D=2.72
+*** beam rank drop 26->25: residual=2.667e-15 max|a|=4.944 parent=id0 channel=r24
+beam gen=01 rank=25 frontier=1 | id1:N=65.0 E=1 D=2.44
+beam expand gen=01: id1:genericity+deletion+death(x0)
+beam gen=02 rank=25 frontier=4 | id4:N=65.0 E=1 D=2.15 | id5:N=65.0 E=1 D=2.08 | id1:N=65.0 E=1 D=2.44 | id3:N=65.0 E=1 D=2.67
+beam expand gen=02: id3:genericity(x0) | id5:deletion+death(x0) | id4:explore(x0)
+beam gen=03 rank=25 frontier=4 | id51:N=65.0 E=1 D=2.19 | id5:N=65.0 E=1 D=2.08 | id18:N=65.0 E=1 D=2.03 | id20:N=64.0 E=1 D=2.20
+beam expand gen=03: id20:genericity(x0) | id5:deletion(x1) | id18:death(x0) | id51:explore(x0)
+beam gen=04 rank=25 frontier=4 | id51:N=65.0 E=1 D=2.19 | id64:N=64.0 E=1 D=1.97 | id111:N=65.0 E=0.103 D=2.44 | id63:N=64.0 E=1 D=2.02
+beam expand gen=04: id64:genericity+death(x0) | id111:deletion(x0) | id63:explore(x0)
+beam gen=05 rank=25 frontier=4 | id124:N=64.0 E=0.914 D=2.11 | id111:N=65.0 E=0.103 D=2.44 | id51:N=65.0 E=1 D=2.19 | id125:N=65.0 E=1 D=1.90
+beam expand gen=05: id124:genericity(x0) | id111:deletion(x1) | id125:death(x0)
+beam gen=06 rank=25 frontier=4 | id125:N=65.0 E=1 D=1.90 | id51:N=65.0 E=1 D=2.19 | id111:N=65.0 E=0.103 D=2.44 | id168:N=64.0 E=1 D=1.96
+beam expand gen=06: id168:genericity(x0) | id111:deletion(x2) | id125:death(x1) | id51:explore(x1)
+beam gen=07 rank=25 frontier=4 | id207:N=64.0 E=1 D=1.95 | id51:N=65.0 E=1 D=2.19 | id125:N=65.0 E=1 D=1.90 | id111:N=65.0 E=0.103 D=2.44
+beam expand gen=07: id207:genericity(x0) | id111:deletion(x3) | id125:death(x2)
+beam gen=08 rank=25 frontier=4 | id266:N=64.0 E=1 D=2.10 | id51:N=65.0 E=1 D=2.19 | id269:N=64.0 E=1 D=1.89 | id111:N=65.0 E=0.103 D=2.44
+beam expand gen=08: id266:genericity(x0) | id111:deletion(x4) | id269:death(x0)
+beam gen=09 rank=25 frontier=4 | id313:N=64.0 E=0.315 D=1.90 | id329:N=65.0 E=1 D=2.13 | id340:N=64.0 E=1 D=1.84 | id111:N=65.0 E=0.103 D=2.44
+*** beam rank drop 25->24: residual=3.391e-15 max|a|=4.134 parent=id111 channel=r18
+beam gen=10 rank=24 frontier=1 | id344:N=50.0 E=1 D=2.73
+beam expand gen=10: id344:genericity+deletion+death(x0)
+beam gen=11 rank=24 frontier=4 | id359:N=50.0 E=0.294 D=2.11 | id357:N=50.0 E=0.329 D=2.04 | id356:N=50.0 E=1 D=2.30 | id358:N=50.0 E=1 D=2.30
+*** beam rank drop 24->23: residual=2.520e-13 max|a|=5.138 parent=id359 channel=r10
+final rank=23; residual=2.380e-13
