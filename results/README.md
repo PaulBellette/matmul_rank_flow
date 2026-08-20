@@ -38,3 +38,15 @@ python3 exactify_rank23.py results/blind_rank23/final.pt \
 Do not interpret a failed simple coefficient recognition or direct reference
 match as novelty.  The next equivalence test would need to quotient the full
 matrix-multiplication isotropy group.
+
+
+The bundled first success now also contains:
+
+```text
+results/blind_rank23/
+  exactify/       # independently refined numerical checkpoint + first recognition pass
+  incidence/      # well-conditioned full-isotropy sparse gauge
+  exact/          # local-family locks + exact quadratic certificate
+```
+
+`exact/rank23_exact.json` is symbolically verified; see `EXACT_RANK23_RESULT.md`.

@@ -500,3 +500,21 @@ multiplication.
 Transient exploratory output belongs in `runs/`; promote anything worth
 keeping/reproducing into `results/`.  `.gitignore` intentionally ignores
 `runs/` but does not ignore `results/` or reference checkpoints.
+
+## Exact certificate for the blind rank-23 family
+
+The first endpoint-free specialist-beam success has now been taken beyond a
+numerical residual.  A well-conditioned incidence-derived `GL(3)^3` gauge
+exposes a sparse 170-variable Brent system with a 21-dimensional local tangent
+family.  Moving only about `5.84e-3` in those reduced coordinates to lock 21
+simple rational parameters, followed by high-precision refinement, gives an
+exact rank-23 representative over
+
+```text
+Q(sqrt(85213608769)).
+```
+
+The bundled exact certificate has 594 rational coefficients and 50 genuinely
+quadratic coefficients, and all 729 Brent identities vanish symbolically.
+
+See `EXACT_RANK23_RESULT.md` for the precise claim and reproduction commands.

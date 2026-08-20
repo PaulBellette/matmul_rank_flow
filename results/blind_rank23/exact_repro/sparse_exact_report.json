@@ -1,0 +1,27 @@
+{
+  "input": "results/blind_rank23/incidence_repro/rank23_incidence_sparse.pt",
+  "structural_zero_threshold": 0.005,
+  "structural_zero_count": 405,
+  "next_nonzero_abs": 0.007134428565575155,
+  "reduced_variables": 170,
+  "initial_reduced_residual": 7.269767302028257e-15,
+  "initial_jacobian_rank": 149,
+  "initial_family_nullity": 21,
+  "rational_locks": 21,
+  "final_family_nullity": 0,
+  "locked_residual": 1.0884632355715766e-15,
+  "family_move_l2": 0.005839686395198564,
+  "family_move_max": 0.0035337766336551724,
+  "high_precision_dps": 130,
+  "high_precision_max_residual": "2.766456261906893759e-123",
+  "high_precision_l2_residual": "6.522673514744617931e-123",
+  "selected_equation_min_qr_diag": 0.04461730779590431,
+  "field": "Q(sqrt(85213608769))",
+  "coefficient_counts": {
+    "total": 644,
+    "rational": 594,
+    "quadratic": 50
+  },
+  "exact_identity": true,
+  "nonzero_exact_identities": 0
+}

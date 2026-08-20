@@ -71,3 +71,48 @@ decomposition associated with a known-endpoint experiment can still look ugly
 under the small channel gauge.  Therefore failure of simple recognition on the
 blind decomposition is a reason to investigate the global isotropy orbit, not
 a novelty claim.
+
+## Full-isotropy sparse-family exactification
+
+For the first blind rank-23 result, the small channel gauge above was only a
+screening step.  The successful exactification uses two additional tools.
+
+### 1. Incidence-derived isotropy gauge
+
+```bash
+python3 isotropy_incidence_gauge.py \
+  results/blind_rank23/exactify/rank23_refined.pt \
+  --out results/blind_rank23/incidence_repro
+```
+
+The script finds repeated projective directions among numerically rank-one
+factor matrices and chooses well-conditioned bases for the three matrix spaces.
+It applies the full continuous matrix-multiplication isotropy action (with the
+third leg written in this repository's output-coefficient convention).  For the
+blind result this exposes 405 structural zeros out of 644 gauge-fixed scalars.
+
+### 2. Exactify along the reduced local family
+
+```bash
+python3 sparse_family_exactify.py \
+  results/blind_rank23/incidence_repro/rank23_incidence_sparse.pt \
+  --out results/blind_rank23/exact_repro
+```
+
+With structural zeros and channel pivots fixed, the reduced system has 170
+unknowns and Jacobian rank/nullity 149/21.  The script uses the 21 local tangent
+degrees of freedom to lock nearby simple rational coordinates, then performs an
+isolated high-precision solve and number-field recognition.
+
+For the bundled blind result this produces a complete exact certificate over
+
+`Q(sqrt(85213608769))`
+
+with 594 rational and 50 genuinely quadratic coefficients.  All 729 Brent
+identities verify exactly.  See `EXACT_RANK23_RESULT.md`.
+
+Standalone verification:
+
+```bash
+python3 verify_rank23_exact.py results/blind_rank23/exact/rank23_exact.json
+```
