@@ -1,0 +1,45 @@
+{
+  "n": 2,
+  "starting_rank": 8,
+  "seed": 0,
+  "tied_best_pairs": [
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      0,
+      7
+    ],
+    [
+      1,
+      6
+    ]
+  ],
+  "chosen_pair": [
+    1,
+    6
+  ],
+  "chosen_signs": [
+    -1.0,
+    1.0,
+    -1.0
+  ],
+  "schoolbook_collision_curvature": 0.3333333333333332,
+  "schoolbook_tangent_gradient_norm": 5.456409930572101e-17,
+  "pre_force_collision_value": 0.9999994355212665,
+  "collision_corrector_ok": true,
+  "collision_constraint_residual": 9.1514514494521e-16,
+  "exact_pair_amplitudes": [
+    1.4142135679164844,
+    1.4142135568297056
+  ],
+  "fused_rank": 7,
+  "fused_tensor_residual": 1.1488522440937936e-15,
+  "status": "collision_threshold",
+  "trajectory_steps": 43
+}

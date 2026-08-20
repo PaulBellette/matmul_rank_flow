@@ -1,0 +1,13 @@
+{
+  "reduced_variables": 12,
+  "independent_polynomial_constraints": 9,
+  "generic_jacobian_rank": 9,
+  "generic_manifold_dimension": 3,
+  "schoolbook_to_fusion_images": 41,
+  "max_compact_constraint_residual": 8.7799066000133e-13,
+  "max_full_tensor_residual": 1.9924247255894227e-12,
+  "max_reduced_step": 0.05027787055949825,
+  "max_projection_correction": 0.3538668697567634,
+  "full_homotopy_max_tensor_residual": 1.9924247255894227e-12,
+  "final_zero_channel_amplitude": 0.0
+}

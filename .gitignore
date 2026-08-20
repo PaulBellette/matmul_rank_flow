@@ -1,0 +1,21 @@
+# Python / environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Exploratory run output (promote anything worth keeping into results/)
+runs/
+
+# Local editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+
+# Scratch / profiler output
+*.prof
+*.trace
+*.tmp
