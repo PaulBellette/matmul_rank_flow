@@ -9,6 +9,7 @@ __pycache__/
 
 # Exploratory run output (promote anything worth keeping into results/)
 runs/
+external/
 
 # Local editor / OS noise
 .vscode/
