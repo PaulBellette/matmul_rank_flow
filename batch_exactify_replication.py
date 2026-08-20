@@ -33,8 +33,6 @@ import torch
 from exactify_rank23 import canonical_channel_gauge, load_checkpoint, tensor_from_canonical
 from rankflow import mm_tensor
 from scan_jku_tar import parse_exp, canonical_pattern as canonical_exp_pattern
-from number_field_exact import SimpleNumberField
-from fractions import Fraction
 
 
 def run(cmd, cwd: Path, log: Path):
@@ -93,52 +91,27 @@ def exact_rank3(M):
     return 0 if all(sp.simplify(x) == 0 for x in M) else 1
 
 
-
-def _parse_frac(s):
-    return Fraction(str(s))
-
-
-def _parse_basis_grid(rows, field):
-    return [[field.elt([_parse_frac(q) for q in entry]) for entry in row] for row in rows]
-
-
 def certificate_pattern(cert_path: Path):
     cert = json.loads(cert_path.read_text())
     if not cert.get("exact_identity"):
         raise ValueError("certificate does not verify exactly")
+    U = parse_expr_grid(cert["U"])
+    V = parse_expr_grid(cert["V"])
+    W = parse_expr_grid(cert["W"])
     rank = int(cert["rank"])
-
-    if cert.get("number_field") and cert.get("U_power_basis"):
-        nf = cert["number_field"]
-        mp = tuple(Fraction(x) for x in nf["minimal_polynomial_coefficients_ascending"])
-        field = SimpleNumberField(mp)
-        U = _parse_basis_grid(cert["U_power_basis"], field)
-        V = _parse_basis_grid(cert["V_power_basis"], field)
-        W = _parse_basis_grid(cert["W_power_basis"], field)
-        pattern = []
-        for r in range(rank):
-            tri = []
-            for X in (U, V, W):
-                M = [[X[3*i+j][r] for j in range(3)] for i in range(3)]
-                tri.append(field.rank3(M))
-            pattern.append(tuple(tri))
-    else:
-        # Backward compatibility with the first quadratic SymPy certificate.
-        U = parse_expr_grid(cert["U"])
-        V = parse_expr_grid(cert["V"])
-        W = parse_expr_grid(cert["W"])
-        pattern = []
-        for r in range(rank):
-            tri = []
-            for X in (U, V, W):
-                M = [[X[3*i+j][r] for j in range(3)] for i in range(3)]
-                tri.append(exact_rank3(M))
-            pattern.append(tuple(tri))
+    pattern = []
+    for r in range(rank):
+        tri = []
+        for X in (U, V, W):
+            M = [[X[3*i+j][r] for j in range(3)] for i in range(3)]
+            tri.append(exact_rank3(M))
+        pattern.append(tuple(tri))
     canon = min(
         tuple(sorted(tuple(t[i] for i in pi) for t in pattern))
         for pi in itertools.permutations(range(3))
     )
     return pattern, canon
+
 
 def pattern_summary(pattern):
     factor = Counter(r for t in pattern for r in t)
@@ -202,7 +175,6 @@ def main():
     ap.add_argument("--rcond", type=float, default=1e-10)
     ap.add_argument("--condition-limit", type=float, default=20.0)
     ap.add_argument("--force", action="store_true")
-    ap.add_argument("--max-field-degree", type=int, default=10)
     args = ap.parse_args()
 
     root = args.root.resolve()
@@ -211,6 +183,9 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
 
     seeds = seed_checkpoints(root)
+    if args.seeds is not None:
+        wanted = set(args.seeds)
+        seeds = [(s, p) for s, p in seeds if s in wanted]
     if not seeds:
         raise SystemExit(f"no rank-23 seed checkpoints found under {root}")
 
@@ -245,7 +220,7 @@ def main():
                 rc = run([
                     sys.executable, str(repo / "sparse_family_exactify.py"), str(sparse_pt),
                     "--out", str(exact), "--zero-threshold", str(threshold),
-                    "--dps", str(args.dps), "--rcond", str(args.rcond), "--max-field-degree", str(args.max_field_degree),
+                    "--dps", str(args.dps), "--rcond", str(args.rcond),
                 ], repo, sd / "exactify.log")
                 if rc:
                     raise RuntimeError(f"sparse exactification failed rc={rc}; see {sd/'exactify.log'}")
@@ -261,8 +236,7 @@ def main():
                 "status": "exact",
                 "field": cert_obj.get("field"),
                 "rational_coefficients": cert_obj.get("coefficient_counts", {}).get("rational"),
-                "algebraic_coefficients": cert_obj.get("coefficient_counts", {}).get("algebraic", cert_obj.get("coefficient_counts", {}).get("quadratic")),
-                "field_degree": cert_obj.get("field_degree", cert_obj.get("number_field", {}).get("degree")),
+                "quadratic_coefficients": cert_obj.get("coefficient_counts", {}).get("quadratic"),
                 "family_nullity": report.get("initial_family_nullity"),
                 "family_move_l2": report.get("family_move_l2"),
                 "family_move_max": report.get("family_move_max"),
@@ -293,7 +267,7 @@ def main():
     (out / "batch_exactification.json").write_text(json.dumps(result, indent=2) + "\n")
     fields = [
         "seed", "status", "field", "family_nullity", "family_move_l2", "family_move_max",
-        "zero_threshold", "rational_coefficients", "algebraic_coefficients", "field_degree",
+        "zero_threshold", "rational_coefficients", "quadratic_coefficients",
         "jku_same_canonical_pattern", "seconds", "checkpoint", "exact_certificate", "error"
     ]
     with (out / "batch_exactification.csv").open("w", newline="") as f:
@@ -325,7 +299,7 @@ def main():
         "because factor-matrix ranks and their per-channel pattern are preserved by channel permutation, CP scaling,",
         "the GL(3)^3 matrix-multiplication isotropy action, and tensor-leg permutation.",
         "", "A failed exactification is not evidence against the endpoint; it means this particular sparse-family",
-        "recogniser was insufficient and the seed should be analysed separately; field-recognition diagnostics are saved per seed.",
+        "recogniser (currently Q or one common quadratic field) was insufficient and the seed should be analysed separately.",
     ]
     (out / "EXACT_ENDPOINTS.md").write_text("\n".join(lines) + "\n")
     print("\n" + "\n".join(lines), flush=True)

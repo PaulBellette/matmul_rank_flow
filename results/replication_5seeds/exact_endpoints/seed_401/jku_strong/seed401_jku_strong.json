@@ -1,0 +1,461 @@
+{
+  "target_certificate": "results/replication_5seeds/exact_endpoints/seed_401/exact/rank23_exact.json",
+  "archive": "external/rank23_corpora/schemes-exp.tgz",
+  "archive_parsed": 17376,
+  "archive_parse_errors": 0,
+  "same_canonical_full_rank_pattern": 7,
+  "same_exact_sandwich_edge_histogram": 0,
+  "same_exact_coloured_incidence_graph": 0,
+  "full_pattern_members": [
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w219c37eg-000.exp",
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w219c37eg-001.exp",
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w221c37eg-000.exp",
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w221c37eg-001.exp",
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w223c389i-000.exp",
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w225c37eg-000.exp",
+    "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w225c46fi-000.exp"
+  ],
+  "results": [
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w219c37eg-000.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    },
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w219c37eg-001.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    },
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w221c37eg-000.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    },
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w221c37eg-001.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    },
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w223c389i-000.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    },
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w225c37eg-000.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    },
+    {
+      "member": "schemes/x3+22x2+46x+4y6+y5+10y4+8y3+z33+2z30/i193w225c46fi-000.exp",
+      "survived_edge_histogram": false,
+      "survived_exact_graph_isomorphism": false,
+      "leg_permutation": null,
+      "channel_mapping": null,
+      "actions": [
+        {
+          "leg_permutation": [
+            0,
+            1,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            0,
+            2,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            0,
+            2
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            1,
+            2,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            0,
+            1
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        },
+        {
+          "leg_permutation": [
+            2,
+            1,
+            0
+          ],
+          "hist_match": false,
+          "graph_isomorphic": false
+        }
+      ]
+    }
+  ]
+}

@@ -381,9 +381,13 @@ def high_precision_refine(
 
 
 
-def recognise_high_precision(hp, *, rational_den: int = 10**6, max_field_degree: int = 10,
+def recognise_high_precision(hp, *, rational_den: int = 10**6, max_field_degree: int = 12,
                              field_algdep_maxcoeff: int = 10**30,
-                             field_basis_maxcoeff: int = 10**40):
+                             field_basis_maxcoeff: int = 10**40,
+                             field_individual_sample: int = 64,
+                             field_pair_sample: int = 20,
+                             field_triple_sample: int = 10,
+                             field_aggregate_sample: int = 8):
     """Recognise refined coordinates in one simple algebraic number field.
 
     Unlike the original quadratic-only recogniser, this first removes rationals,
@@ -427,6 +431,10 @@ def recognise_high_precision(hp, *, rational_den: int = 10**6, max_field_degree:
             tol=tol,
             maxcoeff_algdep=field_algdep_maxcoeff,
             maxcoeff_basis=field_basis_maxcoeff,
+            individual_sample=field_individual_sample,
+            pair_sample=field_pair_sample,
+            triple_sample=field_triple_sample,
+            aggregate_sample=field_aggregate_sample,
         )
     except RuntimeError as exc:
         diagnostics = exc.args[1] if len(exc.args) > 1 and isinstance(exc.args[1], dict) else {}
@@ -564,9 +572,13 @@ def main():
     ap.add_argument("--zero-threshold", type=float, default=5e-3)
     ap.add_argument("--dps", type=int, default=130)
     ap.add_argument("--rcond", type=float, default=1e-10)
-    ap.add_argument("--max-field-degree", type=int, default=10)
+    ap.add_argument("--max-field-degree", type=int, default=12)
     ap.add_argument("--field-algdep-maxcoeff", type=int, default=10**30)
     ap.add_argument("--field-basis-maxcoeff", type=int, default=10**40)
+    ap.add_argument("--field-individual-sample", type=int, default=64)
+    ap.add_argument("--field-pair-sample", type=int, default=20)
+    ap.add_argument("--field-triple-sample", type=int, default=10)
+    ap.add_argument("--field-aggregate-sample", type=int, default=8)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
 
@@ -614,6 +626,10 @@ def main():
             hp, max_field_degree=args.max_field_degree,
             field_algdep_maxcoeff=args.field_algdep_maxcoeff,
             field_basis_maxcoeff=args.field_basis_maxcoeff,
+            field_individual_sample=args.field_individual_sample,
+            field_pair_sample=args.field_pair_sample,
+            field_triple_sample=args.field_triple_sample,
+            field_aggregate_sample=args.field_aggregate_sample,
         )
     except RuntimeError as exc:
         diag = exc.args[1] if len(exc.args) > 1 and isinstance(exc.args[1], dict) else {"error": str(exc)}
