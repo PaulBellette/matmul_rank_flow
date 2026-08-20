@@ -8,8 +8,8 @@ Pipeline:
 5. greedily lock that many mobile coordinates to nearby simple rationals,
    correcting the remaining variables after every lock;
 6. once isolated, refine the remaining variables at high precision;
-7. recognise rationals and, when possible, a common quadratic number field;
-8. verify all 729 Brent identities exactly with SymPy.
+7. recognise rationals and a common low-degree simple number field;
+8. verify all 729 Brent identities exactly by arithmetic in Q[alpha]/(p(alpha)).
 
 This is intentionally downstream from the search controller and from the
 isotropy-incidence gauge. It does not use a known rank-23 endpoint.
@@ -39,6 +39,10 @@ from exactify_rank23 import (
     tensor_from_canonical,
 )
 from rankflow import mm_tensor
+from number_field_exact import (
+    SimpleNumberField, coeffs_expr, discover_common_field, frac_str,
+    verify_brent_power_basis,
+)
 
 
 torch.set_default_dtype(torch.float64)
@@ -376,118 +380,182 @@ def high_precision_refine(
     }
 
 
-def squarefree_part(n: int):
-    n = abs(int(n))
-    fac = sp.factorint(n)
-    out = 1
-    for p, e in fac.items():
-        if e % 2:
-            out *= int(p)
-    return out
 
+def recognise_high_precision(hp, *, rational_den: int = 10**6, max_field_degree: int = 10,
+                             field_algdep_maxcoeff: int = 10**30,
+                             field_basis_maxcoeff: int = 10**40):
+    """Recognise refined coordinates in one simple algebraic number field.
 
-def recognise_high_precision(hp, *, rational_den: int = 10**6):
+    Unlike the original quadratic-only recogniser, this first removes rationals,
+    then searches for a primitive element alpha of degree <= max_field_degree.
+    Coordinates are represented exactly in the power basis 1,alpha,...,alpha^(d-1).
+    Pairwise sums of low-degree coordinates are tried as primitive elements, which
+    handles common cases such as biquadratic composita where no individual
+    coordinate generates the full field.
+    """
     mp.mp.dps = max(mp.mp.dps, 120)
-    direct = {}
+    tol = mp.mpf(10) ** (-(mp.mp.dps - 30))
+    rationals = {}
     unresolved = []
-    tol = mp.mpf("1e-100")
+    hp_rows = []
     for idx, x in zip(hp["free"], hp["values"]):
         fr = Fraction(str(x)).limit_denominator(rational_den)
         err = abs(mp.mpf(fr.numerator) / fr.denominator - x)
         if err < tol:
-            direct[idx] = (sp.Rational(fr.numerator, fr.denominator), "rational", err)
+            rationals[int(idx)] = (fr, err)
+            hp_rows.append({"index": int(idx), "value": mp.nstr(x, mp.mp.dps), "rational": frac_str(fr), "rational_error": mp.nstr(err, 10)})
         else:
-            unresolved.append((idx, x))
+            unresolved.append((int(idx), x))
+            hp_rows.append({"index": int(idx), "value": mp.nstr(x, mp.mp.dps), "rational": None, "rational_error": mp.nstr(err, 10)})
 
-    radicand = None
-    if unresolved:
-        # Discover a quadratic field from the first unresolved variable admitting a stable quadratic PSLQ relation.
-        for _, x in unresolved:
-            rr = mp.pslq(mp.matrix([1, x, x * x]), tol=mp.mpf("1e-105"), maxcoeff=10**10, maxsteps=100000)
-            if rr and rr[2] != 0:
-                a0, a1, a2 = map(int, rr)
-                disc = a1 * a1 - 4 * a2 * a0
-                if disc > 0:
-                    radicand = squarefree_part(disc)
-                    break
-    if unresolved and radicand is None:
-        raise RuntimeError("could not discover a common quadratic field")
+    if not unresolved:
+        return {
+            "kind": "rational",
+            "degree": 1,
+            "minpoly": None,
+            "alpha": None,
+            "representations": {idx: [fr] for idx, (fr, _err) in rationals.items()},
+            "errors": {idx: err for idx, (_fr, err) in rationals.items()},
+            "kinds": {idx: "rational" for idx in rationals},
+            "diagnostics": {"degree_histogram": {"1": len(rationals)}, "high_precision_rows": hp_rows},
+        }
 
-    if radicand is not None:
-        sd_mp = mp.sqrt(radicand)
-        sd_sp = sp.sqrt(radicand)
-        for idx, x in unresolved:
-            rr = mp.pslq(mp.matrix([1, sd_mp, x]), tol=mp.mpf("1e-105"), maxcoeff=10**18, maxsteps=100000)
-            if not rr or rr[2] == 0:
-                raise RuntimeError(f"coefficient {idx} did not recognise in Q(sqrt({radicand}))")
-            rr = list(map(int, rr))
-            g = math.gcd(math.gcd(abs(rr[0]), abs(rr[1])), abs(rr[2])) or 1
-            rr = [z // g for z in rr]
-            if rr[2] < 0:
-                rr = [-z for z in rr]
-            expr = sp.factor(-(sp.Integer(rr[0]) + sp.Integer(rr[1]) * sd_sp) / sp.Integer(rr[2]))
-            ev = mp.mpf(str(sp.N(expr, mp.mp.dps)))
-            err = abs(ev - x)
-            if err > tol:
-                raise RuntimeError(f"bad recognition for coefficient {idx}: {err}")
-            kind = "quadratic" if expr.has(sd_sp) else "rational"
-            direct[idx] = (expr, kind, err)
+    try:
+        common = discover_common_field(
+            unresolved,
+            max_degree=max_field_degree,
+            tol=tol,
+            maxcoeff_algdep=field_algdep_maxcoeff,
+            maxcoeff_basis=field_basis_maxcoeff,
+        )
+    except RuntimeError as exc:
+        diagnostics = exc.args[1] if len(exc.args) > 1 and isinstance(exc.args[1], dict) else {}
+        diagnostics["high_precision_rows"] = hp_rows
+        raise RuntimeError("could not discover a common simple number field", diagnostics) from exc
 
-    return direct, radicand
+    p = common["minpoly"]
+    d = len(p) - 1
+    reps = {}
+    errors = {}
+    kinds = {}
+    for idx, (fr, err) in rationals.items():
+        reps[idx] = [fr] + [Fraction(0)] * (d - 1)
+        errors[idx] = err
+        kinds[idx] = "rational"
+    for idx, qs in common["representations"].items():
+        reps[int(idx)] = list(qs)
+        errors[int(idx)] = mp.mpf('0')
+        kinds[int(idx)] = "algebraic" if any(qs[i] for i in range(1, len(qs))) else "rational"
+
+    diagnostics = common["diagnostics"]
+    diagnostics["high_precision_rows"] = hp_rows
+    return {
+        "kind": "number_field",
+        "degree": d,
+        "minpoly": p,
+        "alpha": common["alpha"],
+        "representations": reps,
+        "errors": errors,
+        "kinds": kinds,
+        "diagnostics": diagnostics,
+    }
 
 
-def build_exact_certificate(sys, locked_fracs, hp_recognition, radicand):
-    U = [[sp.Integer(0) for _ in range(23)] for _ in range(9)]
-    V = [[sp.Integer(0) for _ in range(23)] for _ in range(9)]
-    W = [[sp.Integer(0) for _ in range(23)] for _ in range(9)]
+def _field_element_json(a):
+    return [frac_str(x) for x in a]
+
+
+def _grid_exprs(grid):
+    return [[coeffs_expr(x) for x in row] for row in grid]
+
+
+def _grid_basis_json(grid):
+    return [[_field_element_json(x) for x in row] for row in grid]
+
+
+def build_exact_certificate(sys, locked_fracs, recognition):
+    if recognition["kind"] == "rational":
+        # Use a degree-one dummy field Q[alpha]/(alpha); all elements are rational.
+        minpoly = [0, 1]
+        degree = 1
+        alpha_approx = "0"
+        field_name = "Q"
+    else:
+        minpoly = recognition["minpoly"]
+        degree = recognition["degree"]
+        alpha_approx = mp.nstr(recognition["alpha"], mp.mp.dps)
+        t = sp.Symbol('t')
+        poly_expr = sum(sp.Integer(c) * t**i for i, c in enumerate(minpoly))
+        field_name = f"Q(alpha), alpha root of {sp.sstr(poly_expr)}"
+
+    field = SimpleNumberField(tuple(Fraction(int(c), 1) for c in minpoly))
+    zero = field.zero(); one = field.one()
+    U = [[zero for _ in range(23)] for _ in range(9)]
+    V = [[zero for _ in range(23)] for _ in range(9)]
+    W = [[zero for _ in range(23)] for _ in range(9)]
     arrs = [U, V, W]
     c = [None] * 23
     for r, pp in enumerate(sys.pivots):
         for leg, i in enumerate(pp):
-            arrs[leg][i][r] = sp.Integer(1)
+            arrs[leg][i][r] = one
 
     recognition_rows = []
     for idx in range(len(sys.locations)):
         if idx in locked_fracs:
             fr = locked_fracs[idx]
-            expr = sp.Rational(fr.numerator, fr.denominator)
+            coeffs = [fr] + [Fraction(0)] * (degree - 1)
             kind = "rational_lock"
             err = mp.mpf(0)
         else:
-            expr, kind, err = hp_recognition[idx]
+            coeffs = recognition["representations"][idx]
+            kind = recognition["kinds"][idx]
+            err = recognition["errors"].get(idx, mp.mpf(0))
+        elt = field.elt(coeffs)
         leg, i, r = sys.locations[idx]
         if leg < 3:
-            arrs[leg][i][r] = expr
+            arrs[leg][i][r] = elt
         else:
-            c[i] = expr
+            c[i] = elt
         recognition_rows.append({
             "index": idx,
             "location": list(sys.locations[idx]),
             "kind": kind,
-            "expr": str(expr),
+            "expr": coeffs_expr(elt),
+            "power_basis": _field_element_json(elt),
             "error": mp.nstr(err, 10),
         })
     assert all(v is not None for v in c)
 
-    ok, nonzero, failures = exact_verify(U, V, W, c, 3)
-    true_quad = sum(1 for row in recognition_rows if "sqrt" in row["expr"])
-    all_exprs = [x for A in (U, V, W) for row in A for x in row] + c
-    rational_count = sum(1 for x in all_exprs if not x.has(sp.sqrt(radicand)) if radicand is not None) if radicand is not None else len(all_exprs)
+    ok, nonzero, failures = verify_brent_power_basis(U, V, W, c, field, 3)
+    all_elts = [x for A in (U, V, W) for row in A for x in row] + c
+    rational_count = sum(1 for x in all_elts if all(q == 0 for q in x[1:]))
+    algebraic_count = len(all_elts) - rational_count
     return {
         "rank": 23,
-        "field": f"Q(sqrt({radicand}))" if radicand is not None else "Q",
-        "radicand": radicand,
-        "U": expr_to_strings(U),
-        "V": expr_to_strings(V),
-        "W": expr_to_strings(W),
-        "c": expr_to_strings(c),
+        "field": field_name,
+        "field_degree": degree,
+        "number_field": {
+            "generator": "alpha",
+            "degree": degree,
+            "minimal_polynomial_coefficients_ascending": [str(int(x)) for x in minpoly],
+            "embedding_approx": alpha_approx,
+            "selected_generator": recognition.get("diagnostics", {}).get("selected"),
+        },
+        "U": _grid_exprs(U),
+        "V": _grid_exprs(V),
+        "W": _grid_exprs(W),
+        "c": [coeffs_expr(x) for x in c],
+        "U_power_basis": _grid_basis_json(U),
+        "V_power_basis": _grid_basis_json(V),
+        "W_power_basis": _grid_basis_json(W),
+        "c_power_basis": [_field_element_json(x) for x in c],
         "exact_identity": ok,
         "nonzero_exact_identities": nonzero,
         "first_failures": failures,
-        "coefficient_counts": {"total": len(all_exprs), "rational": rational_count, "quadratic": true_quad},
+        "coefficient_counts": {"total": len(all_elts), "rational": rational_count, "algebraic": algebraic_count},
         "recognition": recognition_rows,
+        "field_diagnostics": recognition.get("diagnostics", {}),
     }
-
 
 def main():
     ap = argparse.ArgumentParser()
@@ -496,6 +564,9 @@ def main():
     ap.add_argument("--zero-threshold", type=float, default=5e-3)
     ap.add_argument("--dps", type=int, default=130)
     ap.add_argument("--rcond", type=float, default=1e-10)
+    ap.add_argument("--max-field-degree", type=int, default=10)
+    ap.add_argument("--field-algdep-maxcoeff", type=int, default=10**30)
+    ap.add_argument("--field-basis-maxcoeff", type=int, default=10**40)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
 
@@ -528,8 +599,28 @@ def main():
     (args.out / "rational_lock_history.json").write_text(json.dumps(hist, indent=2) + "\n")
 
     hp = high_precision_refine(sys, x, locked, lock_fracs, dps=args.dps, rcond=args.rcond)
-    rec, radicand = recognise_high_precision(hp)
-    cert = build_exact_certificate(sys, lock_fracs, rec, radicand)
+    # Persist the expensive high-precision solve *before* arithmetic recognition so
+    # a failed recogniser is diagnosable without rerunning Newton refinement.
+    hp_dump = {
+        "dps": args.dps,
+        "free_indices": [int(i) for i in hp["free"]],
+        "values": [mp.nstr(v, args.dps) for v in hp["values"]],
+        "max_residual": mp.nstr(hp["max_residual"], 30),
+        "l2_residual": mp.nstr(hp["l2_residual"], 30),
+    }
+    (args.out / "high_precision_values.json").write_text(json.dumps(hp_dump, indent=2) + "\n")
+    try:
+        rec = recognise_high_precision(
+            hp, max_field_degree=args.max_field_degree,
+            field_algdep_maxcoeff=args.field_algdep_maxcoeff,
+            field_basis_maxcoeff=args.field_basis_maxcoeff,
+        )
+    except RuntimeError as exc:
+        diag = exc.args[1] if len(exc.args) > 1 and isinstance(exc.args[1], dict) else {"error": str(exc)}
+        (args.out / "field_recognition_diagnostics.json").write_text(json.dumps(diag, indent=2) + "\n")
+        raise
+    (args.out / "field_recognition_diagnostics.json").write_text(json.dumps(rec.get("diagnostics", {}), indent=2) + "\n")
+    cert = build_exact_certificate(sys, lock_fracs, rec)
     (args.out / "rank23_exact.json").write_text(json.dumps(cert, indent=2) + "\n")
 
     report: dict[str, Any] = {
@@ -551,12 +642,13 @@ def main():
         "high_precision_l2_residual": mp.nstr(hp["l2_residual"], 20),
         "selected_equation_min_qr_diag": hp["min_qr_diag"],
         "field": cert["field"],
+        "field_degree": cert.get("field_degree"),
         "coefficient_counts": cert["coefficient_counts"],
         "exact_identity": cert["exact_identity"],
         "nonzero_exact_identities": cert["nonzero_exact_identities"],
     }
     (args.out / "sparse_exact_report.json").write_text(json.dumps(report, indent=2) + "\n")
-    md = f"""# Sparse-family exactification\n\n- structural zeros: **{nzero} / 644** at threshold `{args.zero_threshold:g}`\n- next nonzero magnitude: `{next_nonzero:.6e}`\n- reduced unknowns after zeros + pivot gauge: **{sys.x0.numel()}**\n- reduced Jacobian rank/nullity: **{rank0} / {nullity0}**\n- rational locks accepted: **{len(locked)}**\n- family move L2 / max-coordinate: `{family_move:.6e}` / `{family_move_max:.6e}`\n- high-precision full residual: `{mp.nstr(hp['l2_residual'], 8)}`\n- exact field: **{cert['field']}**\n- exact coefficient counts: **{cert['coefficient_counts']['rational']} rational + {cert['coefficient_counts']['quadratic']} quadratic = 644**\n- exact 729-identity verification: **{cert['exact_identity']}**\n\nThe rational locking step moves along the local exact solution family; it is not merely a coordinate gauge transform.\n"""
+    md = f"""# Sparse-family exactification\n\n- structural zeros: **{nzero} / 644** at threshold `{args.zero_threshold:g}`\n- next nonzero magnitude: `{next_nonzero:.6e}`\n- reduced unknowns after zeros + pivot gauge: **{sys.x0.numel()}**\n- reduced Jacobian rank/nullity: **{rank0} / {nullity0}**\n- rational locks accepted: **{len(locked)}**\n- family move L2 / max-coordinate: `{family_move:.6e}` / `{family_move_max:.6e}`\n- high-precision full residual: `{mp.nstr(hp['l2_residual'], 8)}`\n- exact field: **{cert['field']}**\n- exact coefficient counts: **{cert['coefficient_counts']['rational']} rational + {cert['coefficient_counts']['algebraic']} algebraic = 644**\n- exact 729-identity verification: **{cert['exact_identity']}**\n\nThe rational locking step moves along the local exact solution family; it is not merely a coordinate gauge transform.\n"""
     (args.out / "SPARSE_EXACT_REPORT.md").write_text(md)
 
     print(f"zeros={nzero}, reduced vars={sys.x0.numel()}, family nullity={nullity0}")

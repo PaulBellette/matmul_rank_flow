@@ -1,0 +1,471 @@
+{
+  "rows": [
+    {
+      "seed": 101,
+      "checkpoint": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/endpoint_analysis/polished/seed_101_rank23_refined.pt",
+      "status": "exact",
+      "zero_threshold": 0.01,
+      "field": "Q(alpha), alpha root of 499245824*t**3 - 246779995*t**2 + 434958336*t - 163881900",
+      "rational_coefficients": 530,
+      "algebraic_coefficients": 114,
+      "field_degree": 3,
+      "family_nullity": 16,
+      "family_move_l2": 0.003943984498823929,
+      "family_move_max": 0.0015053890191329966,
+      "factor_rank_counts": {
+        "0": 0,
+        "1": 43,
+        "2": 25,
+        "3": 1
+      },
+      "channel_rank_triples": {
+        "(1, 1, 1)": 7,
+        "(1, 1, 2)": 4,
+        "(1, 1, 3)": 1,
+        "(1, 2, 1)": 3,
+        "(1, 2, 2)": 2,
+        "(2, 1, 1)": 2,
+        "(2, 2, 2)": 4
+      },
+      "canonical_pattern": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "exact_certificate": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_101/exact/rank23_exact.json",
+      "seconds": 0.013165473937988281,
+      "jku_same_canonical_pattern": 0
+    },
+    {
+      "seed": 211,
+      "checkpoint": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/endpoint_analysis/polished/seed_211_rank23_refined.pt",
+      "status": "exact",
+      "zero_threshold": 1e-05,
+      "field": "Q(alpha), alpha root of 4024823*t + 3324240",
+      "rational_coefficients": 644,
+      "algebraic_coefficients": 0,
+      "field_degree": 1,
+      "family_nullity": 18,
+      "family_move_l2": 0.0039225096763785905,
+      "family_move_max": 0.0012709125295264911,
+      "factor_rank_counts": {
+        "0": 0,
+        "1": 45,
+        "2": 23,
+        "3": 1
+      },
+      "channel_rank_triples": {
+        "(1, 1, 1)": 9,
+        "(1, 1, 2)": 2,
+        "(1, 1, 3)": 1,
+        "(1, 2, 1)": 1,
+        "(1, 2, 2)": 2,
+        "(2, 1, 1)": 4,
+        "(2, 2, 2)": 4
+      },
+      "canonical_pattern": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "exact_certificate": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_211/exact/rank23_exact.json",
+      "seconds": 0.006566047668457031,
+      "jku_same_canonical_pattern": 0
+    },
+    {
+      "seed": 307,
+      "checkpoint": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/endpoint_analysis/polished/seed_307_rank23_refined.pt",
+      "status": "failed",
+      "zero_threshold": 1e-10,
+      "error": "RuntimeError('exactification produced a non-verifying certificate')",
+      "seconds": 0.0033829212188720703
+    },
+    {
+      "seed": 401,
+      "checkpoint": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/endpoint_analysis/polished/seed_401_rank23_refined.pt",
+      "status": "exact",
+      "zero_threshold": 0.002,
+      "field": "Q(alpha), alpha root of 4071168*t + 2044471",
+      "rational_coefficients": 644,
+      "algebraic_coefficients": 0,
+      "field_degree": 1,
+      "family_nullity": 18,
+      "family_move_l2": 0.00817747080433772,
+      "family_move_max": 0.004661604772506586,
+      "factor_rank_counts": {
+        "0": 0,
+        "1": 46,
+        "2": 22,
+        "3": 1
+      },
+      "channel_rank_triples": {
+        "(1, 1, 1)": 8,
+        "(1, 1, 2)": 3,
+        "(1, 2, 1)": 3,
+        "(2, 1, 1)": 4,
+        "(2, 2, 2)": 4,
+        "(3, 1, 1)": 1
+      },
+      "canonical_pattern": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "exact_certificate": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_401/exact/rank23_exact.json",
+      "seconds": 0.006389617919921875,
+      "jku_same_canonical_pattern": 7
+    },
+    {
+      "seed": 503,
+      "checkpoint": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/endpoint_analysis/polished/seed_503_rank23_refined.pt",
+      "status": "failed",
+      "zero_threshold": 0.01,
+      "error": "RuntimeError('exactification produced a non-verifying certificate')",
+      "seconds": 0.002971649169921875
+    }
+  ],
+  "jku": {
+    "archive": "external/rank23_corpora/schemes-exp.tgz",
+    "parsed": 17376,
+    "errors": 0,
+    "matches": {
+      "401": 7
+    }
+  }
+}

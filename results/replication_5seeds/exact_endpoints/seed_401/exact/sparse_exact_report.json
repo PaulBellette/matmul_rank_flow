@@ -1,0 +1,28 @@
+{
+  "input": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_401/incidence/rank23_incidence_sparse.pt",
+  "structural_zero_threshold": 0.002,
+  "structural_zero_count": 429,
+  "next_nonzero_abs": 0.002603475953211745,
+  "reduced_variables": 146,
+  "initial_reduced_residual": 4.2142222575084385e-15,
+  "initial_jacobian_rank": 128,
+  "initial_family_nullity": 18,
+  "rational_locks": 18,
+  "final_family_nullity": 0,
+  "locked_residual": 1.1054152963086047e-15,
+  "family_move_l2": 0.00817747080433772,
+  "family_move_max": 0.004661604772506586,
+  "high_precision_dps": 220,
+  "high_precision_max_residual": "3.3197427976908391985e-221",
+  "high_precision_l2_residual": "1.2607526070009919173e-220",
+  "selected_equation_min_qr_diag": 0.044508176636867174,
+  "field": "Q(alpha), alpha root of 4071168*t + 2044471",
+  "field_degree": 1,
+  "coefficient_counts": {
+    "total": 644,
+    "rational": 644,
+    "algebraic": 0
+  },
+  "exact_identity": true,
+  "nonzero_exact_identities": 0
+}

@@ -1,0 +1,4 @@
+zeros=393, reduced vars=182, family nullity=17
+locks=17, move=5.336e-03, hp_res=2.4923e-220
+field=Q(alpha), alpha root of 211866510772584370555412459*t**7 + 19294125378589412270074818*t**6 + 63269304666380935115195323*t**5 - 537058602563045922626638864*t**4 + 271326602145587694334008931*t**3 - 314553735384871426681780744*t**2 - 363110379886779054423586786*t - 19893018621891734264335939 counts={'total': 644, 'rational': 529, 'algebraic': 115} exact=False
+wrote /home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_503/exact

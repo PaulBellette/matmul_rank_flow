@@ -1,0 +1,4 @@
+zeros=423, reduced vars=152, family nullity=16
+locks=16, move=3.944e-03, hp_res=2.1941e-220
+field=Q(alpha), alpha root of 499245824*t**3 - 246779995*t**2 + 434958336*t - 163881900 counts={'total': 644, 'rational': 530, 'algebraic': 114} exact=True
+wrote /home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_101/exact

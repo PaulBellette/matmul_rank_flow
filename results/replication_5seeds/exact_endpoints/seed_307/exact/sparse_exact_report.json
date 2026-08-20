@@ -1,0 +1,28 @@
+{
+  "input": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_307/incidence/rank23_incidence_sparse.pt",
+  "structural_zero_threshold": 1e-10,
+  "structural_zero_count": 334,
+  "next_nonzero_abs": 1.551760071883216e-10,
+  "reduced_variables": 241,
+  "initial_reduced_residual": 7.905471818475625e-11,
+  "initial_jacobian_rank": 228,
+  "initial_family_nullity": 13,
+  "rational_locks": 17,
+  "final_family_nullity": 5,
+  "locked_residual": 4.949394246246491e-15,
+  "family_move_l2": 0.0019143270500768014,
+  "family_move_max": 0.0006588162181104806,
+  "high_precision_dps": 220,
+  "high_precision_max_residual": "2.1502580943424928925e-60",
+  "high_precision_l2_residual": "5.459428800611598745e-60",
+  "selected_equation_min_qr_diag": 1.3058216882423225e-16,
+  "field": "Q(alpha), alpha root of 477907881511765029061390077*t**7 + 432292402607235583226936702*t**6 + 110125595758106309275149206*t**5 - 227953733429658983653850226*t**4 - 118270394042807079027265940*t**3 + 348826871897916061631743556*t**2 - 230715536752442073828475533*t + 34510281815386578495140069",
+  "field_degree": 7,
+  "coefficient_counts": {
+    "total": 644,
+    "rational": 527,
+    "algebraic": 117
+  },
+  "exact_identity": false,
+  "nonzero_exact_identities": 169
+}

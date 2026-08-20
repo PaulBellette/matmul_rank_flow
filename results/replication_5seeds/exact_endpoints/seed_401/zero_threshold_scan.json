@@ -1,0 +1,57 @@
+[
+  {
+    "threshold": 1e-10,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 1e-08,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 1e-07,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 1e-06,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 1e-05,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 0.0001,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 0.0005,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 0.001,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 0.002,
+    "factor_zeros": 429,
+    "zeroed_tensor_residual": 4.2142222575084385e-15
+  },
+  {
+    "threshold": 0.005,
+    "factor_zeros": 432,
+    "zeroed_tensor_residual": 0.010684418118208734
+  },
+  {
+    "threshold": 0.01,
+    "factor_zeros": 440,
+    "zeroed_tensor_residual": 0.018340445517912033
+  }
+]

@@ -1,0 +1,3 @@
+residual=8.452e-15 conds=(1.705,1.439,1.457)
+near zeros: {'1e-10': 334, '1e-06': 420, '0.0001': 420, '0.001': 420, '0.005': 420, '0.01': 421}
+wrote /home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_307/incidence
