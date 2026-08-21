@@ -1,0 +1,19 @@
+{
+  "discovery_seed": 503,
+  "search_seed": 1657,
+  "start": "results/replication_5seeds/endpoint_analysis/polished/seed_503_rank23_refined.pt",
+  "start_sha256": "60dd2b40e61ca97861e0805dbbeb25c5046ed2d5f853f87914aed252853c7b2a",
+  "start_residual": 3.229326868884845e-15,
+  "start_max_abs_amplitude": 3.5933851038236875,
+  "final_rank": 23,
+  "final_residual": 4.1586038986919395e-15,
+  "rank22_candidate": false,
+  "candidate_polished": false,
+  "candidate_polish_residual": null,
+  "independent_operational_pass": null,
+  "independent_operational_rc": null,
+  "min_soft_nullity": 32.99999999999977,
+  "min_susceptibility": 0.549590489048066,
+  "min_death_distance": 1.779542900099993,
+  "min_rank23_residual": 3.1276083929785848e-15
+}
