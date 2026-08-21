@@ -61,3 +61,9 @@ experiments/
 ```
 
 The current proliferation is mostly **historical layering**, not 47 independent concepts.  A public research repository can tolerate that if the canonical path is explicit.
+
+### Arithmetic-complexity follow-up
+
+- `rank23_complexity_search.py` — fixed-rank exact-manifold search for lower raw linear-form support.
+- `run_rank23_complexity_campaign.py` — overnight driver for the rational seed-211 and seed-401 families.
+- `docs/RANK23_COMPLEXITY_SEARCH.md` — objective, caveats, and run instructions.

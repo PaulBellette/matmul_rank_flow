@@ -68,6 +68,24 @@ python3 verify_rank23_exact.py results/blind_rank23/exact/rank23_exact.json
 
 Independent verification code that does not depend on the search controller is under [`independent_verification/`](independent_verification/).
 
+## Rank-23 arithmetic-complexity follow-up
+
+A separate fixed-rank experiment searches the exact rank-23 solution variety for sparser linear forms, starting from the rational seed-211 and seed-401 representatives. Tensor equality remains a hard constraint; the search preserves existing structural zeros and attempts to snap newly tiny coefficients into exact zeros.
+
+Quick wiring check:
+
+```bash
+python3 run_rank23_complexity_campaign.py --smoke
+```
+
+Overnight campaign:
+
+```bash
+python3 run_rank23_complexity_campaign.py
+```
+
+See [`docs/RANK23_COMPLEXITY_SEARCH.md`](docs/RANK23_COMPLEXITY_SEARCH.md) for the objective and caveats.
+
 ## External equivalence corpora
 
 Third-party schemes are not copied into the project.  Fetch or mirror them under ignored `external/` storage and run the exact-invariant funnel described in [`EQUIVALENCE_SEARCH.md`](EQUIVALENCE_SEARCH.md).
