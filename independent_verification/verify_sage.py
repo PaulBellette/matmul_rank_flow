@@ -30,7 +30,7 @@ def load_cert(path):
         c=[elt(x) for x in d['c_power_basis']]
         return d,K,U,V,W,c
     if 'radicand' in d:
-        Rt=PolynomialRing(QQ,'t'); t=Rt.gen(); K=NumberField(t^2-ZZ(d['radicand']),'alpha'); alpha=K.gen()
+        Rt=PolynomialRing(QQ,'t'); t=Rt.gen(); K=NumberField(t**2-ZZ(d['radicand']),'alpha'); alpha=K.gen()
         def pe(s):
             s=s.replace('**','^').replace('sqrt(%s)'%d['radicand'],'alpha')
             return K(sage_eval(s,locals={'alpha':alpha}))
