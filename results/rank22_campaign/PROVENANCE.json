@@ -1,0 +1,26 @@
+{
+  "experiment": "frozen specialist Pareto beam, rank 23 -> 22",
+  "started_utc": "2026-08-21T01:12:59Z",
+  "git_commit": "06faf159b4c84e1d05fb5121fb756e74d8976592",
+  "git_branch": "main",
+  "git_status": "?? RANK22_CAMPAIGN.md\n?? run_rank22_campaign.py\n?? run_rank22_campaign.sh",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:16:10) [GCC 11.2.0]",
+  "torch": "2.9.1+cu128",
+  "max_cycles": 120,
+  "launch_discovery_seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "search_seeds": {
+    "101": 1601,
+    "211": 1613,
+    "307": 1627,
+    "401": 1637,
+    "503": 1657
+  },
+  "policy_change": "none; orchestration sets goal_rank=22 and fresh RNG seed only",
+  "candidate_rule": "rank 22 is numerical candidate only; independent operational PASS required before escalation"
+}

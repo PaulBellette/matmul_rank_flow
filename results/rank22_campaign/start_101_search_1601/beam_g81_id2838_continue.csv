@@ -1,0 +1,2 @@
+iteration,channel,amplitude,killability,residual,jacobian_rank,tangent_dim,sigma_min_positive,max_abs_amplitude,amp_step
+0,14,1.5703557482231763,0.42315763079307306,5.70838936222299e-15,610,34,0.048762829157491555,7.9993811615375625,0.05

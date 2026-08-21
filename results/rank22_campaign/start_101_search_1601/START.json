@@ -1,0 +1,8 @@
+{
+  "discovery_seed": 101,
+  "search_seed": 1601,
+  "start": "results/replication_5seeds/endpoint_analysis/polished/seed_101_rank23_refined.pt",
+  "start_sha256": "da654c25f0b738976ec953567c871e924d4ce9651366c0bbb4fe50ded4850f12",
+  "start_residual": 3.837048103030137e-15,
+  "start_max_abs_amplitude": 5.138178791708696
+}
