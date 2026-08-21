@@ -1,0 +1,300 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+
+\newcommand{\MR}{\mathcal{M}_R}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\rank}{\operatorname{rank}}
+
+\title{Navigating Exact Matrix-Multiplication Algorithm Manifolds\\
+by Differential Geometry and Basin Search}
+\author{Paul Bellette}
+\date{Draft --- August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study exact bilinear algorithms as points on the algebraic variety of low-rank tensor decompositions and search for rank reductions by moving between exact solution basins rather than by solving a fixed-rank approximation problem from random initialization.  The method combines local Jacobian geometry, channel-collision and channel-death diagnostics, finite tangent-shell moves, bounded off-manifold transitions, and a small specialist Pareto beam.  For $3\times3$ matrix multiplication, the procedure starts from the schoolbook rank-27 decomposition, obtains rank 26 through an autonomous collision-and-fusion step, and then searches for successive lower-rank boundaries.  After development, a frozen endpoint-free controller was evaluated on five fresh random seeds.  All five runs followed $26\to25\to24\to23$, requiring 9--25 beam generations, and all endpoints polished to residuals of order $10^{-15}$.  A separate numerical-to-exact pipeline has produced exact symbolic rank-23 certificates for three of the five frozen-seed endpoints, as well as for an earlier endpoint-free success.  Exact orbit invariants distinguish these four certificates from a 17,376-scheme reference archive.  We do not claim a new multiplication-count record or previously unknown continuous families; the contribution is a reproducible search strategy for navigating exact bilinear-algorithm manifolds, together with an exactification and classification workflow.
+\end{abstract}
+
+\section{Introduction}
+
+The rank of the matrix-multiplication tensor is one of the classical algebraic measures of the multiplicative complexity of matrix multiplication.  Strassen's rank-7 decomposition for $2\times2$ multiplication showed that the schoolbook algorithm is not multiplicatively optimal \cite{strassen1969}.  For $3\times3$ multiplication, Laderman gave a noncommutative rank-23 algorithm in 1976 \cite{laderman1976}.  The best known lower bound is 19 \cite{blaser2003}, and no noncommutative rank-22 decomposition is currently known.  Rank 23 is therefore a long-standing boundary at which many inequivalent algorithms are known \cite{heule2021,ballard2019}.
+
+Most computational searches for fast matrix multiplication formulate the problem as finding a low-rank decomposition of the target tensor.  This has led to successful discrete, symbolic, numerical, SAT-based, and learned search strategies; recent examples include large catalogues of rank-23 schemes \cite{heule2021}, geometric constructions \cite{ballard2019}, and AlphaTensor's learned search over finite coefficient spaces \cite{fawzi2022}.  A complementary question is whether one can exploit the geometry of the \emph{existing exact solution set}: starting from a known exact algorithm at rank $R$, can one navigate the manifold of rank-$R$ representations until reaching a boundary where one multiplication can be removed?
+
+This paper develops that viewpoint.  A rank-$R$ algorithm is treated as a point on an exact algebraic solution set.  Local Jacobian geometry identifies directions of exact first-order motion, while finite exact and near-exact moves are used to reorganize the representation globally.  Rank reduction is accepted only when an explicit rank-$(R-1)$ parameterization corrects back to a stringent tensor residual with finite coefficients.
+
+The principal empirical result is deliberately modest but reproducible.  After a development phase, a frozen endpoint-free controller was run from five fresh schoolbook initializations.  All five independently reached rank 23.  Downstream exactification has produced three exact certificates among those five endpoints and one additional certificate from an earlier endpoint-free run.  These exact schemes are structurally distinct from the schemes in a 17,376-entry reference archive under exact invariants preserved by the standard matrix-multiplication isotropy action.  This is not evidence by itself that the corresponding continuous families are new.
+
+The method is also distinct from recent work improving the asymptotic exponent $\omega$ using large-scale continuous optimization and AlphaEvolve \cite{dupont2026}: our objective here is the exact finite tensor-rank landscape of small matrix multiplication, not the laser-method optimization underlying asymptotic bounds.
+
+\section{Bilinear formulation}
+
+Let $T_n$ denote the matrix-multiplication tensor for multiplying two $n\times n$ matrices.  We represent a rank-$R$ decomposition as
+\begin{equation}
+    \widehat T(\theta)
+    = \sum_{r=1}^{R} a_r\,u_r\otimes v_r\otimes w_r,
+\end{equation}
+where the factor directions $u_r,v_r,w_r\in\RR^{n^2}$ are column-normalized and $a_r\in\RR$ is an explicit channel amplitude.  The exact solution set is
+\begin{equation}
+    \MR = \{\theta : F(\theta)=0\},
+    \qquad
+    F(\theta)=\operatorname{vec}(\widehat T(\theta)-T_n).
+\end{equation}
+For $n=3$, exactness is equivalently the satisfaction of the 729 Brent equations.
+
+Separating amplitude from factor direction makes two possible rank-reduction mechanisms visible.  A channel can die when $a_r\to0$, or two channels can collide projectively and be fused into a single rank-one summand.  The first mechanism is natural to probe by local tangent geometry; the second appears already in the transition from schoolbook $2\times2$ multiplication to Strassen's algorithm.
+
+\section{Local geometry of the exact set}
+
+Let
+\begin{equation}
+    J(\theta)=DF(\theta)
+\end{equation}
+be the Jacobian of the tensor residual.  At an exact solution, after removing the trivial factor-scale gauge through column normalization, $\ker J$ approximates the physical tangent space of $\MR$.
+
+\subsection{Channel killability}
+
+For channel $r$, define the first-order killability
+\begin{equation}
+    K_r = \norm{P_{\ker J}\nabla a_r}
+\end{equation}
+and the local death-distance proxy
+\begin{equation}
+    D_r = \frac{|a_r|}{K_r}.
+\end{equation}
+A small $D_r$ indicates that the amplitude can decrease rapidly along an exact first-order motion.  This is useful locally, but in the $3\times3$ experiments it was not a reliable global objective: continuation frequently reached amplitude walls without exposing a lower-rank boundary.
+
+\subsection{Soft effective nullity}
+
+A more useful basin-level diagnostic was the smooth effective nullity
+\begin{equation}
+N_\tau(J)
+=
+ n_{\mathrm{param}}
+-
+\sum_i \frac{\sigma_i^2}{\sigma_i^2+\tau^2},
+\end{equation}
+where $\sigma_i$ are singular values of the physical Jacobian.  The scale $\tau$ is inferred from the current spectrum.  When comparing a candidate child basin to its parent, the parent's $\tau$ is retained so that weakly constrained directions change continuously rather than through a hard numerical-rank threshold.
+
+We do not assume a target nullity.  Empirically, successful global reorganization tended to reduce excess tangent freedom before a deletion became viable.
+
+\section{Rank-reduction mechanisms}
+
+\subsection{Collision and fusion}
+
+For schoolbook $2\times2$ multiplication, naive amplitude death is locally blocked.  A string calculation between schoolbook and Strassen decompositions exposed a different mechanism: two channels become projectively proportional and can then be fused.  This led to a constrained-curvature score for pair alignment on the exact manifold.  Starting from schoolbook rank 8, the resulting autonomous search selects a symmetry-equivalent opposite-corner pair, follows an exact collision branch, and recovers rank 7.
+
+The same mechanism provides the first $3\times3$ reduction.  The rank-27 schoolbook decomposition contains embedded $2\times2\times2$ cubes.  Pair-curvature identifies an opposite-corner collision in one such cube; exact continuation and fusion produce rank 26.
+
+\subsection{Deletion susceptibility}
+
+Later $3\times3$ reductions required basin reorganization before any individual channel could be removed.  For a candidate channel $r$, we therefore define a short deletion challenge: remove that channel, run a bounded rank-$(R-1)$ relaxation, and record the best residual
+\begin{equation}
+E_r(\theta)
+=
+\min_{\text{short bounded relaxation}}
+\norm{F_{R-1}}.
+\end{equation}
+The deletion susceptibility is
+\begin{equation}
+E_{\mathrm{delete}}(\theta)=\min_r E_r(\theta).
+\end{equation}
+This is only a search coordinate.  A small value never certifies a rank drop; the lower-rank decomposition must subsequently be corrected independently to stringent tolerance.
+
+\section{Global basin navigation}
+
+\subsection{Exact shell moves}
+
+Local continuation can terminate at a wall while remaining inside one stratum of the exact solution set.  To reorganize the basin, we use finite tangent motions selected partly by their second-order obstruction.  During development, an obstruction operator of the form
+\begin{equation}
+B(v)=L^\top \dot J[v]N
+\end{equation}
+was useful, where $N$ and $L$ span numerical right and left nullspaces of $J$.  Directions with large obstruction are tangent at first order but strongly change the local constraints at second order.  A finite move is followed by nonlinear correction back to an exact rank-$R$ solution.
+
+\subsection{Bounded off-manifold tunnels}
+
+Exact shell moves alone can remain trapped.  The controller therefore also uses bounded transitions
+\begin{equation}
+\text{exact basin}
+\longrightarrow
+\text{bounded off-manifold move}
+\longrightarrow
+\text{soft relaxation}
+\longrightarrow
+\text{new exact rank-}R\text{ basin}.
+\end{equation}
+The off-manifold state is never accepted as an algorithm.  Candidate landings are rejected if correction fails, coefficients become non-finite, or amplitudes grow beyond fixed bounds.
+
+\section{Specialist Pareto beam}
+
+A single greedy trajectory repeatedly discarded useful basins.  The frozen controller therefore maintains a beam of four exact solutions described by
+\begin{equation}
+\left(N_\tau(J),E_{\mathrm{delete}},D_{\min},A_{\max}\right),
+\end{equation}
+where $D_{\min}=\min_r D_r$ and $A_{\max}$ controls coefficient growth.  Retention is Pareto-based rather than scalarized because progress in genericity, deletion susceptibility, and local death distance is often antagonistic.
+
+Pareto retention is supplemented by explicit specialist scheduling.  At each generation, expansion budget is assigned to the current genericity champion, deletion champion, death-distance champion, and periodically a lightly explored basin.  If a single basin holds several roles, spare budget is reassigned to exploration.  The specialists receive different move families rather than merely different scalar weights.
+
+A proposed $R\to R-1$ transition is accepted only when the rank-$(R-1)$ parameterization corrects to the exact tensor within the numerical acceptance tolerance and with finite bounded coefficients.  The beam is then reset at the new rank and all local spectral diagnostics are recomputed.
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.88\linewidth}{\small
+\textbf{Frozen rank-reduction loop.}
+Starting from an exact rank-$R$ basin: (1) compute local geometry and deletion probes; (2) retain a Pareto beam of exact basins; (3) schedule specialist exact-shell, local-death, deletion, and bounded tunnel moves; (4) correct every retained child back to the exact rank-$R$ manifold; (5) test promising channel removals with a separate rank-$(R-1)$ solve; (6) on success, reset the beam at rank $R-1$; otherwise continue until the fixed generation budget is exhausted.}}
+\caption{High-level structure of the endpoint-free controller.  The implementation records parentage, specialist roles, and accepted rank transitions.}
+\label{fig:controller}
+\end{figure}
+
+\section{Development and evaluation protocol}
+
+The distinction between development and evaluation is important.  During development, a known rank-23 endpoint was used as a diagnostic oracle to investigate why local rank-26 and rank-24 searches stalled.  This exposed two useful global coordinates: reduction of excess tangent freedom and increasing susceptibility to deletion.  The endpoint itself was subsequently removed from the optimizer.
+
+The final specialist Pareto policy was frozen before the replication experiment.  Five fresh random seeds
+\begin{equation}
+101,\quad211,\quad307,\quad401,\quad503
+\end{equation}
+were fixed before observing their outcomes.  Each run independently began from the schoolbook rank-27 decomposition, performed the autonomous collision reduction to rank 26, and then used the same frozen controller with only the random seed changed.  The stopping budget was 120 beam generations.
+
+\section{Results}
+
+\subsection{Five-seed replication}
+
+All five frozen-policy runs reached rank 23.  Table~\ref{tab:replication} reports the recorded endpoint statistics.
+
+\begin{table}[ht]
+\centering
+\caption{Frozen-policy replication results.  Residuals are those at controller termination; every endpoint subsequently polished to order $10^{-15}$.}
+\label{tab:replication}
+\begin{tabular}{rcccc}
+\toprule
+Seed & Rank path & Beam generations & Final residual & $\max|a|$ \\
+\midrule
+101 & $26\to25\to24\to23$ & 12 & $2.38\times10^{-13}$ & 5.138 \\
+211 & $26\to25\to24\to23$ & 12 & $3.61\times10^{-15}$ & 4.608 \\
+307 & $26\to25\to24\to23$ & 25 & $3.11\times10^{-10}$ & 3.856 \\
+401 & $26\to25\to24\to23$ & 12 & $8.31\times10^{-10}$ & 3.572 \\
+503 & $26\to25\to24\to23$ &  9 & $3.23\times10^{-15}$ & 3.593 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The common rank path does not correspond to a fixed scripted sequence: the runs required between 9 and 25 beam generations and selected different basin trajectories.  The result is therefore evidence that the frozen search coordinates repeatedly locate the known rank-23 boundary from fresh schoolbook initializations.
+
+\subsection{Numerical-to-exact recovery}
+
+A floating-point rank-23 endpoint is not treated as a mathematical certificate.  The exactification pipeline first searches the $GL(3)^3$ matrix-multiplication isotropy action for a well-conditioned sparse incidence gauge.  Repeated projective row and column directions in rank-one factor matrices provide a finite basis-selection problem.  After applying the selected transforms and a canonical channel gauge, a large fraction of coefficients become clean structural zeros.
+
+The structural zero pattern and channel pivots are then locked.  The reduced Brent system generally retains a positive-dimensional local solution family.  Small rational locks are introduced along mobile family directions and the remaining coordinates are corrected after each lock.  Once an isolated representative is obtained, the system is refined at high precision and its coefficients are recognized in a common algebraic number field.  Exact arithmetic is finally used to verify all 729 Brent identities.
+
+The first endpoint-free rank-23 success exactifies in
+\begin{equation}
+\QQ\!\left(\sqrt{85\,213\,608\,769}\right),
+\end{equation}
+with 594 rational and 50 genuinely quadratic gauge-fixed coefficients.  The exact representative is a nearby point on the same local exact family rather than the identical floating-point endpoint.
+
+For the frozen five-seed experiment, three endpoints currently have verifying exact certificates; the remaining two have high-precision numerical representatives but current number-field recognition attempts do not satisfy the Brent identities exactly.  Table~\ref{tab:exact} reports the verifying cases.
+
+\begin{table}[ht]
+\centering
+\caption{Exactification status of frozen-seed endpoints.  ``Rational'' means the recognized common field has degree one.}
+\label{tab:exact}
+\begin{tabular}{rccc}
+\toprule
+Seed & Exact certificate & Local family nullity & Exact field \\
+\midrule
+101 & yes & 16 & cubic number field \\
+211 & yes & 18 & rational \\
+307 & no  & --- & --- \\
+401 & yes & 18 & rational \\
+503 & no  & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Equivalence filtering against a public archive}
+
+Matrix-multiplication schemes admit a large invariance group, so coordinate-wise comparison is not meaningful.  Equivalence and normal-form algorithms for matrix-multiplication decompositions have been studied explicitly \cite{berger2022,kauers2022}.  Our current public-corpus comparison uses a cheap-to-expensive exact invariant funnel before any numerical reconstruction.
+
+For each channel $r$, reshape the three factors as $3\times3$ matrices $(A_r,B_r,C_r)$.  The canonical multiset
+\begin{equation}
+\left\{\bigl(\rank A_r,\rank B_r,\rank C_r\bigr)\right\}_{r=1}^{23}
+\end{equation}
+is invariant under channel permutation, per-channel scaling, the standard $GL(3)^3$ isotropy action, and tensor-leg permutation.  Stronger filters use the directed sandwich-incidence labels
+\begin{equation}
+\left(
+\rank(A_rB_s),
+\rank(B_rC_s),
+\rank(C_rA_s)
+\right).
+\end{equation}
+
+A local archive of 17,376 JKU rank-23 schemes was parsed with exact integer arithmetic.  The initial endpoint-free exact certificate has no archive scheme with the same full canonical factor-rank pattern.  The exact seed-101 and seed-211 representatives likewise have zero full-pattern matches.  Seed 401 has seven archive schemes with the same full pattern, but all seven differ already in the exact directed sandwich edge-label histogram.  Thus the four exact certificates are absent from the tested archive under these preserved invariants.
+
+This result is intentionally weaker than a global novelty claim.  The archive is not an enumeration of all rank-23 decompositions, and distinct exact points can lie on previously documented positive-dimensional families.  A future classification pass should use an exact normal-form or equivalence algorithm on any remaining plausible matches.
+
+\section{Complexity and practical arithmetic cost}
+
+Every scheme reported here has rank 23.  Recursive use of a $3\times3$ rank-23 decomposition therefore gives
+\begin{equation}
+T(n)=23T(n/3)+O(n^2)
+\end{equation}
+and the exponent $\log_3 23\approx2.8541$.  These decompositions do not improve the asymptotic matrix-multiplication exponent and are not intended as practical low-addition circuits.
+
+Indeed, additive complexity is a separate optimization problem.  Recent rank-23 work has reduced the linear-circuit cost to 55 additions/subtractions, for 78 scalar operations including the 23 bilinear products \cite{karunaratne2026}.  Our search objective does not currently penalize coefficient alphabet, sparsity of linear forms, constant multiplications, or addition count.  This separation is useful experimentally: the repeated discovery of rank 23 is not a consequence of constraining the search toward known sparse ternary schemes.  It also suggests a natural next experiment---move within a discovered rank-23 family while adding arithmetic circuit complexity as another Pareto objective.
+
+\section{Limitations}
+
+The present evidence supports a search-method claim, not a new rank bound.
+\begin{itemize}[leftmargin=1.5em]
+    \item Rank 23 for noncommutative $3\times3$ multiplication has been known since 1976 \cite{laderman1976}.
+    \item The evaluation set contains only five fresh seeds.  Five successes establish reproducibility for this experiment, not a universal success probability.
+    \item Two of the five frozen-seed numerical endpoints have not yet yielded exact symbolic certificates with the current recognition pipeline.
+    \item Archive inequivalence does not imply that the corresponding continuous solution families are new.
+    \item The method was developed on $2\times2$ and $3\times3$ matrix multiplication.  Its usefulness for other bilinear tensors or larger matrix formats remains to be established.
+    \item The search is computationally expensive relative to simply evaluating a known rank-23 formula; its purpose is algorithm discovery rather than runtime multiplication.
+\end{itemize}
+
+\section{Reproducibility}
+
+The accompanying repository retains both the paper-facing pipeline and the exploratory scripts used during development.  The frozen replication is launched by \texttt{run\_5seed\_replication.sh}.  The principal paper-facing stages are:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \texttt{collision\_search\_3x3.py}: autonomous $27\to26$ collision reduction;
+    \item \texttt{autonomous\_state\_machine\_3x3.py}: frozen specialist Pareto controller;
+    \item \texttt{analyze\_replication\_endpoints.py}: polishing and structural analysis;
+    \item \texttt{batch\_exactify\_replication.py}: sparse-family exactification;
+    \item \texttt{verify\_rank23\_exact.py}: standalone exact certificate verification;
+    \item \texttt{rank23\_equivalence\_search.py}: exact-invariant corpus filtering.
+\end{enumerate}
+
+The repository also includes independent verification scripts that do not depend on the search controller.  External comparison corpora are fetched separately and are not redistributed with the project.
+
+\section{Discussion and future work}
+
+The main observation is that the exact rank-$R$ solution set itself can be treated as a search space.  Local tangent information alone is insufficient, but it provides useful coordinates for a global controller that can preserve and reorganize exact basins.  The specialist Pareto beam appears to work because different precursors of rank reduction---reduced excess nullity, deletion susceptibility, and local channel mobility---need not improve simultaneously in one basin.
+
+Three follow-up experiments are especially informative.  First, initialize from several inequivalent exact rank-23 representatives and search for a genuine rank-22 boundary.  Any success would require finite coefficients, high-precision refinement, and exact verification; border-rank degeneration would not count.  Second, add additive complexity and coefficient simplicity to the Pareto coordinates and test whether the rank-23 manifold can be navigated toward sparse low-cost circuits.  Third, apply the same method to $4\times4$ multiplication, initially asking only whether it can reproduce a known rank reduction before attempting unexplored boundaries.
+
+More broadly, the work fits a growing pattern in computational mathematics in which continuous or learned optimization proposes a candidate and an independent exact stage turns the candidate into a mathematical certificate.  AlphaTensor uses learned search in a discrete tensor-decomposition game \cite{fawzi2022}; recent AlphaEvolve-assisted work uses large-scale optimization inside asymptotic matrix-multiplication analysis \cite{dupont2026}.  The present method explores a different regime: finite exact bilinear decompositions, with the local geometry of the exact solution variety used directly as search information.
+
+\section{Conclusion}
+
+A differential-geometric, basin-search view of bilinear algorithms can repeatedly navigate from schoolbook $3\times3$ multiplication to the known rank-23 boundary without being supplied a target rank-23 decomposition during evaluation.  In a frozen five-seed experiment, all five runs reached rank 23, and several resulting endpoints admit independently verifiable exact symbolic certificates.  The current evidence does not establish a new rank record or new continuous families.  It does establish a reproducible computational pathway from an elementary exact algorithm, through a sequence of exact solution basins, to structurally diverse low-rank algorithms.  Whether the same machinery can cross the rank-23 boundary or generalize to other bilinear tensors remains open.
+
+% TODO before submission: decide final author list, affiliations, acknowledgements,
+% and wording for AI-assisted programming / computational tooling disclosure.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
