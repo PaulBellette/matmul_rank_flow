@@ -55,3 +55,25 @@ The first experiment is not expected to beat the best hand/automatically enginee
 2. run common-subexpression elimination / straight-line-program optimization;
 3. score coefficient complexity (`0, +/-1`, small rationals, general algebraic constants);
 4. compare against published low-addition rank-23 algorithms.
+
+## Exactification and circuit follow-up
+
+After the campaign finishes, exactify the best low-support representatives and compare them with
+the original exact seed representatives:
+
+```bash
+python3 run_rank23_complexity_followup.py
+```
+
+For each seed the follow-up:
+
+1. reads `best_additions.pt` and its explicit `frozen_zero_indices`;
+2. sets exactly those coordinates to zero and chooses a zero threshold below every other factor coefficient;
+3. runs `sparse_family_exactify.py` and requires exact verification of all 729 Brent identities;
+4. checks that every deliberately snapped coefficient is still an exact symbolic zero;
+5. computes exact naive linear-form addition counts for the original and new certificates;
+6. runs a deterministic greedy exact linear CSE heuristic and reports the resulting straight-line-program upper bound.
+
+The CSE number is **not** claimed to be the minimum additive complexity. Constant scalar
+multiplications are also not included in the addition count; coefficient arithmetic is reported
+separately and remains a later optimization target.

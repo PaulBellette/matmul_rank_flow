@@ -1,0 +1,34 @@
+{
+  "input": "runs/rank23_complexity_followup/seed_211/winner_for_exactify.pt",
+  "structural_zero_threshold": 6.384690991397984e-20,
+  "structural_zero_count": 438,
+  "next_nonzero_abs": 6.384690991397985e-19,
+  "reduced_variables": 137,
+  "initial_reduced_residual": 4.536252437611406e-15,
+  "initial_jacobian_rank": 121,
+  "initial_family_nullity": 16,
+  "rational_locks": 16,
+  "final_family_nullity": 0,
+  "locked_residual": 1.501929952071971e-15,
+  "family_move_l2": 0.0044940346334465505,
+  "family_move_max": 0.0022019373544026463,
+  "high_precision_dps": 130,
+  "high_precision_max_residual": "2.0156917209658020891e-124",
+  "high_precision_l2_residual": "3.6714765326494708912e-124",
+  "selected_equation_min_qr_diag": 0.0519827970335584,
+  "high_precision_repivots": 0,
+  "high_precision_solve_modes": [
+    "square_lu",
+    "square_lu",
+    "square_lu"
+  ],
+  "field": "Q(alpha), alpha root of 17694947777*t + 23082777",
+  "field_degree": 1,
+  "coefficient_counts": {
+    "total": 644,
+    "rational": 644,
+    "algebraic": 0
+  },
+  "exact_identity": true,
+  "nonzero_exact_identities": 0
+}

@@ -1,0 +1,834 @@
+[
+  {
+    "seed": 211,
+    "winner_checkpoint": "runs/rank23_complexity_campaign/seed_211/best_additions.pt",
+    "campaign_best_structural_additions": 127,
+    "preparation": {
+      "prepared_checkpoint": "runs/rank23_complexity_followup/seed_211/winner_for_exactify.pt",
+      "frozen_zero_count": 438,
+      "safe_zero_threshold": 6.384690991397984e-20,
+      "min_nonfrozen_canonical_abs": 6.384690991397985e-19
+    },
+    "independent_verifier": "pass",
+    "status": "ok",
+    "zero_mask": {
+      "checked": 438,
+      "all_exact_zero": true,
+      "failures": []
+    },
+    "baseline": {
+      "certificate": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_211/exact/rank23_exact.json",
+      "rank": 23,
+      "field": "Q(alpha), alpha root of 4024823*t + 3324240",
+      "exact_identity": true,
+      "banks": {
+        "left": {
+          "naive_additions": 34,
+          "greedy_cse_additions": 20,
+          "created_subexpressions": 6,
+          "final_form_additions": 14,
+          "cse_steps": [
+            {
+              "net_addition_gain": 4,
+              "occurrences": 5,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 4,
+              "occurrences": 5,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 14
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 150,
+            "plus_minus_one": 23,
+            "other_rational": 34,
+            "algebraic": 0
+          }
+        },
+        "right": {
+          "naive_additions": 48,
+          "greedy_cse_additions": 33,
+          "created_subexpressions": 9,
+          "final_form_additions": 24,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 14
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 15
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 16
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 17
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 136,
+            "plus_minus_one": 23,
+            "other_rational": 48,
+            "algebraic": 0
+          }
+        },
+        "output": {
+          "naive_additions": 61,
+          "greedy_cse_additions": 41,
+          "created_subexpressions": 13,
+          "final_form_additions": 28,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 23
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 24
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 25
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 26
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 27
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 28
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 29
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 30
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 31
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 32
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 33
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 34
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 35
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 137,
+            "plus_minus_one": 3,
+            "other_rational": 67,
+            "algebraic": 0
+          }
+        }
+      },
+      "naive_additions": 143,
+      "greedy_cse_additions": 94
+    },
+    "winner": {
+      "certificate": "runs/rank23_complexity_followup/seed_211/exact/rank23_exact.json",
+      "rank": 23,
+      "field": "Q(alpha), alpha root of 17694947777*t + 23082777",
+      "exact_identity": true,
+      "banks": {
+        "left": {
+          "naive_additions": 30,
+          "greedy_cse_additions": 16,
+          "created_subexpressions": 7,
+          "final_form_additions": 9,
+          "cse_steps": [
+            {
+              "net_addition_gain": 4,
+              "occurrences": 5,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 14
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 15
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 154,
+            "plus_minus_one": 23,
+            "other_rational": 30,
+            "algebraic": 0
+          }
+        },
+        "right": {
+          "naive_additions": 36,
+          "greedy_cse_additions": 27,
+          "created_subexpressions": 5,
+          "final_form_additions": 22,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 148,
+            "plus_minus_one": 23,
+            "other_rational": 36,
+            "algebraic": 0
+          }
+        },
+        "output": {
+          "naive_additions": 58,
+          "greedy_cse_additions": 39,
+          "created_subexpressions": 12,
+          "final_form_additions": 27,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 23
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 24
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 25
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 26
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 27
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 28
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 29
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 30
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 31
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 32
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 33
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 34
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 140,
+            "plus_minus_one": 5,
+            "other_rational": 62,
+            "algebraic": 0
+          }
+        }
+      },
+      "naive_additions": 124,
+      "greedy_cse_additions": 82
+    }
+  },
+  {
+    "seed": 401,
+    "winner_checkpoint": "runs/rank23_complexity_campaign/seed_401/best_additions.pt",
+    "campaign_best_structural_additions": 128,
+    "preparation": {
+      "prepared_checkpoint": "runs/rank23_complexity_followup/seed_401/winner_for_exactify.pt",
+      "frozen_zero_count": 436,
+      "safe_zero_threshold": 3.528103034593751e-22,
+      "min_nonfrozen_canonical_abs": 3.528103034593751e-21
+    },
+    "independent_verifier": "pass",
+    "status": "ok",
+    "zero_mask": {
+      "checked": 436,
+      "all_exact_zero": true,
+      "failures": []
+    },
+    "baseline": {
+      "certificate": "/home/paul-bellete/src/matmul_rank_flow/results/replication_5seeds/exact_endpoints/seed_401/exact/rank23_exact.json",
+      "rank": 23,
+      "field": "Q(alpha), alpha root of 4071168*t + 2044471",
+      "exact_identity": true,
+      "banks": {
+        "left": {
+          "naive_additions": 46,
+          "greedy_cse_additions": 26,
+          "created_subexpressions": 9,
+          "final_form_additions": 17,
+          "cse_steps": [
+            {
+              "net_addition_gain": 5,
+              "occurrences": 6,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 4,
+              "occurrences": 5,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 14
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 15
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 16
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 17
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 138,
+            "plus_minus_one": 23,
+            "other_rational": 46,
+            "algebraic": 0
+          }
+        },
+        "right": {
+          "naive_additions": 44,
+          "greedy_cse_additions": 30,
+          "created_subexpressions": 9,
+          "final_form_additions": 21,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 14
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 15
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 16
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 17
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 140,
+            "plus_minus_one": 23,
+            "other_rational": 44,
+            "algebraic": 0
+          }
+        },
+        "output": {
+          "naive_additions": 47,
+          "greedy_cse_additions": 31,
+          "created_subexpressions": 9,
+          "final_form_additions": 22,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 23
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 24
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 25
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 26
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 27
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 28
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 29
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 30
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 31
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 151,
+            "plus_minus_one": 6,
+            "other_rational": 50,
+            "algebraic": 0
+          }
+        }
+      },
+      "naive_additions": 137,
+      "greedy_cse_additions": 87
+    },
+    "winner": {
+      "certificate": "runs/rank23_complexity_followup/seed_401/exact/rank23_exact.json",
+      "rank": 23,
+      "field": "Q(alpha), alpha root of 23*t**2 - 4",
+      "exact_identity": true,
+      "banks": {
+        "left": {
+          "naive_additions": 37,
+          "greedy_cse_additions": 19,
+          "created_subexpressions": 8,
+          "final_form_additions": 11,
+          "cse_steps": [
+            {
+              "net_addition_gain": 5,
+              "occurrences": 6,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 5,
+              "occurrences": 6,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 12
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 13
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 14
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 15
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 16
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 147,
+            "plus_minus_one": 23,
+            "other_rational": 20,
+            "algebraic": 17
+          }
+        },
+        "right": {
+          "naive_additions": 28,
+          "greedy_cse_additions": 23,
+          "created_subexpressions": 3,
+          "final_form_additions": 20,
+          "cse_steps": [
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 9
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 10
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 11
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 156,
+            "plus_minus_one": 23,
+            "other_rational": 13,
+            "algebraic": 15
+          }
+        },
+        "output": {
+          "naive_additions": 44,
+          "greedy_cse_additions": 29,
+          "created_subexpressions": 8,
+          "final_form_additions": 21,
+          "cse_steps": [
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 23
+            },
+            {
+              "net_addition_gain": 3,
+              "occurrences": 4,
+              "reused_existing_atom": false,
+              "atom_id": 24
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 25
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 26
+            },
+            {
+              "net_addition_gain": 2,
+              "occurrences": 3,
+              "reused_existing_atom": false,
+              "atom_id": 27
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 28
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 29
+            },
+            {
+              "net_addition_gain": 1,
+              "occurrences": 2,
+              "reused_existing_atom": false,
+              "atom_id": 30
+            }
+          ],
+          "coefficient_complexity": {
+            "zero": 154,
+            "plus_minus_one": 8,
+            "other_rational": 24,
+            "algebraic": 21
+          }
+        }
+      },
+      "naive_additions": 109,
+      "greedy_cse_additions": 71
+    }
+  }
+]

@@ -243,6 +243,50 @@ def greedy_rational_locks(
                 accepted = True
                 break
         if not accepted:
+            # Singular sparse strata can expose a second-order family direction only
+            # after an otherwise sensible rational lock.  In that situation the
+            # remaining mobile coordinates may already be numerically zero.
+            # rational_candidates() deliberately ignores <1e-12 moves, so without
+            # this fallback the exactifier gives up one lock short of isolation.
+            #
+            # Keep the normal locking trajectory unchanged: try these exact-zero
+            # locks only when no ordinary rational candidate was accepted.
+            zero_fallbacks = []
+            for pos, idx in enumerate(free):
+                m = float(mobility[pos])
+                xv = float(x[idx])
+                if m < 1e-6 or xv == 0.0 or abs(xv) >= 1e-10:
+                    continue
+                zero_fallbacks.append((abs(xv) / max(m, 1e-8), abs(xv), idx, m, xv))
+            zero_fallbacks.sort()
+
+            for _, d, idx, m, xv in zero_fallbacks[:30]:
+                f = Fraction(0)
+                ntargets = targets | {idx: 0.0}
+                nlocked = locked | {idx}
+                y, ok, nr, _ = correct_with_locks(sys, x, nlocked, ntargets, rcond=rcond)
+                move = float((y - x).norm())
+                if ok and nr < 1e-9 and move < max_move:
+                    history.append({
+                        "step": step,
+                        "index": idx,
+                        "location": list(sys.locations[idx]),
+                        "from": xv,
+                        "target": "0",
+                        "distance": d,
+                        "mobility": m,
+                        "move_norm": move,
+                        "residual": nr,
+                        "fallback": "near_zero_exact_lock",
+                    })
+                    x = y
+                    locked.add(idx)
+                    targets[idx] = 0.0
+                    target_fracs[idx] = f
+                    accepted = True
+                    break
+
+        if not accepted:
             break
 
     F, J = sys.residual_jacobian(x)
@@ -252,10 +296,31 @@ def greedy_rational_locks(
     return x, locked, targets, target_fracs, history, initial_nullity, final_nullity
 
 
-def selected_independent_rows(J: torch.Tensor, n: int):
-    _, R, piv = la.qr(J.detach().cpu().numpy().T, pivoting=True, mode="economic")
+def selected_independent_rows_array(J: np.ndarray, n: int, rcond: float = 1e-10):
+    """Select a numerically independent equation subset by QR pivoting.
+
+    ``J`` is equations x unknowns.  Pivoting ``J.T`` chooses equation rows.
+    The returned rank is diagnostic: callers doing an exact/high-precision solve
+    must not assume a float-selected square subsystem remains nonsingular.
+    """
+    if n == 0:
+        return [], float("inf"), 0
+    _, R, piv = la.qr(np.asarray(J, dtype=np.float64).T, pivoting=True, mode="economic")
+    diag = np.abs(np.diag(R[:, :n]))
+    if diag.size == 0:
+        return [], 0.0, 0
+    scale = float(diag[0])
+    tol = rcond * scale if scale > 0 else 0.0
+    rank = int(np.sum(diag > tol))
     rows = [int(x) for x in piv[:n]]
-    return rows, float(np.min(np.abs(np.diag(R[:, :n]))))
+    return rows, float(np.min(diag)), rank
+
+
+def selected_independent_rows(J: torch.Tensor, n: int, rcond: float = 1e-10):
+    rows, min_diag, _ = selected_independent_rows_array(
+        J.detach().cpu().numpy(), n, rcond=rcond
+    )
+    return rows, min_diag
 
 
 def row_triplet(row: int):
@@ -282,10 +347,30 @@ def high_precision_refine(
     dps: int = 130,
     rcond: float = 1e-10,
 ):
+    """Refine the rationally locked sparse family in high precision.
+
+    The reduced Brent system is overdetermined (729 equations).  Earlier versions
+    chose one square independent subsystem in float64 and then took unrestricted
+    Newton steps on that subsystem.  On ill-conditioned sparse strata a perfectly
+    good local square subsystem can cease to represent the full system after a
+    finite Newton step.  The result is a numerically singular square Jacobian even
+    though the starting point is a high-quality solution of all 729 equations.
+
+    We therefore globalise Newton without changing the equations:
+      * repivot equation rows at every iterate from the full Jacobian;
+      * compute a high-precision Newton direction on the selected square system;
+      * accept it only when the norm of all 729 Brent residuals decreases;
+      * if the square direction is not a descent direction, fall back to the full
+        overdetermined high-precision QR least-squares direction.
+
+    Backtracking changes only the step length, not the target equations, so an
+    accepted endpoint is still refined against the exact Brent identities.
+    """
     free = [i for i in range(x.numel()) if i not in locked]
-    F, J = sys.residual_jacobian(x)
-    rows, min_qr_diag = selected_independent_rows(J[:, free], len(free))
-    triples = [row_triplet(r) for r in rows]
+    F0, J0 = sys.residual_jacobian(x)
+    initial_rows, initial_min_qr_diag = selected_independent_rows(
+        J0[:, free], len(free), rcond=rcond
+    )
 
     mp.mp.dps = dps
     # Fixed sparse base: exact zeros and pivot ones; non-pivot variable locations are overwritten.
@@ -334,11 +419,23 @@ def high_precision_refine(
                 cc[i] = v
         return A, B, C, cc
 
-    def eval_fj(zv):
+    def eval_f(zv, row_ids):
         A, B, C, cc = set_unknown(zv)
-        FF = mp.matrix(len(triples), 1)
-        JJ = mp.matrix(len(triples), len(free))
-        for eq, (i, j, k) in enumerate(triples):
+        row_ids = list(row_ids)
+        FF = mp.matrix(len(row_ids), 1)
+        for eq, row in enumerate(row_ids):
+            i, j, k = row_triplet(int(row))
+            val = mp.fsum(cc[r] * A[i][r] * B[j][r] * C[k][r] for r in range(23))
+            FF[eq] = val - target_entry(i, j, k)
+        return FF
+
+    def eval_fj(zv, row_ids):
+        A, B, C, cc = set_unknown(zv)
+        row_ids = list(row_ids)
+        FF = mp.matrix(len(row_ids), 1)
+        JJ = mp.matrix(len(row_ids), len(free))
+        for eq, row in enumerate(row_ids):
+            i, j, k = row_triplet(int(row))
             val = mp.fsum(cc[r] * A[i][r] * B[j][r] * C[k][r] for r in range(23))
             FF[eq] = val - target_entry(i, j, k)
             for pos, idx in enumerate(free):
@@ -354,11 +451,122 @@ def high_precision_refine(
                     JJ[eq, pos] = A[i][rr] * B[j][rr] * C[k][rr]
         return FF, JJ
 
-    for _ in range(5):
-        FF, JJ = eval_fj(z)
-        if mp.norm(FF) < mp.mpf(10) ** (-(dps - 15)):
+    def rows_from_full_jacobian(JJ_full):
+        # Row selection is combinatorial only; solving remains high precision.
+        Jfloat = np.array(
+            [[float(JJ_full[i, j]) for j in range(len(free))]
+             for i in range(729)],
+            dtype=np.float64,
+        )
+        return selected_independent_rows_array(Jfloat, len(free), rcond=rcond)
+
+    def extract_square(FF_full, JJ_full, row_ids):
+        FF = mp.matrix([FF_full[r] for r in row_ids])
+        JJ = mp.matrix(len(row_ids), len(free))
+        for ii, r in enumerate(row_ids):
+            for jj in range(len(free)):
+                JJ[ii, jj] = JJ_full[r, jj]
+        return FF, JJ
+
+    all_rows = list(range(729))
+    target_norm = mp.mpf(10) ** (-(dps - 15))
+    solve_modes = []
+    step_scales = []
+    full_residual_history = []
+    rank_history = []
+    min_qr_diag = initial_min_qr_diag
+    current_rows = list(initial_rows)
+    repivots = 0
+
+    # More iterations than the original pure Newton loop: backtracking may turn a
+    # dangerous full step into several safe partial steps on ill-conditioned strata.
+    for iteration in range(16):
+        FF_full, JJ_full = eval_fj(z, all_rows)
+        full_norm = mp.norm(FF_full)
+        full_residual_history.append(mp.nstr(full_norm, 30))
+        if full_norm < target_norm:
             break
-        z += mp.lu_solve(JJ, -FF)
+
+        new_rows, new_min_diag, rank_est = rows_from_full_jacobian(JJ_full)
+        rank_history.append(int(rank_est))
+        if rank_est < len(free):
+            raise RuntimeError(
+                "high-precision Newton Jacobian is rank deficient at the current "
+                f"full-system iterate: rank {rank_est} < {len(free)} free variables "
+                f"at iteration {iteration}; full residual={mp.nstr(full_norm, 8)}"
+            )
+        if current_rows != new_rows:
+            repivots += 1
+        current_rows = list(new_rows)
+        min_qr_diag = min(min_qr_diag, new_min_diag)
+        FF, JJ = extract_square(FF_full, JJ_full, current_rows)
+
+        directions = []
+        try:
+            directions.append(("square_lu", mp.lu_solve(JJ, -FF)))
+        except ZeroDivisionError:
+            pass
+
+        accepted = False
+        last_trial_norm = None
+        # Try the cheap square Newton direction first.  It is accepted only if it
+        # improves *all* Brent equations, not merely the selected square subsystem.
+        for mode, dz in directions:
+            alpha = mp.mpf(1)
+            for _ in range(28):
+                ztrial = z + alpha * dz
+                trial_norm = mp.norm(eval_f(ztrial, all_rows))
+                last_trial_norm = trial_norm
+                if trial_norm < full_norm:
+                    z = ztrial
+                    solve_modes.append(mode)
+                    step_scales.append(mp.nstr(alpha, 20))
+                    accepted = True
+                    break
+                alpha /= 2
+            if accepted:
+                break
+
+        if not accepted:
+            # A Newton direction for one independent square subsystem need not be a
+            # descent direction for the complete overdetermined system.  QR gives the
+            # Gauss--Newton direction for all 729 equations without adding damping.
+            try:
+                dz_qr, _ = mp.qr_solve(JJ_full, -FF_full)
+            except (ZeroDivisionError, ValueError) as exc:
+                raise RuntimeError(
+                    "full 729-equation high-precision QR solve is rank deficient "
+                    f"at iteration {iteration}; full residual={mp.nstr(full_norm, 8)}"
+                ) from exc
+
+            alpha = mp.mpf(1)
+            for _ in range(32):
+                ztrial = z + alpha * dz_qr
+                trial_norm = mp.norm(eval_f(ztrial, all_rows))
+                last_trial_norm = trial_norm
+                if trial_norm < full_norm:
+                    z = ztrial
+                    solve_modes.append("full_qr")
+                    step_scales.append(mp.nstr(alpha, 20))
+                    accepted = True
+                    break
+                alpha /= 2
+
+        if not accepted:
+            raise RuntimeError(
+                "globalised high-precision Newton could not find a step decreasing "
+                f"all 729 Brent residuals at iteration {iteration}; "
+                f"current={mp.nstr(full_norm, 8)} "
+                f"best_last_trial={mp.nstr(last_trial_norm, 8) if last_trial_norm is not None else 'n/a'}"
+            )
+    else:
+        # The endpoint is still checked below, but make non-convergence explicit.
+        final_norm = mp.norm(eval_f(z, all_rows))
+        if final_norm >= target_norm:
+            raise RuntimeError(
+                "globalised high-precision Newton exhausted 16 iterations without "
+                f"reaching the requested precision; residual={mp.nstr(final_norm, 12)}"
+            )
 
     A, B, C, cc = set_unknown(z)
     maxerr = mp.mpf(0)
@@ -372,13 +580,18 @@ def high_precision_refine(
                 ss += e * e
     return {
         "free": free,
-        "rows": rows,
+        "rows": initial_rows,
         "min_qr_diag": min_qr_diag,
+        "repivots": repivots,
+        "solve_modes": solve_modes,
+        "step_scales": step_scales,
+        "full_residual_history": full_residual_history,
+        "rank_history": rank_history,
+        "selected_rows": current_rows,
         "values": [z[i] for i in range(len(free))],
         "max_residual": maxerr,
         "l2_residual": mp.sqrt(ss),
     }
-
 
 
 def recognise_high_precision(hp, *, rational_den: int = 10**6, max_field_degree: int = 12,
@@ -619,6 +832,12 @@ def main():
         "values": [mp.nstr(v, args.dps) for v in hp["values"]],
         "max_residual": mp.nstr(hp["max_residual"], 30),
         "l2_residual": mp.nstr(hp["l2_residual"], 30),
+        "repivots": int(hp.get("repivots", 0)),
+        "solve_modes": list(hp.get("solve_modes", [])),
+        "step_scales": list(hp.get("step_scales", [])),
+        "full_residual_history": list(hp.get("full_residual_history", [])),
+        "rank_history": [int(r) for r in hp.get("rank_history", [])],
+        "selected_rows": [int(r) for r in hp.get("selected_rows", [])],
     }
     (args.out / "high_precision_values.json").write_text(json.dumps(hp_dump, indent=2) + "\n")
     try:
@@ -657,6 +876,8 @@ def main():
         "high_precision_max_residual": mp.nstr(hp["max_residual"], 20),
         "high_precision_l2_residual": mp.nstr(hp["l2_residual"], 20),
         "selected_equation_min_qr_diag": hp["min_qr_diag"],
+        "high_precision_repivots": int(hp.get("repivots", 0)),
+        "high_precision_solve_modes": list(hp.get("solve_modes", [])),
         "field": cert["field"],
         "field_degree": cert.get("field_degree"),
         "coefficient_counts": cert["coefficient_counts"],
@@ -664,11 +885,11 @@ def main():
         "nonzero_exact_identities": cert["nonzero_exact_identities"],
     }
     (args.out / "sparse_exact_report.json").write_text(json.dumps(report, indent=2) + "\n")
-    md = f"""# Sparse-family exactification\n\n- structural zeros: **{nzero} / 644** at threshold `{args.zero_threshold:g}`\n- next nonzero magnitude: `{next_nonzero:.6e}`\n- reduced unknowns after zeros + pivot gauge: **{sys.x0.numel()}**\n- reduced Jacobian rank/nullity: **{rank0} / {nullity0}**\n- rational locks accepted: **{len(locked)}**\n- family move L2 / max-coordinate: `{family_move:.6e}` / `{family_move_max:.6e}`\n- high-precision full residual: `{mp.nstr(hp['l2_residual'], 8)}`\n- exact field: **{cert['field']}**\n- exact coefficient counts: **{cert['coefficient_counts']['rational']} rational + {cert['coefficient_counts']['algebraic']} algebraic = 644**\n- exact 729-identity verification: **{cert['exact_identity']}**\n\nThe rational locking step moves along the local exact solution family; it is not merely a coordinate gauge transform.\n"""
+    md = f"""# Sparse-family exactification\n\n- structural zeros: **{nzero} / 644** at threshold `{args.zero_threshold:g}`\n- next nonzero magnitude: `{next_nonzero:.6e}`\n- reduced unknowns after zeros + pivot gauge: **{sys.x0.numel()}**\n- reduced Jacobian rank/nullity: **{rank0} / {nullity0}**\n- rational locks accepted: **{len(locked)}**\n- family move L2 / max-coordinate: `{family_move:.6e}` / `{family_move_max:.6e}`\n- high-precision full residual: `{mp.nstr(hp['l2_residual'], 8)}`\n- high-precision row repivots: **{hp.get('repivots', 0)}**\n- exact field: **{cert['field']}**\n- exact coefficient counts: **{cert['coefficient_counts']['rational']} rational + {cert['coefficient_counts']['algebraic']} algebraic = 644**\n- exact 729-identity verification: **{cert['exact_identity']}**\n\nThe rational locking step moves along the local exact solution family; it is not merely a coordinate gauge transform.\n"""
     (args.out / "SPARSE_EXACT_REPORT.md").write_text(md)
 
     print(f"zeros={nzero}, reduced vars={sys.x0.numel()}, family nullity={nullity0}")
-    print(f"locks={len(locked)}, move={family_move:.3e}, hp_res={mp.nstr(hp['l2_residual'], 5)}")
+    print(f"locks={len(locked)}, move={family_move:.3e}, hp_res={mp.nstr(hp['l2_residual'], 5)}, repivots={hp.get('repivots', 0)}")
     print(f"field={cert['field']} counts={cert['coefficient_counts']} exact={cert['exact_identity']}")
     print("wrote", args.out)
 

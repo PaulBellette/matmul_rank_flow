@@ -1,0 +1,26 @@
+[
+  {
+    "seed": 211,
+    "returncode": 0,
+    "summary": "runs/rank23_complexity_campaign/seed_211/complexity_summary.json",
+    "initial_structural_additions": 143,
+    "best_structural_additions": 127,
+    "initial_additions": 143,
+    "best_additions": 127,
+    "initial_support": 198,
+    "best_support": 182,
+    "best_residual": 4.0514529739447655e-15
+  },
+  {
+    "seed": 401,
+    "returncode": 0,
+    "summary": "runs/rank23_complexity_campaign/seed_401/complexity_summary.json",
+    "initial_structural_additions": 137,
+    "best_structural_additions": 128,
+    "initial_additions": 137,
+    "best_additions": 128,
+    "initial_support": 192,
+    "best_support": 183,
+    "best_residual": 2.431669859151922e-15
+  }
+]

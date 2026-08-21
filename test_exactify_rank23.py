@@ -39,3 +39,34 @@ def test_rational_recognise_simple_fraction():
     assert ok
     assert str(expr) == "1/3"
     assert err < 1e-8
+
+
+def test_high_precision_repivot_can_replace_singular_square_subset():
+    import numpy as np
+    from sparse_family_exactify import selected_independent_rows_array
+
+    # Rows 0 and 1 are collinear, so that particular 2x2 subsystem is singular.
+    # The full 3x2 Jacobian is nevertheless rank two; QR row pivoting must find
+    # a nonsingular pair rather than diagnosing the whole system as singular.
+    J = np.array([
+        [1.0, 0.0],
+        [2.0, 0.0],
+        [0.0, 1.0],
+    ])
+    rows, min_diag, rank = selected_independent_rows_array(J, 2, rcond=1e-12)
+    assert rank == 2
+    assert min_diag > 0
+    assert abs(np.linalg.det(J[rows, :])) > 0.5
+
+
+def test_high_precision_repivot_reports_true_rank_deficiency():
+    import numpy as np
+    from sparse_family_exactify import selected_independent_rows_array
+
+    J = np.array([
+        [1.0, 0.0],
+        [2.0, 0.0],
+        [3.0, 0.0],
+    ])
+    _rows, _min_diag, rank = selected_independent_rows_array(J, 2, rcond=1e-12)
+    assert rank == 1

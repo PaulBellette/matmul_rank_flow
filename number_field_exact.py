@@ -257,18 +257,6 @@ def discover_common_field(unresolved, *, max_degree=12, tol=None, maxcoeff_algde
         tol = mp.mpf(10) ** (-(mp.mp.dps - 30))
     diagnostics = {"individual": [], "candidates": [], "search": {"max_degree": max_degree, "individual_sample": individual_sample, "pair_sample": pair_sample, "triple_sample": triple_sample, "aggregate_sample": aggregate_sample}}
 
-    # Prefer coordinates with larger magnitude variety, but keep deterministic order.
-    sample_values = list(unresolved[:individual_sample])
-    individual = []
-    known_minpolys = {}
-    for idx, x in sample_values:
-        p = algdep(x, max_degree=max_degree, tol=tol, maxcoeff=maxcoeff_algdep)
-        row = {"index": int(idx), "degree": (len(p)-1 if p else None), "minpoly": p}
-        diagnostics["individual"].append(row)
-        if p:
-            known_minpolys[int(idx)] = p
-            individual.append((len(p)-1, idx, x, p, f"x[{idx}]"))
-
     def try_candidate(alpha, p, label):
         d = len(p)-1
         row = {"label": label, "degree": d, "minpoly": p}
@@ -307,9 +295,37 @@ def discover_common_field(unresolved, *, max_degree=12, tol=None, maxcoeff_algde
         diagnostics["selected"] = {"label": label, "degree": d, "minpoly": p, "max_error": mp.nstr(maxerr, 10)}
         return {"alpha": alpha, "minpoly": p, "representations": reps, "diagnostics": diagnostics}
 
+    # Prefer coordinates with larger magnitude variety, but keep deterministic order.
+    # Test each discovered individual generator immediately.  The old ordering first
+    # ran algdep on the entire sample (up to 64 coordinates) before trying the first
+    # candidate, which is needlessly expensive when an early coordinate already
+    # generates the common field (as happens for simple quadratic families).
+    sample_values = list(unresolved[:individual_sample])
+    individual = []
+    known_minpolys = {}
+    tried_individual = set()
+    for idx, x in sample_values:
+        p = algdep(x, max_degree=max_degree, tol=tol, maxcoeff=maxcoeff_algdep)
+        row = {"index": int(idx), "degree": (len(p)-1 if p else None), "minpoly": p}
+        diagnostics["individual"].append(row)
+        if p:
+            known_minpolys[int(idx)] = p
+            label = f"x[{idx}]"
+            individual.append((len(p)-1, idx, x, p, label))
+            tried_individual.add(label)
+            got = try_candidate(x, p, label)
+            if got is not None:
+                deg_hist = {}
+                for rr in diagnostics["individual"]:
+                    deg_hist[str(rr["degree"])] = deg_hist.get(str(rr["degree"]), 0) + 1
+                diagnostics["degree_histogram"] = deg_hist
+                return got
+
     # A coordinate of maximal detected degree is most likely already primitive.
     individual.sort(reverse=True, key=lambda z: (z[0], -max(abs(c) for c in z[3])))
     for _d, _idx, x, p, label in individual:
+        if label in tried_individual:
+            continue
         got = try_candidate(x, p, label)
         if got is not None:
             deg_hist = {}

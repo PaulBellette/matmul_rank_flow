@@ -1,0 +1,7 @@
+# SymPy independent exact operational verification
+domain: QQ<CRootOf(23*t**2 - 4, 0)>
+rank: 23
+81 matrix-unit pairs / 729 output coefficients: PASS
+random exact trials: 20 PASS
+noncommutative M2(K) trials: 5 PASS
+RESULT: PASS
