@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.6.1)  21 AUG 2026 17:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.6.1)  22 AUG 2026 22:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -355,7 +355,7 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count300
 \l__pdf_internal_box=\box56
 )
-No file main.aux.
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
@@ -376,6 +376,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
 LaTeX Font Info:    ... okay on input line 21.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 21.
 LaTeX Font Info:    ... okay on input line 21.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -474,13 +475,14 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 Package hyperref Info: Link coloring OFF on input line 21.
+ (./main.out)
+(./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
 LaTeX Font Info:    Trying to load font information for U+msa on input line 23.
 
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
@@ -525,15 +527,7 @@ LaTeX Warning: Citation `fawzi2022' on page 1 undefined on input line 32.
 
 LaTeX Warning: Citation `dupont2026' on page 2 undefined on input line 38.
 
-[2] [3] [4]
-
-LaTeX Warning: Reference `tab:replication' on page 5 undefined on input line 17
-3.
-
-[5]
-
-LaTeX Warning: Reference `tab:exact' on page 6 undefined on input line 206.
-
+[2] [3] [4] [5]
 
 LaTeX Warning: Citation `berger2022' on page 6 undefined on input line 227.
 
@@ -546,21 +540,27 @@ LaTeX Warning: Citation `karunaratne2026' on page 7 undefined on input line 254
 .
 
 
-LaTeX Warning: Citation `laderman1976' on page 7 undefined on input line 260.
+LaTeX Warning: Reference `tab:complexity' on page 7 undefined on input line 260
+.
+
+[7]
+
+LaTeX Warning: Citation `laderman1976' on page 8 undefined on input line 290.
 
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-[7]
+[8]
 
-LaTeX Warning: Citation `fawzi2022' on page 8 undefined on input line 288.
+LaTeX Warning: Citation `fawzi2022' on page 9 undefined on input line 324.
 
 
-LaTeX Warning: Citation `dupont2026' on page 8 undefined on input line 288.
+LaTeX Warning: Citation `dupont2026' on page 9 undefined on input line 324.
 
+[9]
 No file main.bbl.
-[8] (./main.aux)
+[10] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -578,17 +578,17 @@ Package rerunfilecheck Warning: File `main.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  B04EBBFF9F75B03FAB8956281780DDA7;3703.
+(rerunfilecheck)             Before: B04EBBFF9F75B03FAB8956281780DDA7;3703
+(rerunfilecheck)             After:  5F2E75B4AFEEEC62F73266BF94422845;4177.
  ) 
 Here is how much of TeX's memory you used:
- 13193 strings out of 476182
- 205000 string characters out of 5795596
- 1936975 words of memory out of 5000000
- 34848 multiletter control sequences out of 15000+600000
- 572642 words of font info for 150 fonts, out of 8000000 for 9000
+ 13241 strings out of 476182
+ 205533 string characters out of 5795596
+ 1937975 words of memory out of 5000000
+ 34874 multiletter control sequences out of 15000+600000
+ 572846 words of font info for 154 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,10n,79p,1510b,464s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,2010b,630s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/paul-bellete/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1
 095.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
@@ -606,10 +606,10 @@ amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (8 pages, 225541 bytes).
+Output written on main.pdf (10 pages, 233903 bytes).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
- 146 compressed objects within 2 object streams
- 56 named destinations out of 1000 (max. 500000)
- 31233 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 278 PDF objects out of 1000 (max. 8388607)
+ 228 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 31409 words of extra memory for PDF output out of 35830 (max. 10000000)
 

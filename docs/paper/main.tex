@@ -22,7 +22,7 @@ by Differential Geometry and Basin Search}
 \maketitle
 
 \begin{abstract}
-We study exact bilinear algorithms as points on the algebraic variety of low-rank tensor decompositions and search for rank reductions by moving between exact solution basins rather than by solving a fixed-rank approximation problem from random initialization.  The method combines local Jacobian geometry, channel-collision and channel-death diagnostics, finite tangent-shell moves, bounded off-manifold transitions, and a small specialist Pareto beam.  For $3\times3$ matrix multiplication, the procedure starts from the schoolbook rank-27 decomposition, obtains rank 26 through an autonomous collision-and-fusion step, and then searches for successive lower-rank boundaries.  After development, a frozen endpoint-free controller was evaluated on five fresh random seeds.  All five runs followed $26\to25\to24\to23$, requiring 9--25 beam generations, and all endpoints polished to residuals of order $10^{-15}$.  A separate numerical-to-exact pipeline has produced exact symbolic rank-23 certificates for three of the five frozen-seed endpoints, as well as for an earlier endpoint-free success.  Exact orbit invariants distinguish these four certificates from a 17,376-scheme reference archive.  We do not claim a new multiplication-count record or previously unknown continuous families; the contribution is a reproducible search strategy for navigating exact bilinear-algorithm manifolds, together with an exactification and classification workflow.
+We study exact bilinear algorithms as points on the algebraic variety of low-rank tensor decompositions and search for rank reductions by moving between exact solution basins rather than by solving a fixed-rank approximation problem from random initialization.  The method combines local Jacobian geometry, channel-collision and channel-death diagnostics, finite tangent-shell moves, bounded off-manifold transitions, and a small specialist Pareto beam.  For $3\times3$ matrix multiplication, the procedure starts from the schoolbook rank-27 decomposition, obtains rank 26 through an autonomous collision-and-fusion step, and then searches for successive lower-rank boundaries.  After development, a frozen endpoint-free controller was evaluated on five fresh random seeds.  All five runs followed $26\to25\to24\to23$, requiring 9--25 beam generations, and all endpoints polished to residuals of order $10^{-15}$.  A separate numerical-to-exact pipeline has produced exact symbolic rank-23 certificates for three of the five frozen-seed endpoints, as well as for an earlier endpoint-free success.  Exact orbit invariants distinguish these four certificates from a 17,376-scheme reference archive. A secondary fixed-rank experiment then navigates two discovered exact rank-23 families toward lower-support representatives, producing exact schemes with 124 and 109 naive linear-form additions; deterministic exact greedy-CSE upper bounds are 82 and 71 additions when scalar constant multiplications are not charged. A matched ablation finds no benefit from applying the same simplicity preference during rank discovery and slows one of five weak-guidance trajectories. We do not claim a new multiplication-count record or previously unknown continuous families; the contribution is a reproducible search strategy for navigating exact bilinear-algorithm manifolds, together with exactification, classification, and secondary-objective navigation workflows.
 \end{abstract}
 
 \section{Introduction}
@@ -35,7 +35,7 @@ This paper develops that viewpoint.  A rank-$R$ algorithm is treated as a point 
 
 The principal empirical result is deliberately modest but reproducible.  After a development phase, a frozen endpoint-free controller was run from five fresh schoolbook initializations.  All five independently reached rank 23.  Downstream exactification has produced three exact certificates among those five endpoints and one additional certificate from an earlier endpoint-free run.  These exact schemes are structurally distinct from the schemes in a 17,376-entry reference archive under exact invariants preserved by the standard matrix-multiplication isotropy action.  This is not evidence by itself that the corresponding continuous families are new.
 
-The method is also distinct from recent work improving the asymptotic exponent $\omega$ using large-scale continuous optimization and AlphaEvolve \cite{dupont2026}: our objective here is the exact finite tensor-rank landscape of small matrix multiplication, not the laser-method optimization underlying asymptotic bounds.
+The method is also distinct from recent work improving the asymptotic exponent $\omega$ using large-scale continuous optimization and AlphaEvolve \cite{dupont2026}: our objective here is the exact finite tensor-rank landscape of small matrix multiplication, not the laser-method optimization underlying asymptotic bounds. The post-discovery complexity experiment additionally suggests that the same exact family can be navigated according to an objective other than tensor rank.
 
 \section{Bilinear formulation}
 
@@ -251,7 +251,37 @@ T(n)=23T(n/3)+O(n^2)
 \end{equation}
 and the exponent $\log_3 23\approx2.8541$.  These decompositions do not improve the asymptotic matrix-multiplication exponent and are not intended as practical low-addition circuits.
 
-Indeed, additive complexity is a separate optimization problem.  Recent rank-23 work has reduced the linear-circuit cost to 55 additions/subtractions, for 78 scalar operations including the 23 bilinear products \cite{karunaratne2026}.  Our search objective does not currently penalize coefficient alphabet, sparsity of linear forms, constant multiplications, or addition count.  This separation is useful experimentally: the repeated discovery of rank 23 is not a consequence of constraining the search toward known sparse ternary schemes.  It also suggests a natural next experiment---move within a discovered rank-23 family while adding arithmetic circuit complexity as another Pareto objective.
+Indeed, additive complexity is a separate optimization problem.  Recent rank-23 work has reduced the linear-circuit cost to 55 additions/subtractions, for 78 scalar operations including the 23 bilinear products \cite{karunaratne2026}.  The frozen rank-discovery objective did not penalize coefficient alphabet, sparsity of linear forms, constant multiplications, or addition count.  This separation is experimentally useful: the repeated discovery of rank 23 is not a consequence of constraining the search toward known sparse ternary schemes.
+
+\subsection{Fixed-rank complexity navigation}
+
+After the frozen discovery experiment, we tested whether a discovered exact rank-23 family could be navigated according to raw linear-form support.  Tensor equality remained a hard constraint.  A smooth support objective was projected into the local exact tangent space, candidate steps were corrected back to the rank-23 solution set, existing structural zeros were preserved, and newly tiny coefficients were tested as exact zero constraints.
+
+The first campaign started from the exact seed-211 and seed-401 representatives.  Table~\ref{tab:complexity} reports the raw support-derived addition count before the campaign, at the best numerical sparse checkpoint, and after exactification.  A $k$-term linear form is charged $k-1$ additions/subtractions.
+
+\begin{table}[ht]
+\centering
+\caption{Post-discovery complexity navigation.  Greedy CSE is a deterministic exact straight-line-program upper bound; arbitrary scalar constant multiplications are not charged.}
+\label{tab:complexity}
+\begin{tabular}{rccccc}
+\toprule
+Seed & Start naive & Numerical & Exact naive & Greedy CSE & Exact field \\
+\midrule
+211 & 143 & 127 & 124 & $94\to82$ & rational \\
+401 & 137 & 128 & 109 & $87\to71$ & $\QQ(\sqrt{23})$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All deliberately frozen campaign zeros remain exact zeros in the resulting symbolic certificates, and all 729 Brent identities verify exactly.  For seed 401 the quadratic generator may be chosen to satisfy $23\alpha^2-4=0$.  The substantial additional simplification during exactification, particularly $128\to109$ for seed 401, shows that the numerical search can locate a low-complexity neighbourhood whose exact local family contains an even simpler representative.
+
+These counts are not claims of optimal additive complexity.  The greedy CSE pass is heuristic, and arbitrary scalar multiplications are free in this accounting.  In particular, the value 71 is not directly comparable with a ternary 55-addition construction on total scalar-operation cost.
+
+\subsection{Does simplicity help rank discovery?}
+
+We also ran a matched ablation in which the local rank-reduction operators, shared rank-26 starting checkpoint, beam width, and expansion budget were unchanged, while a weak complexity score influenced beam policy.  Baseline, constant-weak, and rank-adaptive policies all reached rank 23 on all five frozen seeds and all had median structural endpoint complexity 566 additions.  Four seeds reproduced the baseline generation count.  Seed 211 was the exception: baseline required 12 beam generations, constant weak guidance required 29 with no endpoint-complexity benefit, and a policy delayed until rank 24 returned to 12 generations.  Delayed runs on seeds 307 and 503 also matched baseline.
+
+At the tested strength, arithmetic simplicity therefore supplies no demonstrated benefit during rank discovery and can perturb a productive earlier basin trajectory.  In contrast, it is highly effective as a post-discovery objective on a fixed rank-23 family.  The empirical architecture is consequently staged: discover rank first, then simplify the exact family.
 
 \section{Limitations}
 
@@ -263,6 +293,7 @@ The present evidence supports a search-method claim, not a new rank bound.
     \item Archive inequivalence does not imply that the corresponding continuous solution families are new.
     \item The method was developed on $2\times2$ and $3\times3$ matrix multiplication.  Its usefulness for other bilinear tensors or larger matrix formats remains to be established.
     \item The search is computationally expensive relative to simply evaluating a known rank-23 formula; its purpose is algorithm discovery rather than runtime multiplication.
+    \item The reported greedy-CSE addition counts are upper bounds under an addition-only cost convention that leaves arbitrary scalar constant multiplications uncharged.
 \end{itemize}
 
 \section{Reproducibility}
@@ -274,7 +305,10 @@ The accompanying repository retains both the paper-facing pipeline and the explo
     \item \texttt{analyze\_replication\_endpoints.py}: polishing and structural analysis;
     \item \texttt{batch\_exactify\_replication.py}: sparse-family exactification;
     \item \texttt{verify\_rank23\_exact.py}: standalone exact certificate verification;
-    \item \texttt{rank23\_equivalence\_search.py}: exact-invariant corpus filtering.
+    \item \texttt{rank23\_equivalence\_search.py}: exact-invariant corpus filtering;
+    \item \texttt{run\_rank23\_complexity\_campaign.py}: fixed-rank support-reduction campaign;
+    \item \texttt{run\_rank23\_complexity\_followup.py}: exactification and exact circuit comparison of sparse winners;
+    \item \texttt{run\_complexity\_guidance\_ablation.py}: matched complexity-during-discovery ablation.
 \end{enumerate}
 
 The repository also includes independent verification scripts that do not depend on the search controller.  External comparison corpora are fetched separately and are not redistributed with the project.
@@ -283,13 +317,15 @@ The repository also includes independent verification scripts that do not depend
 
 The main observation is that the exact rank-$R$ solution set itself can be treated as a search space.  Local tangent information alone is insufficient, but it provides useful coordinates for a global controller that can preserve and reorganize exact basins.  The specialist Pareto beam appears to work because different precursors of rank reduction---reduced excess nullity, deletion susceptibility, and local channel mobility---need not improve simultaneously in one basin.
 
-Three follow-up experiments are especially informative.  First, initialize from several inequivalent exact rank-23 representatives and search for a genuine rank-22 boundary.  Any success would require finite coefficients, high-precision refinement, and exact verification; border-rank degeneration would not count.  Second, add additive complexity and coefficient simplicity to the Pareto coordinates and test whether the rank-23 manifold can be navigated toward sparse low-cost circuits.  Third, apply the same method to $4\times4$ multiplication, initially asking only whether it can reproduce a known rank reduction before attempting unexplored boundaries.
+The complexity experiments suggest that different stages benefit from different objectives: simplicity did not help the frozen rank-reduction search at the tested strength, but became effective once rank 23 was fixed.  This motivates a modular view of algorithm search rather than a single scalar objective.
+
+Three follow-up experiments are especially informative.  First, compare against deliberately simple baselines: plain gradient descent or Adam from the same schoolbook start, plus a simple sparsity/death-regularized variant, under matched seeds and approximate compute budgets.  Second, extend the post-discovery cost model to coefficient alphabet, nontrivial scalar-multiplication cost, and stronger straight-line-program optimization.  Third, apply the same method to $4\times4$ multiplication, initially asking only whether it can reproduce a known rank reduction before attempting unexplored boundaries.  A rank-22 campaign remains a high-upside exploratory direction; any success would require finite coefficients, high-precision refinement, and exact verification, while failure to find a crossing is not a lower bound.
 
 More broadly, the work fits a growing pattern in computational mathematics in which continuous or learned optimization proposes a candidate and an independent exact stage turns the candidate into a mathematical certificate.  AlphaTensor uses learned search in a discrete tensor-decomposition game \cite{fawzi2022}; recent AlphaEvolve-assisted work uses large-scale optimization inside asymptotic matrix-multiplication analysis \cite{dupont2026}.  The present method explores a different regime: finite exact bilinear decompositions, with the local geometry of the exact solution variety used directly as search information.
 
 \section{Conclusion}
 
-A differential-geometric, basin-search view of bilinear algorithms can repeatedly navigate from schoolbook $3\times3$ multiplication to the known rank-23 boundary without being supplied a target rank-23 decomposition during evaluation.  In a frozen five-seed experiment, all five runs reached rank 23, and several resulting endpoints admit independently verifiable exact symbolic certificates.  The current evidence does not establish a new rank record or new continuous families.  It does establish a reproducible computational pathway from an elementary exact algorithm, through a sequence of exact solution basins, to structurally diverse low-rank algorithms.  Whether the same machinery can cross the rank-23 boundary or generalize to other bilinear tensors remains open.
+A differential-geometric, basin-search view of bilinear algorithms can repeatedly navigate from schoolbook $3\times3$ multiplication to the known rank-23 boundary without being supplied a target rank-23 decomposition during evaluation.  In a frozen five-seed experiment, all five runs reached rank 23, and several resulting endpoints admit independently verifiable exact symbolic certificates.  The current evidence does not establish a new rank record or new continuous families.  It does establish a reproducible computational pathway from an elementary exact algorithm, through a sequence of exact solution basins, to structurally diverse low-rank algorithms. The post-discovery experiments further show that a discovered exact rank-23 family can be navigated toward substantially lower-support exact representatives, whereas the same simplicity signal provides no benefit during the frozen rank-reduction phase at the tested strength. Whether the machinery can cross the rank-23 boundary or generalize to other bilinear tensors remains open.
 
 % TODO before submission: decide final author list, affiliations, acknowledgements,
 % and wording for AI-assisted programming / computational tooling disclosure.
