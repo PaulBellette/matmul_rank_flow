@@ -47,14 +47,37 @@ python3 run_rank23_complexity_campaign.py --smoke
 
 Outputs are written under `runs/rank23_complexity_campaign/`. Each seed records `complexity_history.csv`, exact frontier checkpoints, `best_additions.pt`, `best_smooth.pt`, and `complexity_summary.json`. The campaign root records progress after each seed so a later failure does not hide an earlier result.
 
+
+## First campaign result
+
+The first campaign succeeded on both rational starting families. The numerical search reduced support-derived addition counts in both cases, and exactification then moved to still simpler exact representatives on the same constrained families:
+
+| seed | starting exact naive adds | numerical winner | exact sparse representative | greedy exact CSE: start -> sparse | sparse exact field |
+|---:|---:|---:|---:|:---|:---|
+| 211 | 143 | 127 | **124** | 94 -> **82** | rational |
+| 401 | 137 | 128 | **109** | 87 -> **71** | `Q(sqrt(23))` |
+
+The seed-401 exact representative uses a quadratic generator satisfying
+
+```text
+23*alpha^2 - 4 = 0
+```
+
+and verifies all 729 Brent identities exactly. The exact-zero guardrail also passes: every coefficient deliberately frozen to zero by the campaign remains exactly zero in the symbolic certificate. Seed 211 likewise exactifies successfully with all deliberately snapped zeros preserved.
+
+The extra simplification during exactification is important. The numerical objective found low-support neighbourhoods, but the high-precision family move could land on a substantially sparser exact point (`128 -> 109` for seed 401). This is evidence that the local exact solution family itself contains useful arithmetic structure rather than the search merely producing thresholded near-zeros.
+
+The greedy-CSE numbers are exact deterministic straight-line-program upper bounds, not global minima. Arbitrary scalar multiplications are not charged, so `71` should not be compared directly with a published ternary `55`-addition scheme as a total scalar-operation count.
+
 ## What counts as an interesting result
 
-The first experiment is not expected to beat the best hand/automatically engineered low-addition rank-23 schemes. It is successful if the search can materially reduce raw additions while retaining an exact rank-23 decomposition with finite coefficients. A useful next stage would then:
+The first experiment has cleared its original success criterion: it materially reduced raw additions on two independent rank-23 families and the improvements survived exactification. The next stage is therefore no longer basic feasibility; it is to improve the cost model:
 
-1. exactify the low-support representative;
-2. run common-subexpression elimination / straight-line-program optimization;
-3. score coefficient complexity (`0, +/-1`, small rationals, general algebraic constants);
-4. compare against published low-addition rank-23 algorithms.
+1. score coefficient complexity (`0, +/-1`, small rationals, general algebraic constants);
+2. charge nontrivial scalar multiplications rather than counting additions alone;
+3. strengthen common-subexpression / straight-line-program optimization;
+4. test whether repeated simplify -> exactify cycles continue to move toward low-cost strata;
+5. compare on equal cost conventions with published low-addition rank-23 algorithms.
 
 ## Exactification and circuit follow-up
 

@@ -51,6 +51,7 @@ from curvature_flow import (
 )
 from geometry_flow import amp_index, pack, residual_vector, robust_svd, unpack
 from rankflow import mm_tensor
+from rank23_complexity_search import hard_support_metrics, smooth_support_objective
 
 
 torch.set_default_dtype(torch.float64)
@@ -152,6 +153,15 @@ class ControllerConfig:
     delete_exact_tol: float = 1.0e-9
     clamp_fractions: tuple[float, ...] = (0.8, 0.6, 0.4, 0.2, 0.0)
 
+    # Optional arithmetic-complexity regularisation of *beam policy*.  The
+    # local geometry/operators are unchanged; guided and baseline runs therefore
+    # have the same candidate-generation and compute budget.
+    complexity_mode: str = "off"  # off | weak | delayed | adaptive
+    complexity_tau: float = 8.0e-2
+    complexity_effective_tol: float = 1.0e-3
+    complexity_weight: float = 0.75
+    complexity_delayed_rank: int = 24
+
     max_cycles: int = 16
     seed: int = 0
 
@@ -211,6 +221,9 @@ class BasinState:
     susceptibility_channel: int
     max_abs_amplitude: float
     fingerprint: torch.Tensor
+    complexity_smooth: float = math.nan
+    complexity_additions: int = -1
+    complexity_weight: float = 0.0
     expansion_count: int = 0
     last_expanded_generation: int = -1
 
@@ -320,6 +333,52 @@ def generic_basin_score(
 
 
 
+def complexity_policy_weight(rank: int, cfg: ControllerConfig) -> float:
+    """Weight of algebraic simplicity in beam policy at the current rank.
+
+    ``weak`` is constant. ``delayed`` turns on only at/under the requested
+    rank. ``adaptive`` deliberately grows as the search approaches the goal:
+    for goal 23 the factors at ranks 26,25,24 are 1/4, 1/2, 1.
+    """
+    mode = cfg.complexity_mode
+    if mode == "off":
+        return 0.0
+    if mode == "weak":
+        return float(cfg.complexity_weight)
+    if mode == "delayed":
+        return float(cfg.complexity_weight) if rank <= cfg.complexity_delayed_rank else 0.0
+    if mode == "adaptive":
+        delta = max(1, rank - cfg.goal_rank)
+        factor = 2.0 ** (-max(delta - 1, 0))
+        return float(cfg.complexity_weight) * factor
+    raise ValueError(f"unknown complexity_mode={mode!r}")
+
+
+def discovery_complexity_metrics(theta: torch.Tensor, rank: int, cfg: ControllerConfig) -> tuple[float, int]:
+    """Gauge-controlled smooth support plus a deliberately coarse add count.
+
+    During discovery tiny coefficients are allowed because freezing zeros would
+    remove useful tangent directions.  The effective-addition diagnostic uses
+    a 1e-3-relative threshold by default; exact structural counts remain a
+    post-discovery question.
+    """
+    smooth = float(smooth_support_objective(theta, cfg.n, rank, cfg.complexity_tau).detach())
+    hard = hard_support_metrics(theta, cfg.n, rank, cfg.complexity_effective_tol)
+    return smooth, int(hard["hard_additions"])
+
+
+def _complexity_rank_positions(states: list[BasinState]) -> dict[int, int]:
+    ordered = sorted(
+        states,
+        key=lambda s: (
+            s.complexity_additions if s.complexity_additions >= 0 else 10**9,
+            _finite_metric(s.complexity_smooth),
+            s.basin_id,
+        ),
+    )
+    return {s.basin_id: i for i, s in enumerate(ordered)}
+
+
 def _finite_metric(x: float) -> float:
     return float(x) if math.isfinite(float(x)) else 1.0e30
 
@@ -367,10 +426,15 @@ def beam_priority_order(states: list[BasinState]) -> list[BasinState]:
         _rank_positions(states, lambda s: s.death_distance),
         _rank_positions(states, lambda s: s.max_abs_amplitude),
     ]
+    complexity_active = any(s.complexity_weight > 0.0 for s in states)
+    cr = _complexity_rank_positions(states) if complexity_active else None
+    # Weight is rank-dependent but shared by every state at a fixed rank.
+    cw = max((s.complexity_weight for s in states), default=0.0)
     return sorted(
         states,
         key=lambda s: (
-            sum(r[s.basin_id] for r in ranks),
+            sum(r[s.basin_id] for r in ranks)
+            + (cw * cr[s.basin_id] if cr is not None else 0.0),
             min(r[s.basin_id] for r in ranks),
             s.basin_id,
         ),
@@ -409,6 +473,22 @@ def specialist_expansion_schedule(
     explore_due = cfg.beam_explore_every > 0 and generation % cfg.beam_explore_every == 0
     limit = min(cfg.beam_width, base_limit + (1 if explore_due else 0))
 
+    # Guided runs spend the *existing* periodic exploration slot on the
+    # simplest retained basin.  No extra parent expansion is added, keeping the
+    # operator budget matched to baseline.
+    if explore_due and any(s.complexity_weight > 0.0 for s in states):
+        add(
+            min(
+                states,
+                key=lambda s: (
+                    s.complexity_additions if s.complexity_additions >= 0 else 10**9,
+                    _finite_metric(s.complexity_smooth),
+                    s.basin_id,
+                ),
+            ),
+            "complexity",
+        )
+
     # Fill specialist collisions/spare capacity with states that have received
     # the least compute.  For equal counts prefer newer states so fresh branches
     # get at least one chance before old basins monopolise the beam.
@@ -421,7 +501,7 @@ def specialist_expansion_schedule(
         if state.basin_id not in by_id:
             add(state, "explore")
 
-    ordered_roles = {"genericity": 0, "deletion": 1, "death": 2, "explore": 3}
+    ordered_roles = {"genericity": 0, "deletion": 1, "death": 2, "complexity": 3, "explore": 4}
     scheduled = list(by_id.values())
     scheduled.sort(
         key=lambda item: (
@@ -505,6 +585,8 @@ def make_basin_state(
         susceptibility, channel, _ = deletion_susceptibility(theta, rank, cfg, seed=seed)
     else:
         susceptibility, channel = math.inf, A.best_channel
+    complexity_smooth, complexity_additions = discovery_complexity_metrics(theta, rank, cfg)
+    cweight = complexity_policy_weight(rank, cfg)
     return BasinState(
         basin_id=basin_id,
         theta=theta.detach().clone(),
@@ -518,6 +600,9 @@ def make_basin_state(
         susceptibility_channel=channel,
         max_abs_amplitude=A.max_abs_amplitude,
         fingerprint=basin_fingerprint(theta, rank, cfg),
+        complexity_smooth=complexity_smooth,
+        complexity_additions=complexity_additions,
+        complexity_weight=cweight,
         expansion_count=0,
         last_expanded_generation=-1,
     )
@@ -539,6 +624,9 @@ def basin_state_row(state: BasinState, *, accepted: bool = True, note: str = "")
         "best_amplitude": state.analysis.best_amplitude,
         "best_killability": state.analysis.best_killability,
         "max_abs_amplitude": state.max_abs_amplitude,
+        "complexity_smooth": state.complexity_smooth,
+        "complexity_additions": state.complexity_additions,
+        "complexity_weight": state.complexity_weight,
         "residual": state.analysis.residual,
         "expansion_count": state.expansion_count,
         "last_expanded_generation": state.last_expanded_generation,
@@ -1879,7 +1967,8 @@ def run_beam_controller(
 
         ordered = beam_priority_order(frontier)
         summary = " | ".join(
-            f"id{s.basin_id}:N={s.soft_nullity:.1f} E={s.susceptibility:.3g} D={s.death_distance:.2f}"
+            (f"id{s.basin_id}:N={s.soft_nullity:.1f} E={s.susceptibility:.3g} D={s.death_distance:.2f}"
+             + (f" C={s.complexity_additions}" if s.complexity_weight > 0.0 else ""))
             for s in ordered
         )
         print(f"beam gen={generation:02d} rank={rank} frontier={len(frontier)} | {summary}")
@@ -2176,6 +2265,11 @@ def parse_args():
     p.add_argument("--beam-delete-trigger", type=float, default=0.35)
     p.add_argument("--beam-min-soft-gain", type=float, default=0.25)
     p.add_argument("--beam-offhop-children", type=int, default=1)
+    p.add_argument("--complexity-mode", choices=["off", "weak", "delayed", "adaptive"], default="off")
+    p.add_argument("--complexity-tau", type=float, default=8.0e-2)
+    p.add_argument("--complexity-effective-tol", type=float, default=1.0e-3)
+    p.add_argument("--complexity-weight", type=float, default=0.75)
+    p.add_argument("--complexity-delayed-rank", type=int, default=24)
     p.add_argument("--smoke", action="store_true", help="tiny one-cycle controller smoke test")
     return p.parse_args()
 
@@ -2214,6 +2308,11 @@ def main():
         beam_delete_trigger=args.beam_delete_trigger,
         beam_min_soft_gain=args.beam_min_soft_gain,
         beam_offhop_children=args.beam_offhop_children,
+        complexity_mode=args.complexity_mode,
+        complexity_tau=args.complexity_tau,
+        complexity_effective_tol=args.complexity_effective_tol,
+        complexity_weight=args.complexity_weight,
+        complexity_delayed_rank=args.complexity_delayed_rank,
     )
     if args.smoke:
         cfg.max_cycles = 1

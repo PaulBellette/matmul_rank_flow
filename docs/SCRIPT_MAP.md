@@ -66,4 +66,14 @@ The current proliferation is mostly **historical layering**, not 47 independent 
 
 - `rank23_complexity_search.py` — fixed-rank exact-manifold search for lower raw linear-form support.
 - `run_rank23_complexity_campaign.py` — overnight driver for the rational seed-211 and seed-401 families.
-- `docs/RANK23_COMPLEXITY_SEARCH.md` — objective, caveats, and run instructions.
+- `run_rank23_complexity_followup.py` — exactifies sparse winners, checks frozen zeros, and compares exact circuit counts.
+- `rank23_linear_circuit.py` — exact naive-addition and deterministic greedy-CSE analysis.
+- `docs/RANK23_COMPLEXITY_SEARCH.md` — objective, results, caveats, and run instructions.
+
+### Complexity-guided discovery ablation
+
+- `run_complexity_guidance_ablation.py` — matched baseline/weak/delayed/adaptive campaign from a shared per-seed rank-26 checkpoint.
+- `test_complexity_guided_discovery.py` — compatibility and complexity-policy tests.
+- `docs/COMPLEXITY_GUIDED_DISCOVERY.md` — experiment design, five-seed results, and interpretation.
+
+For the shortest current scientific summary, see `docs/CURRENT_STATUS.md`.

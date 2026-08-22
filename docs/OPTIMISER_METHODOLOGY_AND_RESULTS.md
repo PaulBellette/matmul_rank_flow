@@ -292,7 +292,38 @@ This archive comparison does not establish that the corresponding continuous sol
 
 ---
 
-## 10. Current interpretation
+## 10. Post-discovery arithmetic-complexity navigation
+
+Rank and arithmetic circuit complexity are different objectives. Once rank 23 had been reached and exactified, a separate fixed-rank campaign asked whether the same local exact-family geometry could be used to find sparser representatives.
+
+The first pass optimises support-derived addition count: a linear form with support \(k\) contributes \(k-1\) additions/subtractions. Tensor equality remains a hard constraint. The search projects a smooth sparsity objective into the tangent space, corrects back to the exact rank-23 manifold, preserves existing structural zeros, and attempts to snap newly tiny coefficients to exact zero.
+
+Starting from the exact seed-211 and seed-401 representatives, the first campaign obtained:
+
+| seed | starting exact naive additions | numerical sparse winner | exact sparse representative | greedy exact CSE |
+|---:|---:|---:|---:|:---|
+| 211 | 143 | 127 | **124** | 94 -> **82** |
+| 401 | 137 | 128 | **109** | 87 -> **71** |
+
+Seed 211's sparse representative is rational. Seed 401 exactifies in \(\mathbb Q(\sqrt{23})\), equivalently using a generator \(\alpha\) satisfying \(23\alpha^2-4=0\). All 729 Brent identities verify exactly, and every zero deliberately frozen by the numerical complexity campaign remains an exact symbolic zero.
+
+The additional drop from 128 numerical additions to 109 exact additions for seed 401 is noteworthy: exactification is not merely certifying a thresholded numerical point, but can move along the same constrained exact family to a considerably simpler arithmetic representative.
+
+The CSE numbers are deterministic exact straight-line-program upper bounds, not optimal additive-complexity proofs. They also do not charge arbitrary scalar constant multiplications, so they should not be compared directly with ternary low-addition schemes on total scalar-operation cost.
+
+---
+
+## 11. Complexity guidance during rank discovery
+
+A matched ablation tested whether arithmetic simplicity should be included during the \(26\to23\) discovery process itself. The local operators, shared rank-26 starting checkpoint, beam width, and expansion budget were held fixed. Complexity only weakly influenced beam retention/expansion; no structural zeros were snapped or frozen above rank 23.
+
+Baseline, constant-weak, and rank-adaptive policies all reached rank 23 on all five frozen seeds and all had median structural endpoint complexity 566 additions. Four seeds reproduced the baseline generation count under the guided policies. Seed 211 was the exception: the baseline reached rank 23 in 12 beam generations, constant weak guidance required 29, and produced no simpler endpoint. A delayed policy that activates only at rank 24 returned seed 211 to the 12-generation baseline path; delayed runs on seeds 307 and 503 also matched baseline.
+
+At the tested strength, simplicity therefore provides no demonstrated discovery benefit and can perturb a useful earlier basin trajectory. This contrasts with the strong post-discovery simplification result and supports a staged architecture: **discover rank first, then optimise arithmetic complexity on the resulting exact family**.
+
+---
+
+## 12. Current interpretation
 
 The main result is not an improved matrix-multiplication exponent or a new multiplication-count record: rank 23 for \(3\times3\) matrix multiplication has long been known.
 
@@ -302,14 +333,18 @@ A concise current claim is:
 
 > Starting from the schoolbook rank-27 decomposition of the \(3\times3\) matrix-multiplication tensor, a differential-geometric and Pareto basin-search procedure reproducibly discovers rank-23 decompositions. In five frozen-policy fresh-seed trials, all five reached rank 23. Multiple resulting local solution families contain exact rank-23 algorithms whose isotropy classes are absent from a 17,376-scheme reference archive.
 
-The strongest unresolved questions are whether these exact representatives belong to previously documented continuous families, how broadly the method transfers to other bilinear tensors, and whether the same machinery can locate a rank-22 boundary.
+The strongest unresolved questions are whether these exact representatives belong to previously documented continuous families, how broadly the method transfers to other bilinear tensors, whether a comparable result can be obtained by much simpler optimisation, and whether the same machinery can locate a rank-22 boundary.
+
+The new complexity experiments sharpen the methodological picture. Arithmetic simplicity was not useful as a weak discovery preference in the frozen five-seed ablation, but became highly effective once the search was restricted to an already-discovered rank-23 family. This makes the search look less like one monolithic objective and more like a sequence of geometric tasks with different useful coordinates.
 
 ---
 
-## 11. Immediate next experiments
+## 13. Immediate next experiments
 
-The most tantalising direct experiment is to initialise the same machinery from several inequivalent exact rank-23 representatives and search for a rank-22 boundary. Any claimed \(23\to22\) success would require finite coefficients, high-precision refinement, and exact verification of all 729 Brent identities; approximate or border-rank behaviour would not count.
+The most important control is now a deliberately simple optimisation baseline. Starting from the same schoolbook decomposition, plain gradient descent or Adam should be given matched seeds and an approximate matched compute budget, with a second baseline adding an elementary sparsity/death penalty. If these methods remain trapped at higher rank while the basin controller repeatedly reaches rank 23, the role of the geometric/global machinery becomes much clearer.
+
+A separate frozen rank-22 campaign has been explored from exact rank-23 starting points without an accepted crossing so far. That is only negative search evidence, not a lower bound. Any future \(23\to22\) success must require finite coefficients, high-precision refinement, no border-rank blow-up/cancellation, and exact verification of all 729 Brent identities.
+
+For arithmetic complexity, the next step is no longer to establish that simplification is possible. It is to improve the cost model: coefficient alphabet, nontrivial scalar-multiplication cost, stronger CSE/straight-line-program optimisation, and repeated simplify--exactify cycles.
 
 A complementary scaling experiment is \(4\times4\) multiplication. The first target should be a known rank reduction as a sanity check for the geometry and sparse-linear-algebra implementation at larger scale. Only after reproducing a known boundary should the method be used to explore a previously unknown one.
-
-These experiments would distinguish a method specialised to the geometry of \(3\times3\) rank 23 from a more general strategy for navigating varieties of exact bilinear algorithms.

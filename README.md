@@ -2,15 +2,19 @@
 
 Experimental search for exact low-rank bilinear algorithms by navigating the geometry of the exact tensor-decomposition manifold.
 
-The current headline result is a frozen five-seed experiment for noncommutative `3 x 3` matrix multiplication.  Each run starts from the schoolbook rank-27 decomposition, autonomously reaches rank 26 by channel collision/fusion, and then uses the same endpoint-free specialist Pareto controller to search downward.  All five fresh seeds reached rank 23.
+The current headline result is a frozen five-seed experiment for noncommutative `3 x 3` matrix multiplication. Each run starts from the schoolbook rank-27 decomposition, autonomously reaches rank 26 by channel collision/fusion, and then uses the same endpoint-free specialist Pareto controller to search downward. All five fresh seeds reached rank 23.
 
-This is **not** a new multiplication-count record: rank 23 has been known since Laderman.  The research claim under investigation is the search method and its reproducibility.
+A second result is now established at fixed rank 23: the exact solution family can be navigated toward substantially lower-support representatives while preserving exact matrix multiplication. Starting from the exact seed-211 and seed-401 representatives, the first complexity campaign reduced naive linear-form addition counts from `143 -> 124` and `137 -> 109` after exactification. A deterministic exact greedy-CSE pass gives upper bounds `94 -> 82` and `87 -> 71`, respectively. These CSE counts do **not** charge arbitrary scalar multiplications and are not claimed optimal.
+
+A matched ablation found no benefit from applying the same simplicity preference during rank discovery: baseline, weak, and adaptive policies all reached rank 23 on all five seeds with the same median structural endpoint count; weak-from-start guidance slowed seed 211 from 12 to 29 beam generations, while delayed guidance returned it to the 12-generation baseline path. The current evidence therefore supports a staged architecture: **discover rank first, simplify afterward**.
+
+This is **not** a new multiplication-count record: rank 23 has been known since Laderman. The main research claim is the search method, its reproducibility, and the ability to navigate exact algorithm families according to secondary objectives.
 
 ## Paper draft
 
 A current LaTeX draft is in [`docs/paper/main.tex`](docs/paper/main.tex).  The longer working methodology note remains at [`docs/OPTIMISER_METHODOLOGY_AND_RESULTS.md`](docs/OPTIMISER_METHODOLOGY_AND_RESULTS.md).
 
-For the intentionally flat collection of research scripts, see [`docs/SCRIPT_MAP.md`](docs/SCRIPT_MAP.md).  The exploratory scripts are retained for provenance; the paper-facing path is much smaller.
+For a compact statement of what is currently established and what remains open, see [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md). For the intentionally flat collection of research scripts, see [`docs/SCRIPT_MAP.md`](docs/SCRIPT_MAP.md). The exploratory scripts are retained for provenance; the paper-facing path is much smaller.
 
 ## Frozen five-seed replication
 
@@ -84,7 +88,17 @@ Overnight campaign:
 python3 run_rank23_complexity_campaign.py
 ```
 
-See [`docs/RANK23_COMPLEXITY_SEARCH.md`](docs/RANK23_COMPLEXITY_SEARCH.md) for the objective and caveats.
+The first campaign produced exact post-search representatives at **124 naive / 82 greedy-CSE additions** for seed 211 (rational) and **109 naive / 71 greedy-CSE additions** for seed 401 (quadratic field `Q(sqrt(23))`). See [`docs/RANK23_COMPLEXITY_SEARCH.md`](docs/RANK23_COMPLEXITY_SEARCH.md) for the objective, exactification results, and caveats.
+
+### Complexity during rank discovery
+
+A matched ablation asks whether the same arithmetic-simplicity signal helps or hurts the rank-reduction path itself. The frozen controller remains the `off` baseline; guided variants change only beam retention/expansion policy, not the local search operators or compute budget.
+
+```bash
+python3 run_complexity_guidance_ablation.py --seeds 101 211 401 --variants baseline weak adaptive
+```
+
+The completed baseline/weak/adaptive five-seed comparison found no discovery benefit at the tested strength. Weak-from-start guidance changed one consequential trajectory (seed 211) and made it slower; delayed guidance recovered the baseline path. See [`docs/COMPLEXITY_GUIDED_DISCOVERY.md`](docs/COMPLEXITY_GUIDED_DISCOVERY.md).
 
 ## External equivalence corpora
 
